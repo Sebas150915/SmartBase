@@ -54,9 +54,98 @@ if($_POST['action'] == 'listarDetallePedido')
         exit();
 }
 
+/**
+ * LISTAMOS EL ANTICIPO
+ */
+if($_POST['action'] == 'listaranticipo')
+{
+    //var_dump($_POST);
 
+$idventa = $_POST['id'];
+$montoanticipo = $_POST['montoanticipo'];
 
+$jsondata = array();		
+header("HTTP/1.1");
+header("Content-Type: application/json; charset=UTF-8");
+/*
+$sql2="SELECT *FROM tbl_coti_cab WHERE id='$idventa' ";
+$mos2= ejecutarConsultaSimpleFila($sql2);
+*/
+$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+$sql=" SELECT *FROM tbl_coti_cab WHERE id='$idventa' ";
+$resultado=$connect->prepare($sql);
+$resultado->execute();
+$result = $resultado->fetchObject();
+//$filename = $result->NOMBRE_ARCHIVO;
 
+$sqlcliente=" SELECT *FROM tbl_contribuyente WHERE id_persona='$result->id_cliente' ";
+$resultadocliente=$connect->prepare($sqlcliente);
+$resultadocliente->execute();
+$cliente= $resultadocliente->fetchObject();
+
+$sql=" SELECT sum(total) as total FROM tbl_venta_cab WHERE relacionado_id='$result->id' AND estado IN (0,1,2,8) ";
+$sql22=$connect->prepare($sql);
+$sql22->execute();
+$mos22 = $sql22->fetchObject();
+
+$sql=" SELECT d.*, p.nombre, p.unidad, p.afectacion, p.sku FROM tbl_coti_det d INNER JOIN tbl_productos p ON p.id=d.idproducto WHERE d.idventa='$idventa' ";
+$sqld=$connect->prepare($sql);
+$sqld->execute();
+$det = $sqld->fetchObject();
+
+$tot='0.00';
+//if($mos22){ $tot=$mos22->total; }
+
+$pagado=round($mos22->total+$montoanticipo, 3);
+
+$tit='PAGO ANTICIPADO POR';
+$porpagar=round($result->total-$pagado, 3);
+
+if($porpagar=='0'){ $tit='PAGO FINAL POR'; $idanticipo='2'; }else{ $idanticipo='1'; }
+if($pagado>$result->total){ $idanticipo='3'; }
+
+$serienum=$result->serie.''.$result->correlativo;
+
+$jsondata['id']=$idventa;	
+$jsondata['referencia']=$serienum;
+$jsondata['total']=$result->total;
+$jsondata['pagado']=$pagado;
+$jsondata['saldo']=$porpagar;
+$jsondata['idanticipo']=$idanticipo;
+$jsondata['docmodifica_tipo']='2-01';
+$jsondata['txtID_MONEDA']=$result->codmoneda;
+$jsondata['txtID_CLIENTE']=$result->id_cliente;
+//$jsondata['txtID_TIPO_DOCUMENTO']=$mos2['doc_relaciona'];
+$jsondata['idproducto']=$det->idproducto;
+$jsondata['codigoproducto']=$det->sku;
+$jsondata['unidadmedida']=$det->unidad;
+$jsondata['response']='NO';
+$jsondata['edidetalle']='NO';
+
+/**
+ * CLIENTE
+ */
+$jsondata['clienteid']=$cliente->id_persona;
+$jsondata['clientedoc']=$cliente->num_doc;
+$jsondata['clientenom']=$cliente->nombre_persona;
+$jsondata['clientedir']=$cliente->direccion_persona;
+$jsondata['clientemail']=$cliente->correo;
+/**
+ * CLIENTE
+ */
+$jsondata['nombre']=$tit.': '.$det->nombre.' |DOC REL: '.$serienum.' |TOTAL PAGADO: '.$pagado.' |MONTO TOTAL: '.$result->total;
+$jsondata['exoneradod']='0.00';
+$jsondata['num']='4545';
+$jsondata['afectacion']=$det->afectacion;
+
+echo json_encode($jsondata);
+
+}
+
+/**
+ * LISTAMOS EL ANTICIPO
+ */
 
 //listar pos
 
@@ -343,9 +432,11 @@ if($_POST['action'] == 'addCliente')
 
 // guardar nueva venta
 
-if($_POST['action'] == 'nueva_venta')
- {
-            $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);");
+if($_POST['action'] == 'nueva_venta'){
+
+
+
+$query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);");
             $resultado=$query->execute([$_POST['empresa'],$_POST['tip_cpe'],$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona']]);
                 $lastInsertId = $connect->lastInsertId();
                //registro detalle compra

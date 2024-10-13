@@ -454,7 +454,12 @@ class ApiFacturacion
 
 						$mensaje['estado']    = "";
 						$mensaje['cod_sunat'] = $doc_cdr->getElementsByTagName('ResponseCode')->item(0)->nodeValue;
-						$mensaje['cod_sunat1'] = $doc->getElementsByTagName("faultstring")->item(0)->nodeValue;
+						if(isset($doc->getElementsByTagName("faultstring")->item(0)->nodeValue)){
+							$mensaje['cod_sunat1'] = $doc->getElementsByTagName("faultstring")->item(0)->nodeValue;
+						}else{
+							$mensaje['cod_sunat1'] ='';
+						}
+						
                         $mensaje['msj_sunat'] = $doc_cdr->getElementsByTagName('Description')->item(0)->nodeValue;
                         $mensaje['hash_cdr'] = $doc_cdr->getElementsByTagName('DigestValue')->item(0)->nodeValue;
                         
@@ -467,9 +472,15 @@ class ApiFacturacion
 						
 						//echo "error ".$codigo.": ".$mensaje; */
 						$mensaje['estado']    = "";
-						$mensaje['cod_sunat'] = $doc->getElementsByTagName('faultstring')->item(0)->nodeValue;
+						$mensaje['cod_sunat'] = $doc->getElementsByTagName('faultcode')->item(0)->nodeValue;
 						$mensaje['cod_sunat1'] = $doc->getElementsByTagName("faultcode")->item(0)->nodeValue;
+
+if(isset($doc->getElementsByTagName('message')->item(0)->nodeValue)){
                         $mensaje['msj_sunat'] = $doc->getElementsByTagName('message')->item(0)->nodeValue;
+					}else{
+						$mensaje['msj_sunat'] =$doc->getElementsByTagName('faultstring')->item(0)->nodeValue;
+					}
+
                         //$mensaje['cod_sunat'] = $doc->getElementsByTagName('statusCode')->item(0)->nodeValue;
                         //$mensaje['msj_sunat'] = "EL COMPROBANTE ESTA SIENDO PROCESADO";
                         $mensaje['hash_cdr'] = "";

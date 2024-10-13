@@ -450,6 +450,20 @@ $(document).on('keyup', '#ruc_persona', function(e)
 					allowOutsideClick: false
 					});
 		e.preventDefault();
+
+/*
+
+                        <input type="hidden" id="relacionado_id" name="relacionado_id" value="0">
+                        <input type="hidden" id="estadopagoanticipo" name="estadopagoanticipo" value="0">
+                        <input type="hidden" id="relacionado_serie" name="relacionado_serie" value="">
+
+*/
+
+
+console.log('relacionado_id:'+$('#relacionado_id').val());
+console.log('estadopagoanticipo:'+$('#estadopagoanticipo').val());
+console.log('relacionado_serie:'+$('#relacionado_serie').val());
+
 		$.ajax({
 			url  :  base_url+'/assets/ajax/ajax_venta1.php',
 			type : "POST",
@@ -1709,4 +1723,136 @@ tablacontribuentes=$('#datatable-contribuyente').dataTable({
 
 }
 
+
+/**
+ * ANTICIPOS
+ * 
+ */
+
+function openModalanticipos(){
+	$('#modalDocrefpedido').modal('show');
+}
+
+
+function agregaranticipos(id,tip,nom,ser,num,codcli,ruc,raz,dir,opg,ope,opi,igv,tot){
+
+var montoanticipo=$("#anticipo"+id).val();
+
+if(montoanticipo=='0.00'){
+
+Swal.fire('DEBE PONER UN ANTICIPO');
+
+}else{
+
+var factor=1;
+
+$.ajax({
+	  	url: base_url+'/assets/ajax/ajax_ventas.php',
+	  	type: "POST",
+		dataType : 'json',
+	  	data: {action:'listaranticipo', id:id, montoanticipo:montoanticipo},
+success: function(response){
+
+console.log(response);
+
+if(response.idanticipo=='3'){
+
+Swal.fire('EL MONTO PAGADO EXCEDE AL SALDO');
+
+}else{
+
+$("#anticipo_saldo").val(response.saldo);
+$("#anticipo_pago").val(response.pagado);
+$("#anticipo_total").val(response.total);
+
+$("#relacionado_serie").val(response.referencia);
+$("#relacionado_id").val(response.id);
+$("#estadopagoanticipo").val(response.idanticipo);
+
+//id,doc,nom,dir,mail
+enviacliente(response.clienteid, response.clientedoc, response.clientenom, response.clientedir, response.clientemail);
+
+precio=montoanticipo;
+
+/**/
+if(response.afectacion==10){
+$igv_unitario = 0.18;
+}else{
+$igv_unitario = 0.00;
+}
+
+cont++;
+detalles++;
+var cantidad = 1;
+var cantidadu =0;
+if(response.ediprecio == 'NO'){
+ediprecio =' readonly ';
+}else{
+ediprecio ='';
+}
+if(response.edidetalle == 'NO'){
+edidetalle =' readonly';
+}else{
+edidetalle ='';
+}
+
+precio_compra=precio;
+mxmn='min';
+
+var subtotal =parseFloat(cantidadu*precio+cantidad*factor*precio);
+var valor_unitario =parseFloat(subtotal/(1+$igv_unitario));
+var igv_u =parseFloat(valor_unitario*$igv_unitario);
+
+
+
+
+var fila='<tr id="fila'+cont+'">'+
+	         '<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fe fe-trash-2"></i></button></td>'+
+	         '<td>'+cont+'</td>'+
+	          '<td><input type="hidden" name="itemarticulo[]" value="'+cont+'"><input type="hidden" name="idarticulo[]" value="'+response.idproducto+'"><input type="text" class="form-control w-100" name="nomarticulo[]" value="'+response.nombre+'" '+edidetalle+'><input type="hidden" name="mxmn[]" value="'+mxmn+'"></td>'+
+	          '<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'"><input type="hidden" name="factor[]" value="'+factor+'"><input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="'+cantidad+'" onkeyup="modificarSubtotales()" required ></td>'+
+	          '<td><input type="text" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="'+cantidadu+'" required onkeyup="modificarSubtotales()"></td>'+
+	          '<td><input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="'+valor_unitario+'" readonly>'+
+	          '<input type="hidden" id="cantidada'+cont+'" name="cantidada[]" class="form-control input-sm" >'+
+	          '<input type="hidden" id="cantidadua'+cont+'" name="cantidadua[]" class="form-control input-sm">'+
+	          '<input type="hidden" class="form-control input-sm" name="igv_unitario[]" id="igv_unitario[]" value="'+igv_u+'" readonly>'+
+	          '<input type="text" class="form-control input-sm" name="precio_venta[]" id="precio_venta[]" value="'+precio+'" onkeyup="modificarSubtotales()" '+ediprecio+'></td>'+
+	         '<td><span id="subtotal'+cont+'" name="subtotal">'+subtotal+'</span><input type="hidden" id="afectacion'+cont+'" name="afectacion[]" class="form-control input-sm" value="'+response.afectacion+'"></td>'+
+	         '</tr>';
+
+	    $('#tabla').append(fila);
+	    reordenar();
+	    modificarSubtotales();
+	    calcaulaDt();
+	    $('#detalles').val(detalles);
+
+
+//$('#detalleventa').html(info.detalle);
+
+//modificarSubtotales();
+//$("#btnListar").hide();
+$("#btnGuardar").show();
+
+}
+
+
+	  	},
+	  	error: function(response)
+	  	{
+	  		console.log(response);
+	  	}
+	  });
+  
+  $('#modalDocrefpedido').modal('hide');
+
+}
+
+  
+  }
+
+
+/**
+ * ANTICIPOS
+ * 
+ */
 

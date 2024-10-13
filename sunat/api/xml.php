@@ -260,9 +260,32 @@ class GeneradorXML
          {
            $xml .='<cbc:Note languageLocaleID="2006">Operacion Sujeta a detraccion</cbc:Note>';
          }
+
         $xml .=
-         '<cbc:DocumentCurrencyCode>'.$comprobante['moneda'].'</cbc:DocumentCurrencyCode>
-         <cac:Signature>
+         '<cbc:DocumentCurrencyCode>'.$comprobante['moneda'].'</cbc:DocumentCurrencyCode>';
+
+//AQUI AGREGAMOS EL DOCUMENTO DE REFERENCIA DE ANTICIPO	
+/**/	
+if ($comprobante["NROACTICIPO"] <> "") {	
+   for ($z = 0; $z < count($comprobante["NROACTICIPO"]); $z++) {
+     
+$xml .=
+  '<cac:AdditionalDocumentReference>
+  <cbc:ID>'.$comprobante["NROACTICIPO"][$z]["serienumero"]. '</cbc:ID>
+        <cbc:DocumentTypeCode>'.$comprobante["NROACTICIPO"][$z]["tipodoc"]. '</cbc:DocumentTypeCode>
+        <cbc:DocumentStatusCode>'.$comprobante["NROACTICIPO"][$z]["orden"].'</cbc:DocumentStatusCode>
+        <cac:IssuerParty>
+           <cac:PartyIdentification><cbc:ID schemeID="'.$cliente['tipodoc'].'">'.$cliente["ruc"].'</cbc:ID>
+           </cac:PartyIdentification>
+        </cac:IssuerParty>
+     </cac:AdditionalDocumentReference>';
+  
+  }
+}
+
+
+$xml .=
+         '<cac:Signature>
             <cbc:ID>'.$comprobante['serie'].'-'.$comprobante['correlativo'].'</cbc:ID>
             <cbc:Note><![CDATA['.$emisor['nombre_comercial'].']]></cbc:Note>
             <cac:SignatoryParty>
@@ -414,8 +437,33 @@ class GeneradorXML
 
          }
 
-         
-         $xml.='<cac:TaxTotal>
+/*SEGUNDA PARTE DE ANTICIPOS*/
+if ($comprobante["NROACTICIPO"] <> "") {	
+   for ($z = 0; $z < count($comprobante["NROACTICIPO"]); $z++) {
+     
+ $xml.=
+  '<cac:PrepaidPayment>
+        <cbc:ID>'.$comprobante["NROACTICIPO"][$z]["orden"].'</cbc:ID>
+        <cbc:PaidAmount currencyID="PEN">'.$comprobante["NROACTICIPO"][$z]["monto"].'</cbc:PaidAmount>
+     </cac:PrepaidPayment>';
+  }
+     
+     
+   for ($z = 0; $z < count($comprobante["NROACTICIPO"]); $z++) {	
+ $xml.=
+  '<cac:AllowanceCharge>
+  <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+  <cbc:AllowanceChargeReasonCode>04</cbc:AllowanceChargeReasonCode>
+  <cbc:MultiplierFactorNumeric>'.$comprobante["NROACTICIPO"][$z]["orden"].'</cbc:MultiplierFactorNumeric>
+  <cbc:Amount currencyID="' . $comprobante["moneda"] . '">'.$comprobante["NROACTICIPO"][$z]["monto"].'</cbc:Amount>
+  <cbc:BaseAmount currencyID="' . $comprobante["moneda"] . '">'.$comprobante["NROACTICIPO"][$z]["monto"].'</cbc:BaseAmount>
+  </cac:AllowanceCharge>
+  ';
+  }	
+  }
+/*SEGUNDA PARTE DE ANTICIPOS*/
+
+$xml.='<cac:TaxTotal>
             <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>
             <cac:TaxSubtotal>
                <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opgravadas'],2, '.', '').'</cbc:TaxableAmount>
@@ -429,7 +477,6 @@ class GeneradorXML
                </cac:TaxCategory>
             </cac:TaxSubtotal>';
            
-
 
             if($comprobante['total_opexoneradas']>0){
                $xml.='<cac:TaxSubtotal>
@@ -461,21 +508,41 @@ class GeneradorXML
                </cac:TaxSubtotal>';
             }
 
-             $total_antes_de_impuestos = $comprobante['total_opgravadas']+$comprobante['total_opexoneradas']+$comprobante['total_opinafectas'];
+$total_antes_de_impuestos = $comprobante['total_opgravadas']+$comprobante['total_opexoneradas']+$comprobante['total_opinafectas'];
 
-         $xml.='</cac:TaxTotal>
+$xml.='</cac:TaxTotal>';
+
+/* ULTIMA PARTE DE ANTICIPO*/
+
+if ($comprobante["NROACTICIPO"] <> "") {
+	
+$xml.='
 <cac:LegalMonetaryTotal>
+<cbc:LineExtensionAmount currencyID="' . $comprobante["moneda"] . '">' . $comprobante["subanticipo"] . '</cbc:LineExtensionAmount>
+<cbc:TaxInclusiveAmount currencyID="' . $comprobante["moneda"] . '">' . $comprobante["totalanticipo"] . '</cbc:TaxInclusiveAmount>
+<cbc:PrepaidAmount currencyID="' . $comprobante["moneda"] . '">' . $comprobante["pagadoanticipo"] . '</cbc:PrepaidAmount>
+<cbc:PayableAmount currencyID="' . $comprobante["moneda"] . '">'.$comprobante["total"].'</cbc:PayableAmount>
+</cac:LegalMonetaryTotal>
+';
+
+}else{
+
+$xml.='<cac:LegalMonetaryTotal>
 <cbc:LineExtensionAmount currencyID="'.$comprobante['moneda'].'">'.number_format($total_antes_de_impuestos,2, '.', '').'</cbc:LineExtensionAmount>
 <cbc:TaxInclusiveAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total'],2, '.', '').'</cbc:TaxInclusiveAmount>';
- if($comprobante['redondeo']>0){
-   $xml.='<cbc:PayableRoundingAmount currencyID="PEN">'.$comprobante['redondeo'].'</cbc:PayableRoundingAmount>';  
- }
+if($comprobante['redondeo']>0){
+$xml.='<cbc:PayableRoundingAmount currencyID="PEN">'.$comprobante['redondeo'].'</cbc:PayableRoundingAmount>';  
+}
 
 $xml.='<cbc:PayableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total'],2, '.', '').'</cbc:PayableAmount>
 </cac:LegalMonetaryTotal>';
-  
-         
-         foreach($detalle as $k=>$v){
+
+}
+
+
+
+
+foreach($detalle as $k=>$v){
 
       	   $xml.='<cac:InvoiceLine>
       	      <cbc:ID>'.$v['item'].'</cbc:ID>

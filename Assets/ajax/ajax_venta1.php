@@ -108,7 +108,7 @@ if($_POST['action'] == 'nota_venta_editar')
                 /*producto nuevo*/
                 if($num_reg_bpro == 0)
                 {
-                $insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+$insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $resultado_detalle = $insert_query_detalle->execute([$_POST['id_nv'] ,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn]);
                 /*fin producto nuevo*/
                 }
@@ -272,8 +272,7 @@ if($_POST['action'] == 'nota_venta_editar')
 }
 
 // guardar nueva venta
-if($_POST['action'] == 'nueva_venta')
-{
+if($_POST['action'] == 'nueva_venta'){
     
         $redondeo = 0;
 
@@ -304,25 +303,31 @@ if($_POST['action'] == 'nueva_venta')
                 $vendedor = $_POST['ven'];
         }
         
+if(isset($_POST['redondeo']))        {
         if($_POST['redondeo']>0)
         {
             $redondeo = $_POST['redondeo'];
         }
+}
+
+$estadopagoanticipo=(isset($_POST['estadopagoanticipo'])) ? $_POST['estadopagoanticipo'] : "0";
+$relacionado_id=(isset($_POST['relacionado_id'])) ? $_POST['relacionado_id'] : "0";
+$relacionado_serie=(isset($_POST['relacionado_serie'])) ? $_POST['relacionado_serie'] : "";
 
 
         $query_cli = $connect->prepare("UPDATE tbl_contribuyente SET correo = ? WHERE id_persona = ?");
         $resultado_cli = $query_cli->execute([$_POST['correo_cliente'],$_POST['id_ruc']]);
 
         $hora = date('h:i:s');
-        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,orden_compra,codmoneda,local,redondeo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['orden_compra'],$moneda,$localemp,$redondeo]);
+$query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,orden_compra,codmoneda,local,redondeo, relacionado_id, relacionado_serie, estadopagoanticipo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+$resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['orden_compra'],$moneda,$localemp,$redondeo, $relacionado_id, $relacionado_serie, $estadopagoanticipo]);
 
-        $lastInsertId = $connect->lastInsertId();
+$lastInsertId = $connect->lastInsertId();
 
-        $visa = $_POST['visa'];
-        $cvisa = $_POST['cvisa'];    
-        $efectivo = $_POST['efectivo'];
-        $vuelto   = $_POST['vuelto'];
+$visa = $_POST['visa'];
+$cvisa = $_POST['cvisa'];    
+$efectivo = $_POST['efectivo'];
+$vuelto   = $_POST['vuelto'];
 
 
         //registro detalle venta
@@ -331,7 +336,7 @@ if($_POST['action'] == 'nueva_venta')
         {
         $item                  = $_POST['itemarticulo'][$i];
         $idarticulo            = $_POST['idarticulo'][$i];
-        $nomarticulo           = $_POST['nomarticulo'][$i];
+$nomarticulo=(isset($_POST['nomarticulo'][$i])) ? $_POST['nomarticulo'][$i] : "";
         $cantidad              = $_POST['cantidad'][$i];
 
         $afectacion            = $_POST['afectacion'][$i];
@@ -397,8 +402,8 @@ $des = $row_pro['descripcion'];
 /**************fin del detalle******************************/
 
 
-        $insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn,nombre_producto,descripcion_producto) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn,$nomarticulo,$des]);
+$insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn,nombre_producto,descripcion_producto) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+$resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn,$nomarticulo,$des]);
 
         // actualizar serie + correlativo
         $update_query_serie = $connect->prepare("UPDATE tbl_series SET correlativo = correlativo + ? WHERE serie = ? and correlativo = ? and id_empresa = ?");
@@ -581,11 +586,79 @@ $des = $row_pro['descripcion'];
         $texto=convertir($numero);
         $texto = ltrim($texto);
 
-
         $lista_cpe_cab = "SELECT * FROM vw_tbl_venta_cab WHERE id=$lastInsertId";
         $resultado_cpe_cab = $connect->prepare($lista_cpe_cab);
         $resultado_cpe_cab->execute();
         $row_cpe_cab = $resultado_cpe_cab->fetch(PDO::FETCH_ASSOC);
+
+
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+
+$totanticipo='0.00';
+$subanticipo='0.00';
+$pagadoanticipo='0.00';
+
+$lista_cpe_cab = "SELECT * FROM tbl_venta_cab WHERE id=$lastInsertId";
+$resultadoventa = $connect->prepare($lista_cpe_cab);
+$resultadoventa->execute();
+$rowventa= $resultadoventa->fetch(PDO::FETCH_ASSOC);
+
+if($rowventa['estadopagoanticipo']=='2'){
+
+$lista_cpe_cab = " SELECT *FROM tbl_coti_cab WHERE id='$rowventa[relacionado_id]' ";
+$sqlm = $connect->prepare($lista_cpe_cab);
+$sqlm->execute();
+$most= $sqlm->fetch(PDO::FETCH_ASSOC);
+
+$totanticipo=$most['total'];
+$subanticipo=$most['total']-$most['igv'];
+$subanticipo=round($subanticipo, 2);
+
+$totalventaanticipo=$rowventa['total']-$rowventa['igv'];
+$totalventaorden=$most['total']-$most['igv'];
+
+$pagadoanticipo=$totalventaorden-$totalventaanticipo;
+$pagadoanticipo=round($pagadoanticipo, 2);
+
+$totalventa=round($totanticipo-$pagadoanticipo, 2);
+
+$n=0;	
+$sqla=" SELECT *FROM tbl_venta_cab WHERE relacionado_id='$rowventa[relacionado_id]' AND estadopagoanticipo='1' ";
+$stmt = $connect->prepare($sqla);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+$dataArr = is_array($result) ? $result : array($result);
+foreach ( $dataArr ?? [] as $reg ) {
+$n=$n+1;
+if($reg->op_gravadas>0){
+$subtotaldetalle=round($reg->op_gravadas, 2);
+}else{
+$subtotaldetalle=round($reg->total, 2);
+}
+
+$tipocomprobante='03';
+if($reg->tipocomp=='01'){ $tipocomprobante='02'; }
+
+$jsonant["orden"]=$n;	
+$jsonant["monto"]=$subtotaldetalle;
+$jsonant["tipodoc"]=$tipocomprobante;
+$jsonant["serienumero"]=$reg->serie.'-'.$reg->correlativo;
+$cuerpoant[]=$jsonant;	
+}
+
+}else{
+$cuerpoant='';
+$totalventa=round(($row_cpe_cab['total']-$row_cpe_cab['redondeo']), 2);
+
+}
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+
+
+
 
         $comprobante =  array(
         'tipodoc'            => $row_cpe_cab['tipocomp'], //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
@@ -600,18 +673,47 @@ $des = $row_pro['descripcion'];
         'total_opexoneradas' => $row_cpe_cab['op_exoneradas'],
         'total_opinafectas'  => $row_cpe_cab['op_inafectas'],
         'igv'                => $row_cpe_cab['igv'],
-        'total'              => ($row_cpe_cab['total']-$row_cpe_cab['redondeo']),
+        'total'              => $totalventa,
         'cod_det'            => $row_cpe_cab['cod_det'],
         'por_det'            => $row_cpe_cab['por_det'],
         'imp_det'            => $row_cpe_cab['imp_det'],
         'tc'                 => $row_cpe_cab['tc'],
         'total_texto'        => $texto,
-        'redondeo'           => $row_cpe_cab['redondeo']
+        'redondeo'           => $row_cpe_cab['redondeo'],
+        /*CUERPO DE ANTICIPOS*/
+"totalanticipo"=> $totanticipo,
+"subanticipo"=> $subanticipo,
+"pagadoanticipo"=> $pagadoanticipo,
+"NROACTICIPO"=>$cuerpoant,
+
         );
 
+//var_dump($comprobante);
 
         //********************DATOS DE COMPROBANTE - DETALLE*********************//
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+if($rowventa['estadopagoanticipo']=='2'){
 
+    $lista_cpe_cab = "SELECT * FROM tbl_venta_cab WHERE id=$lastInsertId";
+    $resultadoventa = $connect->prepare($lista_cpe_cab);
+    $resultadoventa->execute();
+    $rowventa= $resultadoventa->fetch(PDO::FETCH_ASSOC);
+
+        //echo 'el id ultimo es '.$lastInsertId;
+        $lista_cpe_det = $connect->prepare("SELECT * FROM vw_tbl_coti_det WHERE idventa='$rowventa[relacionado_id]' ");
+
+        $lista_cpe_det->execute();
+        $row_cpe_det=$lista_cpe_det->fetchAll(PDO::FETCH_ASSOC);
+        //print_r($row_cpe_det);
+
+        $detalle = $row_cpe_det;
+//var_dump($detalle);
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+/*REVISAMOS A VER SI HAY ANTICIPOS*/
+}else{
         //echo 'el id ultimo es '.$lastInsertId;
         $lista_cpe_det = $connect->prepare("SELECT * FROM vw_tbl_venta_det WHERE idventa=$lastInsertId");
 
@@ -620,10 +722,12 @@ $des = $row_pro['descripcion'];
         //print_r($row_cpe_det);
 
         $detalle = $row_cpe_det;
-
-        //var_dump($detalle);
+    }
+//var_dump($detalle);
           //*******************DATOS DE LAS CUOTAS *********************//
         
+$cuota='';
+
         if($_POST['condicion'] == '2')
         {
             $lista_cpe_cuo = $connect->prepare("SELECT * FROM tbl_venta_cuota WHERE id_venta=$lastInsertId");
@@ -635,7 +739,7 @@ $des = $row_pro['descripcion'];
             $cuota = $row_cpe_cuo;
         }
 
-        $xml->CrearXMLFactura($ruta, $emisor, $cliente, $comprobante, $detalle,$cuota);
+        $xml->CrearXMLFactura($ruta, $emisor, $cliente, $comprobante, $detalle, $cuota);
 
 
         require_once("../../sunat/api/ApiFacturacion.php");
@@ -796,9 +900,11 @@ $des = $row_pro['descripcion'];
             {
                 $hash_cdr = $respuestahash;
             }
-            
-            $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
-		$resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
+
+//var_dump($cod_sunat);
+
+$query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
+$resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
             
             $miArray= array
             ("id_emp"      => $row_empresa['ruc'],

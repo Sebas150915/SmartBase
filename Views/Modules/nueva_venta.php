@@ -1,12 +1,17 @@
 <?php 
 $empresa = $_SESSION["id_empresa"];
+
+
+$lista2=$connect->query("SELECT * FROM vw_tbl_coti_cab WHERE empresa= $empresa AND tipocomp in ('CT','NP') ORDER BY id DESC ");
+$resultado2=$lista2->fetchAll(PDO::FETCH_OBJ);
+
 //echo $_SESSION["precio"];
 $query_emp = "SELECT * FROM tbl_empresas WHERE id_empresa=$empresa";
 $resultado_emp = $connect->prepare($query_emp);
 $resultado_emp->execute();
 $row_emp = $resultado_emp->fetch(PDO::FETCH_ASSOC);
 //print_r($row_emp);
-$calculaigv = $row_emp['calculaigv'];
+$calculaigv=$row_emp['calculaigv'];
 //echo 'hola: '.$calculaigv
 $hoy = date('Y-m-d');
 //sumo 1 día
@@ -18,12 +23,11 @@ $min_date = date("Y-m-d",strtotime($hoy."- 4 days"));
     $query_tc->execute();
     $row_tc   = $query_tc->fetch(PDO::FETCH_ASSOC);
 
-    $tc  = $row_tc['tventa'];
+    $tc='1.000';
+   if($row_tc){ $tc  = $row_tc['tventa']; }
+    
 
-    if(empty($tc))
-    {
-      $tc = 1.0000;
-    }
+
 
 
 $query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('01','03')";
@@ -174,6 +178,14 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                         <input type="text" class="form-control" readonly name="numero" id="numero">
                         <input type="hidden" id="vendedor" name="vendedor" value="<?= $_SESSION['id'] ?>">
                         <input type="hidden" id="empresa" name="empresa" value="<?= $_SESSION['id_empresa']?>">
+
+                        <input type="hidden" id="relacionado_id" name="relacionado_id" value="0">
+                        <input type="hidden" id="estadopagoanticipo" name="estadopagoanticipo" value="0">
+                        <input type="hidden" id="relacionado_serie" name="relacionado_serie" value="">
+
+
+
+
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-4">
                         <label for="">Condicion</label>
@@ -262,39 +274,36 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
 </div-->
 
 
-                    <div class="clearfix">
-                      <div class="row mt-3">
+<div class="clearfix">
+<div class="row mt-3">
 <?php if($_SESSION["venta_por_mayor"] == 'SI'){ ?>
-                        <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProdcuto"><i class="fa fa-plus-circle"></i> P. Minorista</button>
-                           
-                        </div>
-                        <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> P. Mayorista</button>
-                        </div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProdcuto"><i class="fa fa-plus-circle"></i> P. Minorista</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> P. Mayorista</button>
+</div>
 <?php } 
 else {?>
 <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-info" type="button" data-toggle="modal" data-target="#addProdcuto2"><i class="fa fa-plus-circle"></i> Productos</button>
-                        </div>
+<button class="btn btn-info" type="button" data-toggle="modal" data-target="#addProdcuto2"><i class="fa fa-plus-circle"></i> Productos</button>
+</div>
 <?php }?>
-                         <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-success" type="button" id="btnGuardarft"><i class="fa fa-save"></i> Guardar</button>
-                         </div>
-                         <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button id="btnPagar" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addPago"><i class="fa fa-usd"></i> Pagos</button>
-                           
-                        </div>
-                        <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button id="btnCuota" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addCuota"><i class="fa fa-usd"></i> Cuotas</button>
-                           
-                        </div>
-                          <div class="col-lg-2 col-sm-6 col-sm-4">                                                
-                          <a href="<?=base_url()?>/ventas" class="btn btn-danger" type="button"><i class="fa fa-close"></i> Cancelar</a>
-                          </div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-success" type="button" id="btnGuardarft"><i class="fa fa-save"></i> Guardar</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button id="btnPagar" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addPago"><i class="fa fa-usd"></i> Pagos</button>
+<button id="btnCuota" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addCuota"><i class="fa fa-usd"></i> Cuotas</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-warning" type="button" onClick="openModalanticipos();" ><i class="fa fa-usd"></i> Anticipos</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">                                                
+<a href="<?=base_url()?>/ventas" class="btn btn-danger" type="button"><i class="fa fa-close"></i> Cancelar</a>
+</div>
 
-                       
-                      </div>
+</div>
                     </div>
                     <hr>
                 <?php if($_SESSION["usabarras"] == 'SI'){ ?>
@@ -325,35 +334,53 @@ else {?>
                   </thead>
                 
                    <tfoot>
-                    <tr>
-                      <th colspan="5"></th>
-                      <th>Op. Gravadas</th>
-                      <td><input type="text" class="form-control text-right" name="op_g" id="op_g" value="0.00" readonly></td>
-                    </tr>
-                    <tr>
-                      <th colspan="5"></th>
-                      <th>Op. Exonerada</th>
-                      <td><input type="text" class="form-control text-right" name="op_e" id="op_e" value="0.00" readonly></td>
-                    </tr>
-                    <tr>
-                      <th colspan="5"></th>
-                      <th>Op. Inafecta</th>
-                      <td><input type="text" class="form-control text-right" name="op_i" id="op_i" value="0.00" readonly></td>
-                    </tr>
-                    <tr>
-                      <th colspan="5"></th>
-                      <th>I.G.V.</th>
-                      <td><input type="text" class="form-control text-right" name="igv" id="igv" value="0.00" readonly></td>
-                    </tr>
-                    <tr>
-                      <th colspan="5"></th>
-                      <th>Total</th>
-                       <td><input type="text" class="form-control text-right" name="total" id="total" value="0.00" readonly></td>
-                    </tr>
-                   </tfoot>
-                                       
-                 
-                </table>
+
+
+
+<tr>
+<th colspan="3"></th>
+<th>Op. Gravadas</th>
+<td><input type="text" class="form-control text-right" name="op_g" id="op_g" value="0.00" readonly></td>
+<th>Anticipo</th>
+<td><input type="text" class="form-control text-right" name="anticipo_pago" id="anticipo_pago" value="0.00" readonly></td>
+</tr>
+
+<tr>
+<th colspan="3"></th>
+<th>Op. Exonerada</th>
+<td><input type="text" class="form-control text-right" name="op_e" id="op_e" value="0.00" readonly></td>
+<th>Saldo.A</th>
+<td><input type="text" class="form-control text-right" name="anticipo_saldo" id="anticipo_saldo" value="0.00" readonly></td>
+</tr>
+
+<tr>
+<th colspan="3"></th>
+<th>Op. Inafecta</th>
+<td><input type="text" class="form-control text-right" name="op_i" id="op_i" value="0.00" readonly></td>
+<th>Total.C</th>
+<td><input type="text" class="form-control text-right" name="anticipo_total" id="anticipo_total" value="0.00" readonly></td>
+</tr>
+
+<tr>
+<th colspan="3"></th>
+<th>I.G.V.</th>
+<td><input type="text" class="form-control text-right" name="igv" id="igv" value="0.00" readonly></td>
+<th></th>
+<td></td>
+</tr>
+
+<tr>
+<th colspan="3"></th>
+<th>Total</th>
+<td><input type="text" class="form-control text-right" name="total" id="total" value="0.00" readonly></td>
+<th></th>
+<td></td>
+</tr>
+
+</tfoot>
+
+
+</table>
 
 
                    </div>
@@ -476,11 +503,12 @@ else {?>
           <?php  include 'views/modules/modals/persona.php' ?> 
           <?php include 'views/modules/modals/buscar_contribuyente.php' ?> 
           <?php include 'views/modules/modals/articulo_venta.php' ?> 
+          <?php include 'views/modules/modals/venta-pedidos.php' ?>
           <?php include 'views/template/pie.php' ?>
 
 
 
-      <script src="<?=media()?>/js/funciones_ventas.js?v=1"></script>
+<script src="<?=media()?>/js/funciones_ventas.js?v=17"></script>
    
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>

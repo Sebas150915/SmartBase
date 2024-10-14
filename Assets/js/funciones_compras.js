@@ -34,10 +34,6 @@ $(document).ready(function(){
 		});
 	});
 
-  
-
-
-
 	//Buscar porcentaje de detraccion
 	$('#det').change(function(e)
 	{
@@ -74,9 +70,6 @@ $(document).ready(function(){
 		});
 
 	});
-
-
-
 
 //buscar proveedor / cliente
 
@@ -126,8 +119,6 @@ $(document).on('keyup', '#ruc_persona', function(e)
 			}
 	});
 });
-
-
 
 //agregar persona
 
@@ -552,3 +543,44 @@ tablacontribuentes=$('#datatable-contribuyente').dataTable({
 
 }
 
+
+
+function listarCompraCab(id)
+{
+	var id_venta_ref = id;
+	var action       = 'listarCompraCab';
+	
+	  $.ajax({
+	  	url: base_url+'/assets/ajax/ajax_compras.php',
+	  	type: "POST",
+	  	async: true,
+	  	data: {action:action,id:id_venta_ref},
+
+
+
+	  	success: function(response)
+	  	{
+	  		//console.log(response);
+	  		 var info = JSON.parse(response);
+	  		 //var datos = eval(response);
+	  		 console.log(info);
+
+				$('#op_g').val(id);
+				$('#op_e').val(idempresa);
+				/*$('#op_i').val(op_inafectas);
+				$('#igv').val(igv);
+				$('#total').val(total);*/
+	  		
+	  	},
+	  	error: function(response)
+	  	{
+	  		console.log(response);
+	  	}
+	  });
+
+
+
+	
+
+	
+}

@@ -16,7 +16,7 @@
   MODAL CUERPO
   ======================================-->
       <div class="modal-body">
-      <table id="datatable-contribuyente" class="table table-bordered table-striped table-condensed table-hover" width="100%">
+      <table id="datatable-pedidos" class="table table-bordered table-striped table-condensed table-hover" width="100%">
        <thead class="bg-dark" style="color: white">
           <tr>
           <th>ID</th>

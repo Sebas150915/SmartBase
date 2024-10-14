@@ -22,6 +22,7 @@ $query_tipo = "SELECT * FROM tbl_tipo_pago WHERE id <> 1";
 $resultado_tipo=$connect->prepare($query_tipo);
 $resultado_tipo->execute(); 
 $num_reg_tipo=$resultado_tipo->rowCount();
+$calculaigv='NO';
 
 ?>
 <!doctype html>

@@ -9,12 +9,8 @@ $hoy = date('Y-m-d');
     $query_tc->execute();
     $row_tc   = $query_tc->fetch(PDO::FETCH_ASSOC);
 
-    $tc          = $row_tc['tventa'];
-
-    if(empty($tc))
-    {
-      $tc = 1.0000;
-    }
+     $tc='1.000';
+   if($row_tc){ $tc  = $row_tc['tventa']; }
 
 $query_documento = "SELECT * FROM tbl_tipo_documento WHERE  id in ('01','03')";
 $resultado_documento=$connect->prepare($query_documento);
@@ -36,9 +32,7 @@ $resultado_forma=$connect->prepare($query_forma);
 $resultado_forma->execute(); 
 $num_reg_forma=$resultado_forma->rowCount();
 
-
-
-$query_nv = "SELECT * FROM tbl_compra_cab WHERE id =$id_nv";
+$query_nv = "SELECT * FROM tbl_compra_cab WHERE id =$id";
 $resultado_nv=$connect->prepare($query_nv);
 $resultado_nv->execute();
 $row_nv = $resultado_nv->fetch(PDO::FETCH_ASSOC);
@@ -247,7 +241,8 @@ $cliente1 = $row_nv['codcliente'];
                       
                     </tr>
                   </thead>
-                
+                <tbody>
+                </tbody>
                           
                  
                 </table>
@@ -305,7 +300,7 @@ $cliente1 = $row_nv['codcliente'];
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.8/jquery.inputmask.bundle.min.js"></script>
 
 
-      <script src="<?=media()?>/js/funciones_compras.js"></script>
+      <script src="<?=media()?>/js/funciones_compras.js?v=5"></script>
    
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>
@@ -358,6 +353,8 @@ $cliente1 = $row_nv['codcliente'];
                   }
                 });
               });
+
+              listarCompraCab(<?=$id?>)
            </script> 
 
   </body>

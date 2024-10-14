@@ -7,12 +7,8 @@ $hoy = date('Y-m-d');
     $query_tc->execute();
     $row_tc   = $query_tc->fetch(PDO::FETCH_ASSOC);
 
-    $tc          = $row_tc['tventa'];
-
-    if(empty($tc))
-    {
-      $tc = 1.0000;
-    }
+      $tc='1.000';
+   if($row_tc){ $tc  = $row_tc['tventa']; }
     
 
 $query_documento = "SELECT * FROM tbl_tipo_documento WHERE  id in ('01','03','99','09','00')";

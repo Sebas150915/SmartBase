@@ -5,6 +5,25 @@ require_once("../../helpers/helpers.php");
 require_once("../../libraries/conexion.php"); 
 session_start();
 
+if($_POST['action'] == 'listarCompraCab')
+{
+       $idventa = $_POST['id'];
+       //echo $idventa;
+        $query_cab = "SELECT * FROM tbl_compra_cab WHERE id ='$idventa'";
+        $resultado_cab = $connect->prepare($query_cab);
+        $resultado_cab->execute();
+        $row_cab = $resultado_cab->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($row_cab,JSON_UNESCAPED_UNICODE);
+
+
+        exit();
+}
+
+
+
+
+
+
         ////////////buscar series
 if($_POST['action'] == 'searchDet')
 {

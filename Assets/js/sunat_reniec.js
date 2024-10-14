@@ -17,6 +17,7 @@ $(function()
 
        if(datos_dni!='')
        {
+       	
        	var datos = eval(datos_dni);
 		//alert("exito");
 		if(datos[1]=='1')

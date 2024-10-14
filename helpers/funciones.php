@@ -2,8 +2,10 @@
 
 class ApiContabilidad
 {
-	public function guardavou(idoperacion,tipoperacion,origen,vou)
+	public function guardarCuenta($idempresa,$conta)
 	{
+		$cuenta   =  $conta['cuenta'];
+		 
       
 	}
 }

@@ -177,7 +177,7 @@ $resultado_pro->execute();
                              $query_data = "SELECT * FROM vw_tbl_alm WHERE fecha BETWEEN '$fecha_ini' AND '$fecha_fin' AND empresa = $empresa AND local = $almacen AND codigo_producto = $codp  ORDER BY nombre_producto,fecha,tipo_movimiento";
                          }
                          
-                         echo $query_data;exit(); 
+                         //echo $query_data;exit(); 
                           $resultado_data=$connect->prepare($query_data);
                           $resultado_data->execute();
                           $num_reg_data=$resultado_data->rowCount();

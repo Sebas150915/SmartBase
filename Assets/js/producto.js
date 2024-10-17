@@ -23,7 +23,7 @@ function ediproducto()
 	  	type: "POST",
 	  	async: true,
 	  	data: {action:action,id:id},
-
+	  	
 	  	success: function(response)
 	  	{
 	  		console.log(response);

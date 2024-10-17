@@ -119,7 +119,7 @@ $cliente1 = $row_nv['codcliente'];
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-2">
                         <label for="">Condicion</label>
-                        <select class="form-control select2" style="width: 100%;" name="condicion" id="condicion">
+                        <select class="form-control" style="width: 100%;" name="condicion" id="condicion">
                   
                             
                             <?php 
@@ -143,7 +143,7 @@ $cliente1 = $row_nv['codcliente'];
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-2">
                         <label for="">Detraccion</label>
-                        <select class="form-control select2" style="width: 100%;" name="det" id="det">
+                        <select class="form-control" style="width: 100%;" name="det" id="det">
                   
                             <?php 
                                     while($row_det = $resultado_detraccion->fetch(PDO::FETCH_ASSOC) )
@@ -159,7 +159,7 @@ $cliente1 = $row_nv['codcliente'];
                     <div class="row mt-1">
                       <div class="col-lg-2 col-sm-6 col-sm-2">
                         <label for="">Tipo Doc:</label>
-                         <select class="form-control select2" style="width: 100%;" name="tip_cpe" id="tip_cpe">
+                         <select class="form-control" style="width: 100%;" name="tip_cpe" id="tip_cpe">
                   
                           <option selected="selected">Seleccionar Documento</option>
                           <?php 
@@ -241,14 +241,14 @@ $cliente1 = $row_nv['codcliente'];
                       
                     </tr>
                   </thead>
-                <tbody>
+                <tbody id="detallecompra">
                 </tbody>
                           
                  
                 </table>
                  <hr>
                 <table id="tabla1" class="table table-striped table-bordered  nowrap no-footer" width="100%">
-                   <thead>
+                   <thead class="bg-dark" style="color:white" >
                     <tr>
                       <th>Op. Gravadas</th>
                       <th>Op. Exonerada</th>
@@ -300,7 +300,7 @@ $cliente1 = $row_nv['codcliente'];
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.8/jquery.inputmask.bundle.min.js"></script>
 
 
-      <script src="<?=media()?>/js/funciones_compras.js?v=5"></script>
+      <script src="<?=media()?>/js/funciones_compras.js?v=9"></script>
    
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>
@@ -354,7 +354,13 @@ $cliente1 = $row_nv['codcliente'];
                 });
               });
 
-              listarCompraCab(<?=$id?>)
+              listarCompraCab(<?=$id?>);
+              listarCompraDet(<?=$id?>);
+              modificarSubtotales();
+              evaluar();
+            
+      
+     
            </script> 
 
   </body>

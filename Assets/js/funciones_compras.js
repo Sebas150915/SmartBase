@@ -284,7 +284,7 @@ $(document).on('keyup', '#ruc_persona', function(e)
 var cont=0;
 var detalles=0;
 var igv_unitario=0;
-$("#btnGuardar").hide();
+//$("#btnGuardar").hide();
 //$('#det').prop('readonly', 'readonly');
 
 function agregarc(id,nombre,precio,afectacion,por1,por2,precio1,precio2,factor)
@@ -345,7 +345,7 @@ function eliminar(id)
 		{
 			limpiarTotales();
 		}
-
+modificarSubtotales();
 	}
 
 function reordenar()
@@ -547,9 +547,59 @@ tablacontribuentes=$('#datatable-contribuyente').dataTable({
 
 function listarCompraCab(id)
 {
-	var id_venta_ref = id;
-	var action       = 'listarCompraCab';
+		var id_venta_ref = id;
+		var action       = 'listarCompraCab';
 	
+	  $.ajax({
+	  	url: base_url+'/assets/ajax/ajax_compras.php',
+	  	type: "POST",
+	  	async: true,
+	  	data: {action:action,id:id_venta_ref},
+
+	  	success: function(response)
+	  	{
+	  		//console.log(response);
+	  		var data = $.parseJSON(response);
+	  		$('#id_ruc').val(data.serie);
+			  $('#ruc_persona').val(data.codcliente);
+			  $('#id_ruc').val(data.codcliente);
+			  $('#razon_social').val(data.nombrepro);
+			  $('#razon_direccion').val(data.direccionpro);
+			  $('#fecha_emision').val(data.fecha_emision);
+			  $('#fecha_vencimiento').val(data.fecha_vencimiento);
+
+			  $('#condicion').val(data.condicion_venta).attr('selected', 'selected');
+			  $('#moneda').val(data.codmoneda).attr('selected', 'selected');
+			  $('#tip_cpe').val(data.tipocomp).attr('selected', 'selected');
+
+	  		$('#serie').val(data.serie);
+			  $('#numero').val(data.correlativo);
+
+	  		$('#op_g').val(data.op_gravadas);
+			  $('#op_e').val(data.op_exoneradas);
+			  $('#op_i').val(data.op_inafectas);
+			  $('#igv').val(data.igv);
+			  $('#total').val(data.total);
+
+			  
+	  		
+	  	},
+	  	error: function(response)
+	  	{
+	  		console.log(response);
+	  	}
+       });
+
+	
+}
+
+
+function listarCompraDet(id)
+{
+	var id_venta_ref = id;
+	var action       = 'listarCompraDet';
+	 
+
 	  $.ajax({
 	  	url: base_url+'/assets/ajax/ajax_compras.php',
 	  	type: "POST",
@@ -562,25 +612,16 @@ function listarCompraCab(id)
 	  	{
 	  		//console.log(response);
 	  		 var info = JSON.parse(response);
-	  		 //var datos = eval(response);
-	  		 console.log(info);
+	  		// console.log(info);
+	  		 $('#detallecompra').html(info.detalle);
 
-				$('#op_g').val(id);
-				$('#op_e').val(idempresa);
-				/*$('#op_i').val(op_inafectas);
-				$('#igv').val(igv);
-				$('#total').val(total);*/
-	  		
+	  		 
+	  		 //$("#btnListar").hide();
+	  		 //$("#btnGuardar").show();
 	  	},
 	  	error: function(response)
 	  	{
 	  		console.log(response);
 	  	}
 	  });
-
-
-
-	
-
-	
 }

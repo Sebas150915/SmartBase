@@ -19,7 +19,7 @@ else
     $hoy = date('Y-m-d');
     $fecha_ini = $hoy;
     $fecha_fin = $hoy;
-    $query_venta = "SELECT * FROM tbl_compra_cab  WHERE fecha_emision='$hoy' AND idempresa = $empresa";
+    $query_venta = "SELECT * FROM vw_tbl_compra_cab  WHERE fecha_emision='$hoy' AND idempresa = $empresa";
 $resultado_venta=$connect->prepare($query_venta);
 $resultado_venta->execute();
 $num_reg_venta=$resultado_venta->rowCount();

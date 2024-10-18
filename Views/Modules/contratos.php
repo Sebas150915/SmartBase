@@ -64,6 +64,7 @@ $num_reg_data=$resultado_data->rowCount();
                         <tr>
                           <th>Acciones</th>
                           <th>Id</th>
+                          <th>ID Cliente</th>
                           <th>Cliente</th>
                           <th>Fecha Contr</th>
                           <th>Fecha Ini</th>
@@ -88,9 +89,10 @@ $num_reg_data=$resultado_data->rowCount();
                         ?>
                           <tr>
                             <td>
-                              <button class="btn btn-warning rounded-circle" onclick="openModalEdit1()"><i class="fe fe-edit"></i></button>
+                              <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
                               <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button></td>
                             <td><?= $usuario['id_contrato'] ?></td>
+                            <td><?= $usuario['id_cliente'] ?></td>
                             <td><?= $row_empresa['nombre_persona'] ?></td>
                             <td><?= $usuario['fecha_contrato'] ?></td>
                             <td><?= $usuario['fecha_inicio_alquiler'] ?></td>

@@ -24,7 +24,7 @@ $(document).ready(function(){
                 icon: "success"
                 }); 
              console.log(response);
-             //location.reload(); 
+             location.reload(); 
 			},
 			error: function(response)
 			{
@@ -60,7 +60,7 @@ $(document).ready(function(){
                 icon: "success"
                 }); 
              console.log(response);
-             //location.reload(); 
+             location.reload(); 
 			},
 			error: function(response)
 			{

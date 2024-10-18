@@ -12,7 +12,7 @@ session_start();
 if($_POST['action'] == 'addLocal')
 {
 	$query=$connect->prepare("INSERT INTO tbl_alq_local(idempresa,nombre,area,ubi,imp_alqui,estado) VALUES (?,?,?,?,?,?);");
-	$resultado=$query->execute([$_POST['empresa'],$_POST['local'],$_POST['importe'],$_POST['arealocal'],'1',$_POST['ubilocal']]);
+	$resultado=$query->execute([$_POST['empresa'],$_POST['local'],$_POST['arealocal'],$_POST['ubilocal'],$_POST['importe'],'1']);
 
 
 	if($resultado)

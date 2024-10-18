@@ -3,6 +3,7 @@
 $empresa = $_SESSION["id_empresa"];
 $hoy = date('Y-m-d');
 
+
 $query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('01','03') ORDER BY id DESC";
 $resultado_documento=$connect->prepare($query_documento);
 $resultado_documento->execute(); 
@@ -55,6 +56,13 @@ $num_reg_data=$resultado_data->rowCount();
 
 $lista2=$connect->query("SELECT * FROM vw_tbl_coti_cab WHERE empresa= $empresa AND tipocomp in ('CT','NP')");
 $resultado2=$lista2->fetchAll(PDO::FETCH_OBJ);
+
+
+
+$query_vendedor = "SELECT * FROM tbl_vendedor WHERE idempresa = $empresa";
+$resultado_vendedor=$connect->prepare($query_vendedor);
+$resultado_vendedor->execute(); 
+$num_reg_vendedor=$resultado_vendedor->rowCount();
 ?>
 <!doctype html>
 <html lang="en">
@@ -170,7 +178,14 @@ $resultado2=$lista2->fetchAll(PDO::FETCH_OBJ);
                              <?php  } ?>
                         </select>
                       </div>
+                
+                
+                       <input type="hidden" name="ven" value="0">
+                                                
+                     
                   <div class="col-lg-3">
+
+
                         <label for="">Serie:</label>
                         <input type="text" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="4" readonly name="serie" id="serie" value="<?=$row_def['serie']?>">
                       </div>

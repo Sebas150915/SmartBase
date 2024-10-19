@@ -34,14 +34,16 @@ if($_POST['action'] == 'listarDetallePedido')
             $precio_compra = 0 ;
             $factor = 1;
             $cantidadu = 0;
+            $mxmn    = 'MAY';
 
             $detalletabla .='<tr id="fila'.$cont.'">
-             <td><button type="button" class="btn btn-danger" onclick="eliminar('.$cont.')" disabled><i class="fe fe-trash"></i></button></td>
+             <td><button type="button" class="btn btn-danger" onclick="eliminar('.$cont.')"><i class="fe fe-trash"></i></button></td>
              <td>'.$cont.'</td>
             <td><input type="hidden" name="itemarticulo[]" value="'.$cont.'"><input type="hidden" name="idarticulo[]" value="'.$codigo.'"><input type="hidden" name="nomarticulo[]" value="'.$descripcion.'">'.$descripcion.'</td>
-            <td><input type="text" min="1" class="form-control text-right" name="cantidad[]" id="cantidad[]" value="'.$cantidad.'" onkeyup="modificarSubtotales()" <td><input type="hidden" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="'.$cantidadu.'" required onkeyup="modificarSubtotales()"></td> <input type="hidden" name="precio_compra[]" value="'.$precio_compra.'"> <input type="hidden" name="factor[]" value="'.$factor.'"> ></td>
-            <td><input type="text" min="1" class="form-control text-right" name="precio_venta[]" id="precio_venta[]" value="'.$precio_unitario.'" onkeyup="modificarSubtotales()" > <input type="hidden" class="form-control input-sm" name="igv_unitario[]" id="igv_unitario[]" value="'.$igv_unitario.'" readonly> <input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="'.$valor_unitario.'" onkeyup="modificarSubtotales()" readonly> </td>
-            <td><span id="subtotal'.$cont.'" name="subtotal">'.$importe_total.'</span><input type="hidden" id="afectacion'.$cont.'" name="afectacion[]" class="form-control" value="'.$codigo_afectacion_alt.'"></td>
+            <td><input type="text" min="1" class="form-control input-money" name="cantidad[]" id="cantidad[]" value="'.$cantidad.'" onkeyup="modificarSubtotales()" >
+            <input type="hidden" min="1" class="form-control input-money input-sm" name="cantidadu[]" id="cantidadu[]" value="'.$cantidadu.'" required onkeyup="modificarSubtotales()"></td> <input type="hidden" name="precio_compra[]" value="'.$precio_compra.'"> <input type="hidden" name="factor[]" value="'.$factor.'"> ></td>
+            <td><input type="text" min="1" class="form-control input-money text-right" name="precio_venta[]" id="precio_venta[]" value="'.$precio_unitario.'" onkeyup="modificarSubtotales()" readonly> <input type="hidden" class="form-control input-sm" name="igv_unitario[]" id="igv_unitario[]" value="'.$igv_unitario.'" readonly> <input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="'.$valor_unitario.'" onkeyup="modificarSubtotales()" readonly> </td>
+            <td><span id="subtotal'.$cont.'" name="subtotal">'.$importe_total.'</span><input type="hidden" id="afectacion'.$cont.'" name="afectacion[]" class="form-control" value="'.$codigo_afectacion_alt.'"><input type="hidden" name="mxmn" value="'.$mxmn.'"></td>
             </tr>';
              $cont++;
         }
@@ -61,85 +63,85 @@ if($_POST['action'] == 'listaranticipo')
 {
     //var_dump($_POST);
 
-$idventa = $_POST['id'];
-$montoanticipo = $_POST['montoanticipo'];
+    $idventa = $_POST['id'];
+    $montoanticipo = $_POST['montoanticipo'];
 
-$jsondata = array();		
-header("HTTP/1.1");
-header("Content-Type: application/json; charset=UTF-8");
-/*
-$sql2="SELECT *FROM tbl_coti_cab WHERE id='$idventa' ";
-$mos2= ejecutarConsultaSimpleFila($sql2);
-*/
-$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-$sql=" SELECT *FROM tbl_coti_cab WHERE id='$idventa' ";
-$resultado=$connect->prepare($sql);
-$resultado->execute();
-$result = $resultado->fetchObject();
-//$filename = $result->NOMBRE_ARCHIVO;
+    $jsondata = array();		
+    header("HTTP/1.1");
+    header("Content-Type: application/json; charset=UTF-8");
+    /*
+    $sql2="SELECT *FROM tbl_coti_cab WHERE id='$idventa' ";
+    $mos2= ejecutarConsultaSimpleFila($sql2);
+    */
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+    $sql=" SELECT *FROM tbl_coti_cab WHERE id='$idventa' ";
+    $resultado=$connect->prepare($sql);
+    $resultado->execute();
+    $result = $resultado->fetchObject();
+    //$filename = $result->NOMBRE_ARCHIVO;
 
-$sqlcliente=" SELECT *FROM tbl_contribuyente WHERE id_persona='$result->id_cliente' ";
-$resultadocliente=$connect->prepare($sqlcliente);
-$resultadocliente->execute();
-$cliente= $resultadocliente->fetchObject();
+    $sqlcliente=" SELECT *FROM tbl_contribuyente WHERE id_persona='$result->id_cliente' ";
+    $resultadocliente=$connect->prepare($sqlcliente);
+    $resultadocliente->execute();
+    $cliente= $resultadocliente->fetchObject();
 
-$sql=" SELECT sum(total) as total FROM tbl_venta_cab WHERE relacionado_id='$result->id' AND estado IN (0,1,2,8) ";
-$sql22=$connect->prepare($sql);
-$sql22->execute();
-$mos22 = $sql22->fetchObject();
+    $sql=" SELECT sum(total) as total FROM tbl_venta_cab WHERE relacionado_id='$result->id' AND estado IN (0,1,2,8) ";
+    $sql22=$connect->prepare($sql);
+    $sql22->execute();
+    $mos22 = $sql22->fetchObject();
 
-$sql=" SELECT d.*, p.nombre, p.unidad, p.afectacion, p.sku FROM tbl_coti_det d INNER JOIN tbl_productos p ON p.id=d.idproducto WHERE d.idventa='$idventa' ";
-$sqld=$connect->prepare($sql);
-$sqld->execute();
-$det = $sqld->fetchObject();
+    $sql=" SELECT d.*, p.nombre, p.unidad, p.afectacion, p.sku FROM tbl_coti_det d INNER JOIN tbl_productos p ON p.id=d.idproducto WHERE d.idventa='$idventa' ";
+    $sqld=$connect->prepare($sql);
+    $sqld->execute();
+    $det = $sqld->fetchObject();
 
-$tot='0.00';
-//if($mos22){ $tot=$mos22->total; }
+    $tot='0.00';
+    //if($mos22){ $tot=$mos22->total; }
 
-$pagado=round($mos22->total+$montoanticipo, 3);
+    $pagado=round($mos22->total+$montoanticipo, 3);
 
-$tit='PAGO ANTICIPADO POR';
-$porpagar=round($result->total-$pagado, 3);
+    $tit='PAGO ANTICIPADO POR';
+    $porpagar=round($result->total-$pagado, 3);
 
-if($porpagar=='0'){ $tit='PAGO FINAL POR'; $idanticipo='2'; }else{ $idanticipo='1'; }
-if($pagado>$result->total){ $idanticipo='3'; }
+    if($porpagar=='0'){ $tit='PAGO FINAL POR'; $idanticipo='2'; }else{ $idanticipo='1'; }
+    if($pagado>$result->total){ $idanticipo='3'; }
 
-$serienum=$result->serie.''.$result->correlativo;
+    $serienum=$result->serie.''.$result->correlativo;
 
-$jsondata['id']=$idventa;	
-$jsondata['referencia']=$serienum;
-$jsondata['total']=$result->total;
-$jsondata['pagado']=$pagado;
-$jsondata['saldo']=$porpagar;
-$jsondata['idanticipo']=$idanticipo;
-$jsondata['docmodifica_tipo']='2-01';
-$jsondata['txtID_MONEDA']=$result->codmoneda;
-$jsondata['txtID_CLIENTE']=$result->id_cliente;
-//$jsondata['txtID_TIPO_DOCUMENTO']=$mos2['doc_relaciona'];
-$jsondata['idproducto']=$det->idproducto;
-$jsondata['codigoproducto']=$det->sku;
-$jsondata['unidadmedida']=$det->unidad;
-$jsondata['response']='NO';
-$jsondata['edidetalle']='NO';
+    $jsondata['id']=$idventa;	
+    $jsondata['referencia']=$serienum;
+    $jsondata['total']=$result->total;
+    $jsondata['pagado']=$pagado;
+    $jsondata['saldo']=$porpagar;
+    $jsondata['idanticipo']=$idanticipo;
+    $jsondata['docmodifica_tipo']='2-01';
+    $jsondata['txtID_MONEDA']=$result->codmoneda;
+    $jsondata['txtID_CLIENTE']=$result->id_cliente;
+    //$jsondata['txtID_TIPO_DOCUMENTO']=$mos2['doc_relaciona'];
+    $jsondata['idproducto']=$det->idproducto;
+    $jsondata['codigoproducto']=$det->sku;
+    $jsondata['unidadmedida']=$det->unidad;
+    $jsondata['response']='NO';
+    $jsondata['edidetalle']='NO';
 
-/**
- * CLIENTE
- */
-$jsondata['clienteid']=$cliente->id_persona;
-$jsondata['clientedoc']=$cliente->num_doc;
-$jsondata['clientenom']=$cliente->nombre_persona;
-$jsondata['clientedir']=$cliente->direccion_persona;
-$jsondata['clientemail']=$cliente->correo;
-/**
- * CLIENTE
- */
-$jsondata['nombre']=$tit.': '.$det->nombre.' |DOC REL: '.$serienum.' |TOTAL PAGADO: '.$pagado.' |MONTO TOTAL: '.$result->total;
-$jsondata['exoneradod']='0.00';
-$jsondata['num']='4545';
-$jsondata['afectacion']=$det->afectacion;
+    /**
+     * CLIENTE
+     */
+    $jsondata['clienteid']=$cliente->id_persona;
+    $jsondata['clientedoc']=$cliente->num_doc;
+    $jsondata['clientenom']=$cliente->nombre_persona;
+    $jsondata['clientedir']=$cliente->direccion_persona;
+    $jsondata['clientemail']=$cliente->correo;
+    /**
+     * CLIENTE
+     */
+    $jsondata['nombre']=$tit.': '.$det->nombre.' |DOC REL: '.$serienum.' |TOTAL PAGADO: '.$pagado.' |MONTO TOTAL: '.$result->total;
+    $jsondata['exoneradod']='0.00';
+    $jsondata['num']='4545';
+    $jsondata['afectacion']=$det->afectacion;
 
-echo json_encode($jsondata);
+    echo json_encode($jsondata);
 
 }
 
@@ -184,6 +186,7 @@ if($_POST['action'] == 'listarPOS')
             $afectacion = $row['afectacion'];
             $costo = $row['costo'];
             $factor = $row['factor'];
+            $mxmn = 'MAY';
             
             if($row['imagen']=='')
                      {
@@ -195,7 +198,7 @@ if($_POST['action'] == 'listarPOS')
                       $img = $row['imagen'];
                      }
             
-            $detalletabla .='<a class="ml-2 mr-1 mt-1" onclick="agregarpos(\''.$id.'\',\''.$nombre.'\',\''.$precio_venta.'\',\''.$afectacion.'\',\''.$costo.'\',\''.$factor.'\')">';
+            $detalletabla .='<a class="ml-2 mr-1 mt-1" onclick="agregarpos(\''.$id.'\',\''.$nombre.'\',\''.$precio_venta.'\',\''.$afectacion.'\',\''.$costo.'\',\''.$factor.'\',\''.$mxmn.'\')">';
             
             $detalletabla .='<div class="card card-primary card-outline card-outline-tabs m-0 d-flex flex-column justify-content-center align-items-center" style="position: relative;border: 1px solid lightgray;max-width:100px">';
             $detalletabla .='<div class="card-body p-0 text-center">';

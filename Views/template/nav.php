@@ -239,6 +239,9 @@
                       <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_sunat"><span class="ml-1">Ventas Sunat</span></a>
                       <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_diarias"><span class="ml-1">Venta Resumen</span></a>
                       <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_detalle"><span class="ml-1">Ventas Detalle</span></a>
+
+                       <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_detalle_pedido"><span class="ml-1">Detalle Pedido</span></a>
+
                        <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_vendedor"><span class="ml-1">Ventas Vendedor</span></a>
                        <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_documento"><span class="ml-1">Ventas por Doc.</span></a>
                        <a class="nav-link pl-lg-2" data-toggle="modal" data-target="#modalReporteZ" href="#"><span class="ml-1">Reporte Z</span></a>

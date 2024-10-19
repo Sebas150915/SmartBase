@@ -260,6 +260,13 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
 <tr>
    <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">condicion: <?=$row_cabecera['det_condicion'] ?> <br></td>
 </tr>
+
+<?php if($row_cabecera['orden_compra'] != ''){ ?>
+   <tr>
+   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Doc Ref: <?=$row_cabecera['orden_compra'] ?> <br></td>
+</tr>
+<?php } ?>
+
 <tr>
           <td colspan="4">==============================================</td>
         
@@ -290,7 +297,7 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
                { ?>
                  
                   <tr><td align="left" colspan="4"style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?=strtoupper($row_detalle->descripcion) ?></td></tr>
-                  <tr><td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= strtoupper($row_detalle->cantidad_factor).'/'.strtoupper($row_detalle->cantidad_unitario) ?></td>
+                  <tr><td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= number_format(strtoupper($row_detalle->cantidad_factor),2).'/'.strtoupper($row_detalle->cantidad_unitario) ?></td>
                       <td align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= strtoupper($row_detalle->unidadf).'/'.strtoupper($row_detalle->unidadu) ?></td>
                
                <td align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= number_format($row_detalle->precio_unitario*$row_detalle->factor,2).'/'.number_format($row_detalle->precio_unitario,2)  ?></td>
@@ -311,7 +318,7 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
                 </td>
                   </tr>
                   <tr>
-               <td width="20%" class="cantidad" align="left"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= strtoupper($row_detalle->cantidad_unitario) ?></td>
+               <td width="20%" class="cantidad" align="left"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= strtoupper($row_detalle->cantidad) ?></td>
 
                <td width="20%" class="unidad" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= strtoupper($row_detalle->unidadu) ?></td>
                
@@ -502,6 +509,9 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
    </tr>
    <tr>
         <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Vuelva Pronto</td>
+   </tr>
+   <tr>
+        <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Powered by SmartBase - Perú</td>
    </tr>
  </table>
 

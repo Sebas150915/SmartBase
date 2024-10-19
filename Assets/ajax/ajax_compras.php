@@ -13,6 +13,16 @@ if($_POST['action'] == 'listarCompraCab')
         $resultado_cab = $connect->prepare($query_cab);
         $resultado_cab->execute();
         $row_cab = $resultado_cab->fetch(PDO::FETCH_ASSOC);
+
+        
+        $query_cli = "SELECT * FROM tbl_contribuyente WHERE id_persona ='$row_cab[idcliente]'";
+        $resultado_cli = $connect->prepare($query_cli);
+        $resultado_cli->execute();
+        $row_cli = $resultado_cli->fetch(PDO::FETCH_ASSOC);
+
+        $row_cab['direccionpro'] =$row_cli['direccion_persona'];
+        $row_cab['nombrepro'] =$row_cli['nombre_persona'];
+
         echo json_encode($row_cab,JSON_UNESCAPED_UNICODE);
 
 
@@ -20,32 +30,67 @@ if($_POST['action'] == 'listarCompraCab')
 }
 
 
+if($_POST['action'] == 'listarCompraDet')
+{
+       $idventa = $_POST['id'];
+       //echo $idventa;
+       $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $sql="SELECT * FROM vw_tbl_compra_det WHERE idventa = $idventa";
+        $resultado=$connect->prepare($sql);
+        $resultado->execute();
+        $num_reg=$resultado->rowCount();
+        $detalletabla = '';
+        $cont =1;
+        foreach($resultado as $serie )
+        {
+                        
+            $detalletabla .='
+            <tr id="fila'.$cont.'">
+             <td><button type="button" class="btn btn-danger" onclick="eliminar('.$cont.')"><i class="fa fa-trash"></i></button></td>
+             <td>'.$cont.'</td>
+             <td><input type="hidden" name="fecven[]" value="0000-00-00">
+                 <input type="hidden" name="itemarticulo[]" value="'.$cont.'">
+                 <input type="hidden" name="idarticulo[]" value="'.$serie['codigo'].'">
+                 <input type="hidden" name="nomarticulo[]" value="'.$serie['descripcion'].'">'.$serie['descripcion'].'</td>
+              <td><input type="text" min="1" class="form-control text-right" name="cantidad[]" id="cantidad[]" value="'.$serie['cantidad'].'" onkeyup="modificarSubtotales()" ></td>
+              <td><input type="text" min="1" class="form-control text-right" name="precio_venta[]" id="precio_venta[]" value="'.$serie['precio_unitario'].'" onkeyup="modificarSubtotales()" ></td>
+              <td><input type="text" min="1" class="form-control text-right" name="por1[]" id="por1[]" value="0" onkeyup="modificarPrecioVenta()" ></td>
+              <td><input type="text" min="1" class="form-control text-right" name="precio1[]" id="precio1[]" value="'.$serie['precio_unitario'].'"></td>
+              <td><input type="text" min="1" class="form-control text-right" name="por2[]" id="por2[]" value="0" onkeyup="modificarPrecioVenta()" ></td>
+              <td><input type="text" min="1" class="form-control text-right" name="precio2[]" id="precio2[]" value="'.$serie['precio_unitario'].'" ></td>
+              <td><span id="subtotal'.$cont.'" name="subtotal">'.$serie['valor_total'].'</span>
+              <input type="hidden" id="afectacion'.$cont.'" name="afectacion[]" class="form-control" value="'.$serie['codigo_afectacion_alt'].'">
+              <input type="hidden" id="afectacion'.$cont.'" name="factor[]" class="form-control" value="1"></td>
+              </tr>';
+             $cont++;
+        }
+
+        $arrayData['detalle'] = $detalletabla;
+
+        echo json_encode($arrayData,JSON_UNESCAPED_UNICODE);
 
 
+        exit();
+}
 
-
-        ////////////buscar series
+////////////buscar series
 if($_POST['action'] == 'searchDet')
 {
   $det=$_POST['detraccion'];
   $cod = $_POST['cod'];
  
 
-$query_detraccion = "SELECT * FROM tbl_por_det WHERE id ='$cod'";
-        
-$resultado = $connect->prepare($query_detraccion);
-$resultado->execute();
-$row_detraccion = $resultado->fetch(PDO::FETCH_ASSOC);
+    $query_detraccion = "SELECT * FROM tbl_por_det WHERE id ='$cod'";
+            
+    $resultado = $connect->prepare($query_detraccion);
+    $resultado->execute();
+    $row_detraccion = $resultado->fetch(PDO::FETCH_ASSOC);
 
-echo json_encode($row_detraccion);
+    echo json_encode($row_detraccion);
 
-exit;
+    exit;
 }
-
-
-
-
-
 
 //buscar persona
 

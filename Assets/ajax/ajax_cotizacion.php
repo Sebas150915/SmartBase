@@ -9,7 +9,7 @@ session_start();
 
 if($_POST['action'] == 'nota_pedido_editar')
 {
-//print_r($_POST);
+  //print_r($_POST);
         $t = explode("-",$_POST['tip_cpe']);
         $cod = $t[0];
         $tdoc = $t[1];
@@ -311,10 +311,11 @@ if($_POST['action'] == 'nueva_cotizacion')
             $t = explode("-",$_POST['tip_cpe']);
             $cod = $t[0];
             $tdoc = $t[1];
+            $localemp = $_SESSION['almacen'];
 
 
-            $query=$connect->prepare("INSERT INTO tbl_coti_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,id_cliente,codcliente,vendedor,dias,obs) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-            $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['id_ruc'],$_POST['ruc_persona'], $_SESSION["id"],$_POST['validez'],$_POST['descripcion']]);
+            $query=$connect->prepare("INSERT INTO tbl_coti_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,id_cliente,codcliente,vendedor,dias,obs,local) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+            $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['id_ruc'],$_POST['ruc_persona'], $_SESSION["id"],$_POST['validez'],$_POST['descripcion'],$localemp]);
                 $lastInsertId = $connect->lastInsertId();
 
                 $visa = $_POST['visa'];

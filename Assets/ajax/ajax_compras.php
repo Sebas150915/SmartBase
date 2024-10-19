@@ -74,32 +74,23 @@ if($_POST['action'] == 'listarCompraDet')
         exit();
 }
 
-
-
-
-
-        ////////////buscar series
+////////////buscar series
 if($_POST['action'] == 'searchDet')
 {
   $det=$_POST['detraccion'];
   $cod = $_POST['cod'];
  
 
-$query_detraccion = "SELECT * FROM tbl_por_det WHERE id ='$cod'";
-        
-$resultado = $connect->prepare($query_detraccion);
-$resultado->execute();
-$row_detraccion = $resultado->fetch(PDO::FETCH_ASSOC);
+    $query_detraccion = "SELECT * FROM tbl_por_det WHERE id ='$cod'";
+            
+    $resultado = $connect->prepare($query_detraccion);
+    $resultado->execute();
+    $row_detraccion = $resultado->fetch(PDO::FETCH_ASSOC);
 
-echo json_encode($row_detraccion);
+    echo json_encode($row_detraccion);
 
-exit;
+    exit;
 }
-
-
-
-
-
 
 //buscar persona
 

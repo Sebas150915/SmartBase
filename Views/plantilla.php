@@ -97,6 +97,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                  $rutas[0] == "reportez" ||
                  $rutas[0] == "rpt_productos" ||
                  $rutas[0] == "rpt_productos_pdf" ||
+                 $rutas[0] == "rpt_detalle_pedido" ||
 
 
                  $rutas[0] == "resumen_cpe" ||

@@ -72,7 +72,7 @@ $cliente1 = $row_nv['codcliente'];
        } ?>
       
       <main role="main" class="main-content">
-      <form id="venta_nueva" name="venta_nueva">
+      <form id="compra_editar" name="compra_editar">
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">

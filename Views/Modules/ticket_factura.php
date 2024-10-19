@@ -510,6 +510,9 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
    <tr>
         <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Vuelva Pronto</td>
    </tr>
+   <tr>
+        <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Powered by SmartBase - Perú</td>
+   </tr>
  </table>
 
     </div>

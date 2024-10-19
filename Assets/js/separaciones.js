@@ -12,11 +12,11 @@ function openModalEdit()
 					return this.innerHTML;
 				}).get();
 			$('#update_id').val(arr[1]);
+			$('#update_cliente').val(arr[2]).attr('selected', 'selected');
 			$('#update_soles').val(arr[4]);
 			$('#update_dolares').val(arr[5]);
 			$('#update_fecha').val(arr[6]);
-			var clb_cliente = arr[2];
-			$('#update_cliente').val(clb_cliente).attr('selected', 'selected');
+			
 		});
 }
 

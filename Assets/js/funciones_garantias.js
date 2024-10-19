@@ -41,7 +41,7 @@ $(document).ready(function(){
 			 $('#cargando').modal('hide');
              $('#exito').modal('show'); 
              console.log(response);
-             //location.reload(); 
+             location.reload(); 
 			},
 			error: function(response)
 			{

@@ -41,7 +41,7 @@ $(document).ready(function(){
 			 $('#cargando').modal('hide');
              $('#exito').modal('show'); 
              console.log(response);
-             //location.reload(); 
+             location.reload(); 
 			},
 			error: function(response)
 			{
@@ -57,7 +57,7 @@ $(document).ready(function(){
 		$('#cargando').modal('show');
 		e.preventDefault();
 		$.ajax({
-			url  :  base_url+'/assets/ajax/ajax_categoria.php',
+			url  :  base_url+'/assets/ajax/ajax_separacion.php',
 			type : "POST",
 			async: true,
 			data : $('#form_del_separacion').serialize(),
@@ -67,7 +67,7 @@ $(document).ready(function(){
 			 $('#cargando').modal('hide');
              $('#exito').modal('show'); 
              console.log(response);
-             //location.reload(); 
+             location.reload(); 
 			},
 			error: function(response)
 			{

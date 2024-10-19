@@ -154,12 +154,12 @@ $num_reg_cli=$resultado_cli->rowCount();
 
 
 <!-- Modal delete-->
-<div class="modal fade" id="DeleteGarantia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="" name="form_del_garantia" id="form_del_garantia">
+<div class="modal fade" id="ModalDeleteSeparacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form action="" name="form_del_separacion" id="form_del_separacion">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header bg-danger">
-        <h5 class="modal-title" id="exampleModalLabel" style="color: white">Anular Garantia?</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color: white">Anular Separación?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -171,7 +171,7 @@ $num_reg_cli=$resultado_cli->rowCount();
           <div class="col-sm-12">
             
             <input type="hidden" name="delete_id" id="delete_id" value="">
-            <input type="hidden" name="action" value="delGarantia">
+            <input type="hidden" name="action" value="DeleteSeparacion">
           <h5 class="text-center">¿Esta seguro que desea realizar el proceso?</h5>
           </div>
       </div>

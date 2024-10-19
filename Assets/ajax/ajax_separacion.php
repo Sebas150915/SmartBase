@@ -33,7 +33,7 @@ if($_POST['action'] == 'addSeparacion')
 if($_POST['action'] == 'editSeparacion')
 {
 
-	$query=$connect->prepare("UPDATE tbl_alq_separaciones SET id_cliente=?,monto_separacion_soles=?,monto_separacion_dolares=?, fecha_separacion=? WHERE id_separacion = ?");
+	$query=$connect->prepare("UPDATE tbl_alq_separaciones SET id_cliente=?,monto_separacion_soles=?,monto_separacion_dolar=?, fecha_separacion=? WHERE id_separacion = ?");
 	$resultado = $query->execute([$_POST['update_cliente'],$_POST['update_soles'],$_POST['update_dolares'],$_POST['update_fecha'],$_POST['update_id']]);
 
 	if($resultado)

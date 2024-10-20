@@ -7,265 +7,81 @@ require_once("../../sunat/api/xml.php");
 require_once("../../sunat/api/ApiFacturacion.php");
 session_start();
 
-if($_POST['action'] == 'nota_venta_editar')
-{
+if($_POST['action'] == 'compra_editar') {
+    $tdoc = $_POST['tip_cpe'];
+    $hora = date('h:i:s');
 
-        $t = explode("-",$_POST['tip_cpe']);
-        $cod = $t[0];
-        $tdoc = $t[1];
+    // Actualización en tbl_compra_cab
+    $query_insumo = $connect->prepare("UPDATE tbl_compra_cab SET op_gravadas = ?, op_exoneradas = ?, op_inafectas = ?, igv = ?, total = ? WHERE id = ?");
+    $resultado_insumo = $query_insumo->execute([$_POST['op_g'], $_POST['op_e'], $_POST['op_i'], $_POST['igv'], $_POST['total'], $_POST['id_nv']]);
 
-        $hora = date('h:i:s');
-        $visa = $_POST['visa'];
-        $cvisa = $_POST['cvisa'];    
-        $efectivo = $_POST['efectivo'];
-        $query_insumo = $connect->prepare("UPDATE tbl_venta_cab SET op_gravadas =  ?, op_exoneradas=?,op_inafectas=?,igv=?, total=?  WHERE id = ?");
-        $resultado_insumo = $query_insumo->execute([$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['id_nv']]);
+    // Obtener los IDs originales de los ítems de la compra antes de procesar los nuevos ítems
+    $query_items_originales = $connect->prepare("SELECT id FROM tbl_compra_det WHERE idventa = ?");
+    $query_items_originales->execute([$_POST['id_nv']]);
+    $items_originales = $query_items_originales->fetchAll(PDO::FETCH_COLUMN); // Obtener un array con los IDs
 
+    // Almacenar los ítems que se procesan en la nueva solicitud
+    $items_procesados = [];
+    $item = 1;
 
-        //registro detalle venta
+    // Registro o actualización en tbl_compra_det
+    for($i = 0; $i < count($_POST['idarticulo']); $i++) 
+    {
+        $idarticulo = $_POST['idarticulo'][$i];
+        $items_procesados[] = $_POST['id_detalle'][$i];  // Almacenar el ID del artículo procesado (nuevo o existente)
 
-        for($i = 0; $i< count($_POST['idarticulo']); $i++)
-        {
-            $item                  = $_POST['itemarticulo'][$i];
-            $idarticulo            = $_POST['idarticulo'][$i];
-            $nomarticulo           = $_POST['nomarticulo'][$i];
-            $cantidad              = $_POST['cantidad'][$i];
+        // Calcular las cantidades y precios
+        $cantidad_total = $_POST['cantidad'][$i];
+        $afectacion = $_POST['afectacion'][$i];
+        $precio_venta = $_POST['precio_venta'][$i] / $_POST['factor'][$i];
+        $valor_total = $afectacion == 10 ? ($cantidad_total * $precio_venta) / 1.18 : $cantidad_total * $precio_venta;
 
-            $afectacion            = $_POST['afectacion'][$i];
-            $tipo_precio           = '01';
-            $unidad                = 'NIU';
-            $costo                 = $_POST['precio_compra'][$i];
-            $factor                = $_POST['factor'][$i];
-            $cantidadu             = $_POST['cantidadu'][$i];
-            $mxmn                  = $_POST['mxmn'][$i];
-            $cantidad_total        = $factor*$cantidad + $cantidadu;
-
-            if($afectacion == '10')
-            {
-            $igv_unitario          = 18;
-            }
-            else
-            {
-            $igv_unitario          = 0;
-            }
-
-
-            if($cantidad_total>0)
-            {
-            $precio_venta          = $_POST['precio_venta'][$i]/$factor;
-            $precio_unitario       = ($precio_venta - ($igv_unitario/$cantidad_total));
-            $precio_venta_total    = $precio_venta*$cantidad_total;
-            }
-            else
-            {
-            $precio_venta          = 0;
-            $precio_unitario       = 0;
-            $precio_venta_total    = 0;
-            }
-
-
-
-        if($afectacion == 10)
-        {
-        $precio_venta_unitario = $precio_venta/1.18;
-        $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor)/1.18;
-
-        $importe_total = ($cantidad_total*$precio_venta);
-
-        $valor_total = $cantidad_total*$precio_venta_unitario;
-
-        }
-        else
-        {
-        $precio_venta_unitario = $precio_venta;
-        $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor);
-
-        $importe_total = ($cantidad_total*$precio_venta);
-
-        $valor_total = $cantidad_total*$precio_venta_unitario;
-
+        // Actualización de productos en el stock
+        if (in_array($tdoc, ['01', '03', '99'])) {
+            $query_stock = $connect->prepare("UPDATE tbl_productos SET stock = stock - ? WHERE id = ?");
+            $resultado_stock = $query_stock->execute([$cantidad_total, $idarticulo]);
         }
 
-        $igv_total             = $importe_total - $valor_total;
-        $precio_compra            = $_POST['precio_compra'][$i];
-
-
-
-        /*regresar productos al stock*/
-
-        if($tdoc=='01' || $tdoc=='03' || $tdoc  == '99')
-        {
-              
-                /*buscar producto*/
-                $query_bpro = "SELECT * FROM tbl_venta_det WHERE idproducto = $idarticulo AND idventa = $_POST[id_nv] ";
-                $resultado_bpro = $connect->prepare($query_bpro);
-                $resultado_bpro->execute();
-                $num_reg_bpro=$resultado_bpro->rowCount();
-                /*fin buscar producto*/
-                /*producto nuevo*/
-                if($num_reg_bpro == 0)
-                {
-     $insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                $resultado_detalle = $insert_query_detalle->execute([$_POST['id_nv'] ,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn]);
-                /*fin producto nuevo*/
-                }
-
-                else
-                {
-                          //ACTUALIZA STOCK
-                        //buscar insumos de tabla recetas
-                $query_articulos = "SELECT * FROM tbl_recetas WHERE id_producto = '$idarticulo'";
-                $resultado_articulos = $connect->prepare($query_articulos);
-                $resultado_articulos->execute();
-                $num_reg_articulos=$resultado_articulos->rowCount();
-
-                $cantidad1              = $_POST['cantidada'][$i];
-                $cantidadu1             = $_POST['cantidadua'][$i];
-                $cantidad_total1        = (float)$factor*(float)$cantidad1 + (float)$cantidadu1;
-
-                /*regresa el producto al kardex*/
-
-                if($num_reg_articulos>=1)
-                {
-                        foreach($resultado_articulos as $receta_insumo)
-                        {
-                        $idarticulo = $receta_insumo['id_insumo'];
-
-                        $query_insumo = $connect->prepare("UPDATE tbl_productos SET stock = stock + ?  WHERE id = ?");
-                        $resultado_insumo = $query_insumo->execute([$cantidad_total1*$receta_insumo['cantidad'],$idarticulo]);                                                      
-
-                        }
-
-
-
-                }
-                else
-                {
-                $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock + ? WHERE id=?");
-                $resultado_stock = $query_stock->execute([$cantidad_total1,$idarticulo]);
-
-                }
-
-
-                }
-
-
-                        if($cantidad_total>0)
-                        {
-
-                                $insert_query_detalle =$connect->prepare("UPDATE tbl_venta_det SET item=?,idproducto=?,cantidad=?,valor_unitario=?,precio_unitario=?,igv=?,porcentaje_igv=?,valor_total=?,importe_total=?,costo=?,cantidad_factor=?,factor=?,cantidad_unitario=? WHERE idventa=? AND item = ? and idproducto = ?");
-                                $resultado_detalle = $insert_query_detalle->execute([$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$_POST['id_nv'],$item,$idarticulo]);
-                        }
-                        else
-                        {
-                                $del_pro =$connect->prepare("DELETE FROM tbl_venta_det WHERE idventa=? AND item = ? and idproducto = ?");
-                                $resultado_del = $del_pro->execute([$_POST['id_nv'],$item,$idarticulo]);
-                        }
-
-                }
-
-
-        if($tdoc=='01' || $tdoc=='03' || $tdoc == '99')
-        {
-        //ACTUALIZA STOCK
-        //buscar insumos de tabla recetas
-
-        $query_articulos = "SELECT * FROM tbl_recetas WHERE id_producto = '$idarticulo'";
-        $resultado_articulos = $connect->prepare($query_articulos);
-        $resultado_articulos->execute();
-        $num_reg_articulos=$resultado_articulos->rowCount();
-
-
-
-        if($num_reg_articulos>=1)
-        {
-        foreach($resultado_articulos as $receta_insumo)
-        {
-        $idarticulo = $receta_insumo['id_insumo'];
-
-        $query_insumo = $connect->prepare("UPDATE tbl_productos SET stock = stock - ?  WHERE id = ?");
-        $resultado_insumo = $query_insumo->execute([$cantidad_total*$receta_insumo['cantidad'],$idarticulo]);                                                       
-
-
+        // Si el ítem ya existe (tiene ID), actualizar; si no, insertar uno nuevo
+        if (!empty($_POST['id_detalle'][$i])) {
+            // Actualizar detalle existente
+            $query_detalle = $connect->prepare("UPDATE tbl_compra_det SET cantidad = ?, valor_unitario = ?, precio_unitario = ?, igv = ?, valor_total = ?, importe_total = ? WHERE id = ?");
+            $resultado_detalle = $query_detalle->execute([$cantidad_total, $valor_total, $precio_venta, $afectacion, $valor_total, $valor_total, $_POST['id_detalle'][$i]]);
+        } else {
+            // Insertar nuevo detalle
+            $query_detalle = $connect->prepare("INSERT INTO tbl_compra_det (idventa, item, idproducto, cantidad, valor_unitario, precio_unitario, igv, valor_total, importe_total)
+                                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $resultado_detalle = $query_detalle->execute([$_POST['id_nv'], $item, $idarticulo, $cantidad_total, $valor_total, $precio_venta, $afectacion, $valor_total, $valor_total]);
         }
 
+        // Verificar si se ejecutó correctamente
+        if (!$resultado_detalle) {
+          //  echo json_encode(["status" => "error", "message" => "Error al actualizar el detalle de la compra"]);
+            exit;
         }
-        else
-        {
-        $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock - ? WHERE id=?");
-        $resultado_stock = $query_stock->execute([$cantidad_total,$idarticulo]);
+    
+        $item++;
+    }
 
+    // Encontrar los ítems originales que no fueron procesados y eliminarlos
+    $items_a_eliminar = array_diff($items_originales, $items_procesados); // Encuentra los que no se procesaron
+
+    if (count($items_a_eliminar) > 0) {
+        $query_eliminar = $connect->prepare("DELETE FROM tbl_compra_det WHERE id = ?");
+        foreach ($items_a_eliminar as $id_detalle_a_eliminar) {
+            $query_eliminar->execute([$id_detalle_a_eliminar]);
         }
+    }
 
+    // Ingresar el registro en la tabla tbl_cta_pagar
+    $query_cta_cobrar = $connect->prepare("INSERT INTO tbl_cta_pagar (tipo, persona, tipo_doc, ser_doc, num_doc, monto, fecha, empresa)
+                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $resultado_cta_cobrar = $query_cta_cobrar->execute([1, $_POST['ruc_persona'], $tdoc, $_POST['serie'], $_POST['numero'], $_POST['total'], $_POST['fecha_emision'], $_POST['empresa']]);
 
-
-        }
-        else if($tdoc=='07')
-        {
-        //ACTUALIZA STOCK
-
-        $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock + ? WHERE id=?");
-        $resultado_stock = $query_stock->execute([$cantidad,$idarticulo]);
-        }
-
-
-        }
-
-
-
-        $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
-        $resultado_detalle = $insert_ctemov->execute(['1',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['total'],$_POST['fecha_emision'],$_POST['empresa']]);
-
-
-
-        if($_POST['condicion'] == '1')
-        {
-        if($visa>0)
-        {
-        $fdp = '2';
-        $query_fdp = $connect->prepare("UPDATE tbl_venta_pago set fdp=?,importe_pago=? WHERE  id_venta=?");
-        $resultado_fdp = $query_fdp->execute([$cvisa,$visa,$_POST['id_nv']]);
-
-        $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
-        $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$visa,$_POST['fecha_emision'],$_POST['empresa']]);
-
-
-        }
-        if($efectivo>0)
-        {
-        $fdp = '1';
-        $query_fdp = $connect->prepare("UPDATE tbl_venta_pago set fdp=?,importe_pago=? WHERE  id_venta=?");
-        $resultado_fdp = $query_fdp->execute([$fdp,$efectivo,$_POST['id_nv']]);
-
-        $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
-        $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$efectivo+$_POST['vuelto'],$_POST['fecha_emision'],$_POST['empresa']]);
-        }
-
-        }
-        else
-        {
-        $cuotas = $_POST['cuotas'];
-        $importe_pago  = $_POST['importe_pago_cuota'];
-        $num_cuota = 1;
-
-        for($i = 0; $i< count($_POST['datepago']); $i++)
-        {
-        $fecha_cuota                  = $_POST['datepago'][$i];
-        $importe_cuota          = $_POST['montocuota'][$i];
-
-        $query_fdp = $connect->prepare("INSERT INTO tbl_venta_cuota(id_venta,num_cuota,importe_cuota,fecha_cuota) VALUES (?,?,?,?)");
-        $resultado_fdp = $query_fdp->execute([$_POST['id_nv'],$num_cuota,$importe_cuota,$fecha_cuota]);
-
-
-        $num_cuota = $num_cuota+1;
-
-
-
-        }
-
-        }
-        echo json_encode($_POST['id_nv']);
-        exit;
+    // Respuesta exitosa
+   // echo json_encode(["status" => "success", "id_nv" => $_POST['id_nv']]);
+      echo json_encode($_POST['id_nv']);
+    exit;
 }
 
 

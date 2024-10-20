@@ -72,7 +72,7 @@ $cliente1 = $row_nv['codcliente'];
        } ?>
       
       <main role="main" class="main-content">
-      <form id="compra_editar" name="compra_editar">
+      <form id="frm_compra_editar" name="frm_compra_editar">
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
@@ -84,7 +84,8 @@ $cliente1 = $row_nv['codcliente'];
                           <button type="button" class="btn btn-danger go-class" data-toggle="modal" data-target="#ModalClientes"><i class="fa fa-search"></i></button>
                         </span>
                           <input type="hidden" id="id_ruc" name="id_ruc" value="">
-                          <input type="hidden" name="action" value="nueva_venta">
+                          <input type="hidden" name="action" value="compra_editar">
+                          <input type="hidden" name="id_nv" value="<?=$id?>">
                           <input type="text" class="form-control" name="ruc_persona" id="ruc_persona" maxlength="11" required>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary" onclick="cliente()"><i class="fa fa-search"></i></button>

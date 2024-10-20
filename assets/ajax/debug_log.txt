@@ -1,0 +1,1859 @@
+Array
+(
+    [0] => Array
+        (
+            [codigo_producto] => 10
+            [nombre_producto] => CAÑONAZO
+            [fecha] => 2024-10-12
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 59
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -2
+            [costo_promedio] => 0
+            [total_final] => -0
+        )
+
+    [1] => Array
+        (
+            [codigo_producto] => 17
+            [nombre_producto] => OLLAS PARA MÁQUINA POP CORN
+            [fecha] => 2024-10-12
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 60
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -4
+            [costo_promedio] => 0
+            [total_final] => -0
+        )
+
+    [2] => Array
+        (
+            [codigo_producto] => 17
+            [nombre_producto] => OLLAS PARA MÁQUINA POP CORN
+            [fecha] => 2024-10-12
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 61
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -6
+            [costo_promedio] => 0
+            [total_final] => -0
+        )
+
+    [3] => Array
+        (
+            [codigo_producto] => 17
+            [nombre_producto] => OLLAS PARA MÁQUINA POP CORN
+            [fecha] => 2024-10-12
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 62
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -8
+            [costo_promedio] => 0
+            [total_final] => -0
+        )
+
+    [4] => Array
+        (
+            [codigo_producto] => 17
+            [nombre_producto] => OLLAS PARA MÁQUINA POP CORN
+            [fecha] => 2024-10-12
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 63
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -10
+            [costo_promedio] => 0
+            [total_final] => -0
+        )
+
+    [5] => Array
+        (
+            [codigo_producto] => 17
+            [nombre_producto] => OLLAS PARA MÁQUINA POP CORN
+            [fecha] => 2024-10-12
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 64
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -12
+            [costo_promedio] => 0
+            [total_final] => -0
+        )
+
+    [6] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => B001
+            [num_doc] => 125
+            [cantidad_entrada] => 20.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 338.98305
+            [saldo_final] => 8
+            [costo_promedio] => 847.457625
+            [total_final] => 6779.661
+        )
+
+    [7] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 106
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => 7
+            [costo_promedio] => 847.457625
+            [total_final] => 5932.203375
+        )
+
+    [8] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 109
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => 6
+            [costo_promedio] => 847.457625
+            [total_final] => 5084.74575
+        )
+
+    [9] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 110
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => 4
+            [costo_promedio] => 847.457625
+            [total_final] => 3389.8305
+        )
+
+    [10] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 112
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.52
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => 2.48
+            [costo_promedio] => 847.457625
+            [total_final] => 2101.69491
+        )
+
+    [11] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 114
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.54
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => 0.94
+            [costo_promedio] => 847.457625
+            [total_final] => 796.6101675
+        )
+
+    [12] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-03
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 115
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -0.06
+            [costo_promedio] => 847.457625
+            [total_final] => -50.8474575
+        )
+
+    [13] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-05
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 122
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -1.06
+            [costo_promedio] => 847.457625
+            [total_final] => -898.3050825
+        )
+
+    [14] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-13
+            [tipo_doc] => 00
+            [serie_doc] => INVI
+            [num_doc] => 1222
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 16.94915
+            [saldo_final] => -0.06
+            [costo_promedio] => 847.457625
+            [total_final] => -50.8474575
+        )
+
+    [15] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-13
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 109
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -1.06
+            [costo_promedio] => 847.457625
+            [total_final] => -898.3050825
+        )
+
+    [16] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-13
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 111
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -2.06
+            [costo_promedio] => 847.457625
+            [total_final] => -1745.7627075
+        )
+
+    [17] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-16
+            [tipo_doc] => 03
+            [serie_doc] => B001
+            [num_doc] => 254444
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 16.94915
+            [saldo_final] => -1.06
+            [costo_promedio] => 847.457625
+            [total_final] => -898.3050825
+        )
+
+    [18] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 126
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -2.06
+            [costo_promedio] => 847.457625
+            [total_final] => -1745.7627075
+        )
+
+    [19] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 132
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -3.06
+            [costo_promedio] => 847.457625
+            [total_final] => -2593.2203325
+        )
+
+    [20] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-18
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 112
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 100.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -103.06
+            [costo_promedio] => 847.457625
+            [total_final] => -87338.9828325
+        )
+
+    [21] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-19
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 114
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -104.06
+            [costo_promedio] => 847.457625
+            [total_final] => -88186.4404575
+        )
+
+    [22] => Array
+        (
+            [codigo_producto] => 3852
+            [nombre_producto] => PC SERVIDOR
+            [fecha] => 2024-10-19
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 134
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 99.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -203.06
+            [costo_promedio] => 847.457625
+            [total_final] => -172084.7453325
+        )
+
+    [23] => Array
+        (
+            [codigo_producto] => 6910
+            [nombre_producto] => SERVICIO DE ALQUILER DE LOCAL
+            [fecha] => 2024-10-13
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 123
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -204.06
+            [costo_promedio] => 847.457625
+            [total_final] => -172932.2029575
+        )
+
+    [24] => Array
+        (
+            [codigo_producto] => 6910
+            [nombre_producto] => SERVICIO DE ALQUILER DE LOCAL
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 128
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -205.06
+            [costo_promedio] => 847.457625
+            [total_final] => -173779.6605825
+        )
+
+    [25] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-02
+            [tipo_doc] => 01
+            [serie_doc] => FE05
+            [num_doc] => 270287
+            [cantidad_entrada] => 14.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 84.74576
+            [saldo_final] => -191.06
+            [costo_promedio] => 847.457625
+            [total_final] => -161915.2538325
+        )
+
+    [26] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => B001
+            [num_doc] => 125
+            [cantidad_entrada] => 10.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 847.45763
+            [saldo_final] => -181.06
+            [costo_promedio] => 847.457625
+            [total_final] => -153440.6775825
+        )
+
+    [27] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 107
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -182.06
+            [costo_promedio] => 847.457625
+            [total_final] => -154288.1352075
+        )
+
+    [28] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 108
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -183.06
+            [costo_promedio] => 847.457625
+            [total_final] => -155135.5928325
+        )
+
+    [29] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 110
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 3.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -186.06
+            [costo_promedio] => 847.457625
+            [total_final] => -157677.9657075
+        )
+
+    [30] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 113
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.54
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -187.6
+            [costo_promedio] => 847.457625
+            [total_final] => -158983.05045
+        )
+
+    [31] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-05
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 58
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 10.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -197.6
+            [costo_promedio] => 847.457625
+            [total_final] => -167457.6267
+        )
+
+    [32] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-13
+            [tipo_doc] => 00
+            [serie_doc] => INVI
+            [num_doc] => 1222
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 84.74576
+            [saldo_final] => -196.6
+            [costo_promedio] => 847.457625
+            [total_final] => -166610.169075
+        )
+
+    [33] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-14
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 125
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -197.6
+            [costo_promedio] => 847.457625
+            [total_final] => -167457.6267
+        )
+
+    [34] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-16
+            [tipo_doc] => 03
+            [serie_doc] => B001
+            [num_doc] => 254444
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 84.74576
+            [saldo_final] => -196.6
+            [costo_promedio] => 847.457625
+            [total_final] => -166610.169075
+        )
+
+    [35] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 128
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 2.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -198.6
+            [costo_promedio] => 847.457625
+            [total_final] => -168305.084325
+        )
+
+    [36] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 131
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -199.6
+            [costo_promedio] => 847.457625
+            [total_final] => -169152.54195
+        )
+
+    [37] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 133
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -200.6
+            [costo_promedio] => 847.457625
+            [total_final] => -169999.999575
+        )
+
+    [38] => Array
+        (
+            [codigo_producto] => 3879
+            [nombre_producto] => SERVICIO DE REPARACION
+            [fecha] => 2024-10-19
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 114
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -201.6
+            [costo_promedio] => 847.457625
+            [total_final] => -170847.4572
+        )
+
+    [39] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-03
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 116
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -202.6
+            [costo_promedio] => 847.457625
+            [total_final] => -171694.914825
+        )
+
+    [40] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-03
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 117
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -203.6
+            [costo_promedio] => 847.457625
+            [total_final] => -172542.37245
+        )
+
+    [41] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-03
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 118
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -204.6
+            [costo_promedio] => 847.457625
+            [total_final] => -173389.830075
+        )
+
+    [42] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-13
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 124
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -205.6
+            [costo_promedio] => 847.457625
+            [total_final] => -174237.2877
+        )
+
+    [43] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-14
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 125
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -206.6
+            [costo_promedio] => 847.457625
+            [total_final] => -175084.745325
+        )
+
+    [44] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 129
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -207.6
+            [costo_promedio] => 847.457625
+            [total_final] => -175932.20295
+        )
+
+    [45] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 132
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -208.6
+            [costo_promedio] => 847.457625
+            [total_final] => -176779.660575
+        )
+
+    [46] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-18
+            [tipo_doc] => 01
+            [serie_doc] => FE01
+            [num_doc] => 113
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 10.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -218.6
+            [costo_promedio] => 847.457625
+            [total_final] => -185254.236825
+        )
+
+    [47] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-19
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 134
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -219.6
+            [costo_promedio] => 847.457625
+            [total_final] => -186101.69445
+        )
+
+    [48] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-19
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 135
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -220.6
+            [costo_promedio] => 847.457625
+            [total_final] => -186949.152075
+        )
+
+    [49] => Array
+        (
+            [codigo_producto] => 3881
+            [nombre_producto] => SERVICIO DEMO1
+            [fecha] => 2024-10-19
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 135
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -221.6
+            [costo_promedio] => 847.457625
+            [total_final] => -187796.6097
+        )
+
+    [50] => Array
+        (
+            [codigo_producto] => 3882
+            [nombre_producto] => SERVICIO DEMO2
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 130
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -222.6
+            [costo_promedio] => 847.457625
+            [total_final] => -188644.067325
+        )
+
+    [51] => Array
+        (
+            [codigo_producto] => 3883
+            [nombre_producto] => SERVICIO DEMO3
+            [fecha] => 2024-10-05
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 120
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -223.6
+            [costo_promedio] => 847.457625
+            [total_final] => -189491.52495
+        )
+
+    [52] => Array
+        (
+            [codigo_producto] => 3883
+            [nombre_producto] => SERVICIO DEMO3
+            [fecha] => 2024-10-05
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 121
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -224.6
+            [costo_promedio] => 847.457625
+            [total_final] => -190338.982575
+        )
+
+    [53] => Array
+        (
+            [codigo_producto] => 3884
+            [nombre_producto] => SERVICIO DEMO4
+            [fecha] => 2024-10-05
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 121
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -225.6
+            [costo_promedio] => 847.457625
+            [total_final] => -191186.4402
+        )
+
+    [54] => Array
+        (
+            [codigo_producto] => 3886
+            [nombre_producto] => SERVICIO DEMO6
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 130
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -226.6
+            [costo_promedio] => 847.457625
+            [total_final] => -192033.897825
+        )
+
+    [55] => Array
+        (
+            [codigo_producto] => 3894
+            [nombre_producto] => SERVICIO DEMO61
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => B001
+            [num_doc] => 125
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 100.00000
+            [saldo_final] => -225.6
+            [costo_promedio] => 847.457625
+            [total_final] => -191186.4402
+        )
+
+    [56] => Array
+        (
+            [codigo_producto] => 3880
+            [nombre_producto] => SERVICIOS VARIOS
+            [fecha] => 2024-10-02
+            [tipo_doc] => 01
+            [serie_doc] => FE05
+            [num_doc] => 270287
+            [cantidad_entrada] => 5.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 200.00000
+            [saldo_final] => -220.6
+            [costo_promedio] => 847.457625
+            [total_final] => -186949.152075
+        )
+
+    [57] => Array
+        (
+            [codigo_producto] => 3880
+            [nombre_producto] => SERVICIOS VARIOS
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 110
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 5.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -225.6
+            [costo_promedio] => 847.457625
+            [total_final] => -191186.4402
+        )
+
+    [58] => Array
+        (
+            [codigo_producto] => 3880
+            [nombre_producto] => SERVICIOS VARIOS
+            [fecha] => 2024-10-05
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 120
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -226.6
+            [costo_promedio] => 847.457625
+            [total_final] => -192033.897825
+        )
+
+    [59] => Array
+        (
+            [codigo_producto] => 3880
+            [nombre_producto] => SERVICIOS VARIOS
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 127
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -227.6
+            [costo_promedio] => 847.457625
+            [total_final] => -192881.35545
+        )
+
+    [60] => Array
+        (
+            [codigo_producto] => 3880
+            [nombre_producto] => SERVICIOS VARIOS
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 129
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -228.6
+            [costo_promedio] => 847.457625
+            [total_final] => -193728.813075
+        )
+
+    [61] => Array
+        (
+            [codigo_producto] => 3880
+            [nombre_producto] => SERVICIOS VARIOS
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 131
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -229.6
+            [costo_promedio] => 847.457625
+            [total_final] => -194576.2707
+        )
+
+    [62] => Array
+        (
+            [codigo_producto] => 3880
+            [nombre_producto] => SERVICIOS VARIOS
+            [fecha] => 2024-10-18
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 133
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -230.6
+            [costo_promedio] => 847.457625
+            [total_final] => -195423.728325
+        )
+
+    [63] => Array
+        (
+            [codigo_producto] => 3899
+            [nombre_producto] => SERVICIOS VARIOS12
+            [fecha] => 2024-10-02
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 111
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 3.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -233.6
+            [costo_promedio] => 847.457625
+            [total_final] => -197966.1012
+        )
+
+    [64] => Array
+        (
+            [codigo_producto] => 6948
+            [nombre_producto] => SUBLIME
+            [fecha] => 2024-10-03
+            [tipo_doc] => 03
+            [serie_doc] => BE01
+            [num_doc] => 119
+            [cantidad_entrada] => 0.00
+            [cantidad_salida] => 1.00
+            [costo_unitario_entrada] => 0.00000
+            [saldo_final] => -234.6
+            [costo_promedio] => 847.457625
+            [total_final] => -198813.558825
+        )
+
+    [65] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4708
+            [cantidad_entrada] => 32.87
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 84.75000
+            [saldo_final] => -201.73
+            [costo_promedio] => 847.457625
+            [total_final] => -170957.62669125
+        )
+
+    [66] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4429
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5900.00000
+            [saldo_final] => -200.73
+            [costo_promedio] => 847.457625
+            [total_final] => -170110.16906625
+        )
+
+    [67] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4780
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 21000.00000
+            [saldo_final] => -199.73
+            [costo_promedio] => 847.457625
+            [total_final] => -169262.71144125
+        )
+
+    [68] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4271
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 4600.00000
+            [saldo_final] => -198.73
+            [costo_promedio] => 847.457625
+            [total_final] => -168415.25381625
+        )
+
+    [69] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4272
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 8750.00000
+            [saldo_final] => -197.73
+            [costo_promedio] => 847.457625
+            [total_final] => -167567.79619125
+        )
+
+    [70] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4273
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5460.00000
+            [saldo_final] => -196.73
+            [costo_promedio] => 847.457625
+            [total_final] => -166720.33856625
+        )
+
+    [71] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4274
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 4600.00000
+            [saldo_final] => -195.73
+            [costo_promedio] => 847.457625
+            [total_final] => -165872.88094125
+        )
+
+    [72] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4275
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5460.00000
+            [saldo_final] => -194.73
+            [costo_promedio] => 847.457625
+            [total_final] => -165025.42331625
+        )
+
+    [73] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4276
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5460.00000
+            [saldo_final] => -193.73
+            [costo_promedio] => 847.457625
+            [total_final] => -164177.96569125
+        )
+
+    [74] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4277
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5460.00000
+            [saldo_final] => -192.73
+            [costo_promedio] => 847.457625
+            [total_final] => -163330.50806625
+        )
+
+    [75] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4278
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 500.00000
+            [saldo_final] => -191.73
+            [costo_promedio] => 847.457625
+            [total_final] => -162483.05044125
+        )
+
+    [76] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4279
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 4600.00000
+            [saldo_final] => -190.73
+            [costo_promedio] => 847.457625
+            [total_final] => -161635.59281625
+        )
+
+    [77] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4280
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 4600.00000
+            [saldo_final] => -189.73
+            [costo_promedio] => 847.457625
+            [total_final] => -160788.13519125
+        )
+
+    [78] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4281
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 8750.00000
+            [saldo_final] => -188.73
+            [costo_promedio] => 847.457625
+            [total_final] => -159940.67756625
+        )
+
+    [79] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4282
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 4600.00000
+            [saldo_final] => -187.73
+            [costo_promedio] => 847.457625
+            [total_final] => -159093.21994125
+        )
+
+    [80] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4283
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 2850.00000
+            [saldo_final] => -186.73
+            [costo_promedio] => 847.457625
+            [total_final] => -158245.76231625
+        )
+
+    [81] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4284
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1425.00000
+            [saldo_final] => -185.73
+            [costo_promedio] => 847.457625
+            [total_final] => -157398.30469125
+        )
+
+    [82] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4285
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 2600.00000
+            [saldo_final] => -184.73
+            [costo_promedio] => 847.457625
+            [total_final] => -156550.84706625
+        )
+
+    [83] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4286
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1037.00000
+            [saldo_final] => -183.73
+            [costo_promedio] => 847.457625
+            [total_final] => -155703.38944125
+        )
+
+    [84] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4287
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 2650.00000
+            [saldo_final] => -182.73
+            [costo_promedio] => 847.457625
+            [total_final] => -154855.93181625
+        )
+
+    [85] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4288
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1800.00000
+            [saldo_final] => -181.73
+            [costo_promedio] => 847.457625
+            [total_final] => -154008.47419125
+        )
+
+    [86] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4289
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1037.00000
+            [saldo_final] => -180.73
+            [costo_promedio] => 847.457625
+            [total_final] => -153161.01656625
+        )
+
+    [87] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4290
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1446.00000
+            [saldo_final] => -179.73
+            [costo_promedio] => 847.457625
+            [total_final] => -152313.55894125
+        )
+
+    [88] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4291
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1205.00000
+            [saldo_final] => -178.73
+            [costo_promedio] => 847.457625
+            [total_final] => -151466.10131625
+        )
+
+    [89] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4292
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 300.00000
+            [saldo_final] => -177.73
+            [costo_promedio] => 847.457625
+            [total_final] => -150618.64369125
+        )
+
+    [90] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4293
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 180.75000
+            [saldo_final] => -176.73
+            [costo_promedio] => 847.457625
+            [total_final] => -149771.18606625
+        )
+
+    [91] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4294
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1205.00000
+            [saldo_final] => -175.73
+            [costo_promedio] => 847.457625
+            [total_final] => -148923.72844125
+        )
+
+    [92] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4325
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 4200.00000
+            [saldo_final] => -174.73
+            [costo_promedio] => 847.457625
+            [total_final] => -148076.27081625
+        )
+
+    [93] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4377
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 455.00000
+            [saldo_final] => -173.73
+            [costo_promedio] => 847.457625
+            [total_final] => -147228.81319125
+        )
+
+    [94] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4378
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 455.00000
+            [saldo_final] => -172.73
+            [costo_promedio] => 847.457625
+            [total_final] => -146381.35556625
+        )
+
+    [95] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4379
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 350.00000
+            [saldo_final] => -171.73
+            [costo_promedio] => 847.457625
+            [total_final] => -145533.89794125
+        )
+
+    [96] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4380
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 350.00000
+            [saldo_final] => -170.73
+            [costo_promedio] => 847.457625
+            [total_final] => -144686.44031625
+        )
+
+    [97] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4381
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 350.00000
+            [saldo_final] => -169.73
+            [costo_promedio] => 847.457625
+            [total_final] => -143838.98269125
+        )
+
+    [98] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4382
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 350.00000
+            [saldo_final] => -168.73
+            [costo_promedio] => 847.457625
+            [total_final] => -142991.52506625
+        )
+
+    [99] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4383
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 350.00000
+            [saldo_final] => -167.73
+            [costo_promedio] => 847.457625
+            [total_final] => -142144.06744125
+        )
+
+    [100] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4384
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 350.00000
+            [saldo_final] => -166.73
+            [costo_promedio] => 847.457625
+            [total_final] => -141296.60981625
+        )
+
+    [101] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4385
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 3950.00000
+            [saldo_final] => -165.73
+            [costo_promedio] => 847.457625
+            [total_final] => -140449.15219125
+        )
+
+    [102] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4386
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 4600.00000
+            [saldo_final] => -164.73
+            [costo_promedio] => 847.457625
+            [total_final] => -139601.69456625
+        )
+
+    [103] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4387
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5460.00000
+            [saldo_final] => -163.73
+            [costo_promedio] => 847.457625
+            [total_final] => -138754.23694125
+        )
+
+    [104] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4388
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 400.00000
+            [saldo_final] => -162.73
+            [costo_promedio] => 847.457625
+            [total_final] => -137906.77931625
+        )
+
+    [105] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4389
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5460.00000
+            [saldo_final] => -161.73
+            [costo_promedio] => 847.457625
+            [total_final] => -137059.32169125
+        )
+
+    [106] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4390
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 585.00000
+            [saldo_final] => -160.73
+            [costo_promedio] => 847.457625
+            [total_final] => -136211.86406625
+        )
+
+    [107] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4391
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 5460.00000
+            [saldo_final] => -159.73
+            [costo_promedio] => 847.457625
+            [total_final] => -135364.40644125
+        )
+
+    [108] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4392
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 2850.00000
+            [saldo_final] => -158.73
+            [costo_promedio] => 847.457625
+            [total_final] => -134516.94881625
+        )
+
+    [109] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4393
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 585.00000
+            [saldo_final] => -157.73
+            [costo_promedio] => 847.457625
+            [total_final] => -133669.49119125
+        )
+
+    [110] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4394
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 8750.00000
+            [saldo_final] => -156.73
+            [costo_promedio] => 847.457625
+            [total_final] => -132822.03356625
+        )
+
+    [111] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4395
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 3028.00000
+            [saldo_final] => -155.73
+            [costo_promedio] => 847.457625
+            [total_final] => -131974.57594125
+        )
+
+    [112] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4396
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1514.00000
+            [saldo_final] => -154.73
+            [costo_promedio] => 847.457625
+            [total_final] => -131127.11831625
+        )
+
+    [113] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4397
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 602.50000
+            [saldo_final] => -153.73
+            [costo_promedio] => 847.457625
+            [total_final] => -130279.66069125
+        )
+
+    [114] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4398
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1205.00000
+            [saldo_final] => -152.73
+            [costo_promedio] => 847.457625
+            [total_final] => -129432.20306625
+        )
+
+    [115] => Array
+        (
+            [codigo_producto] => 8092
+            [nombre_producto] => TORTA DE 3 LECHES
+            [fecha] => 2024-10-01
+            [tipo_doc] => 01
+            [serie_doc] => F001
+            [num_doc] => 4399
+            [cantidad_entrada] => 1.00
+            [cantidad_salida] => 0.00
+            [costo_unitario_entrada] => 1037.00000
+            [saldo_final] => -151.73
+            [costo_promedio] => 847.457625
+            [total_final] => -128584.74544125
+        )
+
+)

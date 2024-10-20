@@ -1,5 +1,43 @@
 $(document).ready(function(){
 
+// agragar compra
+  $('#frm_compra_editar').submit(function(e)
+	{
+		$('#cargando').modal('show');
+		e.preventDefault();
+		$.ajax({
+			url  :  base_url+'/assets/ajax/ajax_compra1.php',
+			type : "POST",
+			async: true,
+			data : new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+
+			success: function(response)
+			{
+       $('#cargando').modal('hide');
+			 $('#exito').modal('show'); 	
+        //window.location = "ventas";
+         console.log(response);
+         var data1 = $.parseJSON(response);
+         //console.log(data);
+         //window.location = base_url+'/ticket_factura/'+data;
+         window.open(base_url+'/ticket_factura_compra/'+data1, '_blank');
+         window.location = base_url+"/compras";
+         //location.reload();
+			},
+			error: function(response)
+			{
+          $('#cargando').modal('hide');
+          $('#error').modal('show');
+          location.reload(); 
+			}
+
+		});
+	});
+
+
 
  	// agragar compra
   $('#frm-dt').submit(function(e)
@@ -299,7 +337,7 @@ function agregarc(id,nombre,precio,afectacion,por1,por2,precio1,precio2,factor)
 	{
 		$igv_unitario = 0.00;
 	}
-
+var id_detalle='';
 	cont++;
 	detalles++;
 	var cantidad = 1;
@@ -310,7 +348,8 @@ function agregarc(id,nombre,precio,afectacion,por1,por2,precio1,precio2,factor)
 	var fila='<tr id="fila'+cont+'">'+
 	         '<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa fa-trash"></i></button></td>'+
 	         '<td>'+cont+'</td>'+
-	          '<td><input type="hidden" name="fecven[]" value="0000-00-00"><input type="hidden" name="itemarticulo[]" value="'+cont+'"><input type="hidden" name="idarticulo[]" value="'+id+'"><input type="hidden" name="nomarticulo[]" value="'+nombre+'">'+nombre+'</td>'+
+	          '<td><input type="hidden" name="id_detalle[]" value="'+id_detalle+'">'+
+	          '<input type="hidden" name="fecven[]" value="0000-00-00"><input type="hidden" name="itemarticulo[]" value="'+cont+'"><input type="hidden" name="idarticulo[]" value="'+id+'"><input type="hidden" name="nomarticulo[]" value="'+nombre+'">'+nombre+'</td>'+
 	          '<td><input type="text" min="1" class="form-control text-right" name="cantidad[]" id="cantidad[]" value="'+cantidad+'" onkeyup="modificarSubtotales()" ></td>'+
 	           '<td><input type="text" min="1" class="form-control text-right" name="precio_venta[]" id="precio_venta[]" value="'+precio+'" onkeyup="modificarSubtotales()" ></td>'+
 	            '<td><input type="text" min="1" class="form-control text-right" name="por1[]" id="por1[]" value="'+por1+'" onkeyup="modificarPrecioVenta()" ></td>'+
@@ -471,7 +510,7 @@ function evaluar()
 	}
 	else if(detalles=0)
 	{
-		$('#btnGuardar').hide();
+		//$('#btnGuardar').hide();
 
 	}
 
@@ -512,7 +551,7 @@ function limpiarTotales()
 	$('#subtotal').val('0.00');
 	$('#igv').val('0.00');
 	$('#total').val('0.00');
-	$('#btnGuardar').hide();
+	//$('#btnGuardar').hide();
 }
 
 
@@ -614,8 +653,11 @@ function listarCompraDet(id)
 	  		 var info = JSON.parse(response);
 	  		// console.log(info);
 	  		 $('#detallecompra').html(info.detalle);
-
-	  		 
+        detalles++;
+	  		 reordenar();
+	    modificarSubtotales();
+	    calcaulaDt();	
+	    //alert('detalle:'+detalles);
 	  		 //$("#btnListar").hide();
 	  		 //$("#btnGuardar").show();
 	  	},

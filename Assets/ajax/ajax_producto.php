@@ -145,6 +145,7 @@ if($_POST['action']=='buscar_productox')
 
    echo $data;
 
+
    exit();
 
 }

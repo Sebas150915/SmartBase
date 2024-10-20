@@ -16,7 +16,7 @@
   MODAL CUERPO
   ======================================-->
       <div class="modal-body">
-      <table id="datatable-contribuyente" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+      <table id="datatable-insumos" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
        <thead class="bg-dark" style="color: white">
           <tr>
             <th>RUC</th>

@@ -49,7 +49,9 @@ if($_POST['action'] == 'listarCompraDet')
             <tr id="fila'.$cont.'">
              <td><button type="button" class="btn btn-danger" onclick="eliminar('.$cont.')"><i class="fa fa-trash"></i></button></td>
              <td>'.$cont.'</td>
-             <td><input type="hidden" name="fecven[]" value="0000-00-00">
+             <td><input type="hidden" name="id_detalle[]" value="'.$serie['id'].'">
+
+                 <input type="hidden" name="fecven[]" value="0000-00-00">
                  <input type="hidden" name="itemarticulo[]" value="'.$cont.'">
                  <input type="hidden" name="idarticulo[]" value="'.$serie['codigo'].'">
                  <input type="hidden" name="nomarticulo[]" value="'.$serie['descripcion'].'">'.$serie['descripcion'].'</td>

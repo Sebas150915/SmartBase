@@ -15,7 +15,7 @@ $(document).ready(function(){
 			 $('#cargando').modal('hide');
              $('#exito').modal('show'); 
              console.log(response);
-             //location.reload(); 
+             location.reload(); 
 			},
 			error: function(response)
 			{
@@ -41,7 +41,7 @@ $(document).ready(function(){
 			 $('#cargando').modal('hide');
              $('#exito').modal('show'); 
              console.log(response);
-             //location.reload(); 
+             location.reload(); 
 			},
 			error: function(response)
 			{
@@ -52,15 +52,15 @@ $(document).ready(function(){
 	});
 
 	//##################################ELIMINAR CATEGORIA##################################//
-	$('#form_del_categoria').submit(function(e)
+	$('#form_del_separacion').submit(function(e)
 	{
 		$('#cargando').modal('show');
 		e.preventDefault();
 		$.ajax({
-			url  :  base_url+'/assets/ajax/ajax_categoria.php',
+			url  :  base_url+'/assets/ajax/ajax_separacion.php',
 			type : "POST",
 			async: true,
-			data : $('#form_del_categoria').serialize(),
+			data : $('#form_del_separacion').serialize(),
 
 			success: function(response)
 			{
@@ -76,5 +76,5 @@ $(document).ready(function(){
 
 		});
 	});
-});// en ready
+});
 

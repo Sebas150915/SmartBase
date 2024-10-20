@@ -33,8 +33,8 @@ if($_POST['action'] == 'addSeparacion')
 if($_POST['action'] == 'editSeparacion')
 {
 
-	$query=$connect->prepare("UPDATE tbl_alq_garantias SET meses_garantia=?,importe_soles=?,importe_dolares=?, fecha_garantia=? WHERE id_garantia = ?");
-	$resultado = $query->execute([$_POST['update_meses'],$_POST['update_soles'],$_POST['update_dolares'],$_POST['update_fecha'],$_POST['update_id']]);
+	$query=$connect->prepare("UPDATE tbl_alq_separaciones SET id_cliente=?,monto_separacion_soles=?,monto_separacion_dolar=?, fecha_separacion=? WHERE id_separacion = ?");
+	$resultado = $query->execute([$_POST['update_cliente'],$_POST['update_soles'],$_POST['update_dolares'],$_POST['update_fecha'],$_POST['update_id']]);
 
 	if($resultado)
 	{
@@ -52,10 +52,10 @@ if($_POST['action'] == 'editSeparacion')
 }
 
 //####################################ELIMINAR####################################////
-if($_POST['action'] == 'delGarantia')
+if($_POST['action'] == 'DeleteSeparacion')
 {
 
-	$query=$connect->prepare("UPDATE tbl_alq_garantias SET estado=? WHERE id_garantia = ?");
+	$query=$connect->prepare("UPDATE tbl_alq_separaciones SET estado=? WHERE id_separacion = ?");
 	$resultado = $query->execute(['0',$_POST['delete_id']]);
 
 	if($resultado)

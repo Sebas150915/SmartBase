@@ -278,6 +278,7 @@
           [16, 32, 64, -1],
           [16, 32, 64, "All"]
         ],
+        "order": [[ 1, "desc" ]],
         language: {
                     "decimal": "",
                     "emptyTable": "No hay información",

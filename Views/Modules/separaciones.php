@@ -64,6 +64,7 @@ $num_reg_data=$resultado_data->rowCount();
                         <tr>
                           <th>Acciones</th>
                           <th>Id</th>
+                          <th>Id Cliente</th>
                           <th>Cliente</th>
                           <th>Importe Soles</th>
                           <th>Importe Dólares</th>
@@ -80,7 +81,6 @@ $num_reg_data=$resultado_data->rowCount();
                         $resultado_cli = $connect->prepare($query_cli);
                         $resultado_cli->execute();
                         $row_clie = $resultado_cli->fetch(PDO::FETCH_ASSOC);
-                        $nomcli=$row_clie['nombre_persona'];
                         
                         ?>
                           <tr>
@@ -88,7 +88,8 @@ $num_reg_data=$resultado_data->rowCount();
                               <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
                               <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button></td>
                             <td><?= $usuario['id_separacion'] ?></td>
-                            <td><?= $nomcli ?></td>
+                            <td><?= $usuario['id_cliente'] ?></td>
+                            <td><?= $row_clie['nombre_persona'] ?></td>
                             <td><?= $usuario['monto_separacion_soles'] ?></td>
                             <td><?= $usuario['monto_separacion_dolar'] ?></td>
                             <td><?= $usuario['fecha_separacion'] ?></td>

@@ -55,7 +55,7 @@ $num_reg_emp1=$resultado_emp1->rowCount();
           </div>
           <div class="col-sm-4">
               <label>Moneda</label>
-              <select class="form-control" name="moneda" id="moneda">
+              <select class="form-control" name="moneda" id="moneda" required="">
                   <option value="PEN">SOLES</option>
                   <option value="USD">DOLARES</option>
               </select>
@@ -71,10 +71,6 @@ $num_reg_emp1=$resultado_emp1->rowCount();
           <div class="col-sm-4">
               <label>Importe $</label>
               <input type="text" name="importedolar" value="0.00" id="importedolar" class="form-control text-right" min="0.00">
-          </div>
-          <div class="col-sm-4">
-              
-              <input type="hidden" name="contrato" id="contrato" class="form-control text-right">
           </div>
           
           <div class="col-sm-12">
@@ -102,7 +98,7 @@ $num_reg_emp1=$resultado_emp1->rowCount();
 
 
 <!-- Modal Edit-->
-<div class="modal fade" id="ModalCategoriaEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalContratoEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <form action="" name="form_edit_contrato" id="form_edit_contrato">
  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
@@ -162,10 +158,6 @@ $num_reg_emp1=$resultado_emp1->rowCount();
           <div class="col-sm-4">
               <label>Importe $</label>
               <input type="text" name="update_importedolar" id="update_importedolar" class="form-control text-right">
-          </div>
-          <div class="col-sm-4">
-              
-              <input type="hidden" name="update_contrato" id="update_contrato" class="form-control text-right">
           </div>
           
           <div class="col-sm-12">

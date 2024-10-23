@@ -1,6 +1,6 @@
 <?php 
 //RUTA DE APLICACION
-const BASE_URL	= "http://localhost/proyectos/php/smartbase";
+const BASE_URL	= "http://localhost/smartbase";
 
 //ZONA HORARIA
 date_default_timezone_set('America/Lima');

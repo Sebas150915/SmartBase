@@ -557,6 +557,39 @@ window.location = "ventas";
 			return 0;
      
 		}
+
+		 //let tipoDocumento = document.getElementById('tipoDocumento').value;
+         let tipoDocVenta = document.getElementById('tip_cpe').value;
+         //alert(tipoDocVenta);
+         let partes = tipoDocVenta.split('-');
+		if(user.length <11 &&  partes[1] == '01')
+		{
+			Swal.fire({
+			icon: 'error',
+			title: 'No puedes emitir Factura con un tipo Doc. diferente a RUC...',
+			text: 'Hacer los pasos indicados!',
+			});
+			document.venta_nueva.ruc_persona.focus()
+			return 0;
+
+		}
+        let condicionVenta = document.getElementById('condicion').value;
+        var saldo = document.getElementById('saldo').value;
+       
+
+
+        if(condicionVenta =='1' &&  saldo > 0)
+		{
+			Swal.fire({
+			icon: 'error',
+			title: 'No ha ingresado algun medio de pago',
+			text: 'Hacer los pasos indicados!',
+			});
+			document.venta_nueva.ruc_persona.focus()
+			return 0;
+
+		}
+
 	    /*var detalles = document.getElementById('detalles').value;
 		if(detalles == 0)
 		{

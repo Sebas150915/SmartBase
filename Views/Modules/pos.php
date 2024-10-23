@@ -105,6 +105,10 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
   margin: 3px;
   border-radius: 10px;
 }
+ .my-class-form-control-group{
+        display:flex;
+        align-items:Center;
+        }  
         
          
            </style> 
@@ -202,7 +206,7 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                 <div class="row">
                   <div class="col-lg-3">
                     <input type="hidden" class="form-control" name="orden_compra" id="orden_compra" value="">
-                    <input type="hidden" class="form-control" name="condicion" id="condicion" value="1">
+                    <!--input type="hidden" class="form-control" name="condicion" id="condicion" value="1"-->
                     <label for="">Fec. Emision</label>
                     <input type="date" class="form-control" value="<?=$hoy?>" name="fecha_emision" id="fecha_emision" readonly>
                     <input type="hidden" class="form-control" value="<?=$hoy?>" name="fecha_vencimiento" id="fecha_vencimiento" readonly>
@@ -227,7 +231,7 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                     <input type="text" class="form-control" name="razon_social" id="razon_social" readonly>
                   </div>
                  
-                  <div class="col-lg-6">
+                  <div class="col-lg-3">
                     <label for="">Cotizacion</label>
                     <div class="input-group">
                     <input name="id_coti_ref" id="id_coti_ref" type="hidden">
@@ -251,6 +255,17 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                     
                     <input name="num_ref" id="num_ref" type="text" class="form-control">
                   </div>
+                  <div class="col-lg-3 col-sm-6 col-sm-4">
+                        <label for="">Condicion</label>
+                        <select class="form-control select2" style="width: 100%;" name="condicion" id="condicion">
+                  
+                            <?php 
+                                    while($row_forma = $resultado_forma->fetch(PDO::FETCH_ASSOC) )
+                               {?>
+                                <option value="<?= $row_forma['tipo'] ?>"><?=$row_forma['nombre_fdp']?></option>;
+                               <?php  } ?>
+                          </select>
+                      </div>
 
                   <hr>
 
@@ -326,6 +341,8 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                     
                          <div class="col-lg-6">
                           <button id="btnPagar" class="btn btn-warning btn-lg btn-block" type="button" data-toggle="modal" data-target="#addPago"><i class="fe fe-usd"></i> Pagos</button>
+
+                          <button id="btnCuota" class="btn btn-primary btn-lg btn-block" type="button" data-toggle="modal" data-target="#addCuota"><i class="fa fa-usd"></i> Cuotas</button>
                            
                         </div>
                           <div class="col-lg-6">                                                
@@ -407,6 +424,46 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
     </div>
   </div>
 </div>
+
+<!--modal cuotas-->
+<div class="modal fade" id="addCuota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Cuotas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">      
+                    
+    <div id="cargador">
+    <div>
+    <div class="row">
+    <div class="col-sm-12">
+       <div class="my-class-form-control-group">
+          <input type="numeric" class="form-control text-right mr-2" name="cuotas" id="cuotas" placeholder="Cuotas" value="0" />
+          <input type="text" class="form-control text-center text-bold mr-2" name="importe_pago_cuota" id="importe_pago_cuota" readonly style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;" />
+          <button class="btn btn-dark" type="button" onclick="agregar_campo();"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-save"></i> Guardar</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!--fin modal uotas-->
+
+
+
         </form>
       </main> <!-- main -->
     </div> <!-- .wrapper -->
@@ -424,7 +481,29 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>
 <script type="text/javascript">
+
+  /*letras o cuotas*/
+            var contador=0;
+            var detalle=0;
+            function agregar_campo() 
+            { 
+               cont++;
+             detalles++;
+              $("#cargador").append("<div class='row mt-1'><div class='col-sm-12'><div class='my-class-form-control-group'><input type='date' class='form-control mr-2' name='datepago[]' /><input type='text' class='form-control text-right' value='0.00' name='montocuota[]'><button class='btn btn-danger' type='button' onclick='eliminar_campo(this);''><i class='fas fa-minus'></i></button></div></div></div>"); 
+              
+                $('#valor_unitario').val(cuotas.value);
+            } 
+                
+            function eliminar_campo(campos) 
+            { 
+              $(campos).parent().remove();
+              detalle=detalle-1;
+            }
+
     listarproductospos();
 </script>
+
+
+
   </body>
 </html>

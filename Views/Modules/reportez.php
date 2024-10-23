@@ -43,6 +43,13 @@ $query_prod->execute();
 $row_prod=$query_prod->fetchAll(PDO::FETCH_OBJ);
 //print_r($row_prod);exit();
 
+
+$query_cre = "SELECT SUM(total) as tot_cre FROM tbl_venta_cab WHERE idempresa=$empresa AND condicion_venta ='2' AND vendedor = $idusuario and fecha_emision = '$fechaz'";
+$resultado_cre = $connect->prepare($query_cre);
+$resultado_cre->execute();
+$row_cre = $resultado_cre->fetch(PDO::FETCH_ASSOC);
+
+
 include 'assets/ajax/numeros.php';
 $texto=convertir($numero);
 //file_put_contents($rutaGuardado.$fileName, $fileData);
@@ -253,6 +260,14 @@ $totalf = $totalf + $importe_p;
 
 } 
 
+$output.='
+<tr>
+<th class="text-left border3" colspan="2">CREDITO</th>
+
+<th class="text-right border3" colspan="1">'.$row_cre['total_cre'].'</th>
+</tr>
+
+';
 
 $output.='
 <tr>

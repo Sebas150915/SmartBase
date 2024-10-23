@@ -1945,7 +1945,7 @@ if($_POST['action'] == 'nueva_venta_pos')
                 $update_query_serie = $connect->prepare("UPDATE tbl_series SET correlativo = correlativo + ? WHERE serie = ? and correlativo = ? and id_empresa = ?");
                 $resultado_serie   = $update_query_serie->execute([1,$_POST['serie'],$_POST['numero'],$_POST['empresa']]);
 
-$itemdet++;
+    $itemdet++;
         if($cotidet > 0)
             {
         $query_coti_det=$connect->prepare("UPDATE tbl_coti_det SET entregado=? WHERE idventa = ? AND idproducto = ?");

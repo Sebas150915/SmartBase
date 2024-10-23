@@ -183,9 +183,6 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                         <input type="hidden" id="estadopagoanticipo" name="estadopagoanticipo" value="0">
                         <input type="hidden" id="relacionado_serie" name="relacionado_serie" value="">
 
-
-
-
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-4">
                         <label for="">Condicion</label>
@@ -473,18 +470,18 @@ else {?>
       </div>
       <div class="modal-body">      
                     
-<div id="cargador">
-<div>
-<div class="row">
-<div class="col-sm-12">
-   <div class="my-class-form-control-group">
-      <input type="numeric" class="form-control text-right mr-2" name="cuotas" id="cuotas" placeholder="Cuotas" value="0" /><input type="text" class="form-control text-center text-bold mr-2" name="importe_pago_cuota" id="importe_pago_cuota" readonly style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;" /><button class="btn btn-dark" type="button" onclick="agregar_campo();"><i class="fas fa-plus"></i></button>
+    <div id="cargador">
+    <div>
+    <div class="row">
+    <div class="col-sm-12">
+       <div class="my-class-form-control-group">
+          <input type="numeric" class="form-control text-right mr-2" name="cuotas" id="cuotas" placeholder="Cuotas" value="0" /><input type="text" class="form-control text-center text-bold mr-2" name="importe_pago_cuota" id="importe_pago_cuota" readonly style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;" /><button class="btn btn-dark" type="button" onclick="agregar_campo();"><i class="fas fa-plus"></i></button>
+        </div>
     </div>
-</div>
 
-</div>
-</div>
-</div>
+    </div>
+    </div>
+    </div>
        
       </div>
       <div class="modal-footer">

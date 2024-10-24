@@ -241,6 +241,7 @@
                       <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_detalle"><span class="ml-1">Ventas Detalle</span></a>
 
                        <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_detalle_pedido"><span class="ml-1">Detalle Pedido</span></a>
+                       <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_detalle_anticipo"><span class="ml-1">Detalle Anticipo</span></a>
 
                        <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_vendedor"><span class="ml-1">Ventas Vendedor</span></a>
                        <a class="nav-link pl-lg-2" href="<?= base_url()?>/rpt_ventas_documento"><span class="ml-1">Ventas por Doc.</span></a>

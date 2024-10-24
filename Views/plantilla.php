@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+//error_reporting(0);
 
 if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
 {
@@ -98,7 +98,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                  $rutas[0] == "rpt_productos" ||
                  $rutas[0] == "rpt_productos_pdf" ||
                  $rutas[0] == "rpt_detalle_pedido" ||
-
+                 $rutas[0] == "rpt_detalle_anticipo" ||
 
                  $rutas[0] == "resumen_cpe" ||
                  $rutas[0] == "baja_boletas" ||

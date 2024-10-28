@@ -119,10 +119,10 @@
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/cotizacion"><span class="ml-1">Cotizacion/Pedidos</span></a>
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/ventas"><span class="ml-1">Ventas</span></a>
                       
-                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/nota_venta"><span class="ml-1">Nota de Venta</span></a>
-                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/pos"><span class="ml-1">POS VENTA</span>
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/nota_venta"><span class="ml-1">Nota Venta/Recibo</span></a>
+                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/pos"><span class="ml-1">Pos Venta</span>
                        </a>
-                      <a class="#" href="<?=base_url()?>/cuentas_por_cobrar"><span class="ml-1">Cuentas x Cobrar</span></a>
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/cuentas_por_cobrar"><span class="ml-1">Cuentas x Cobrar</span></a>
                     </ul>
                   </li>
                   <li class="nav-item dropdown">

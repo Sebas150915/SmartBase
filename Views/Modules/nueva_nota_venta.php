@@ -6,7 +6,7 @@ $pormayor  = $_SESSION["venta_por_mayor"];
 $empresa = $_SESSION["id_empresa"];
 $hoy = date('Y-m-d');
 
-$query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('CT','NP','99')";
+$query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('CT','NP','99','10')";
 $resultado_documento=$connect->prepare($query_documento);
 $resultado_documento->execute(); 
 $num_reg_documento=$resultado_documento->rowCount();

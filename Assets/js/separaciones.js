@@ -13,9 +13,10 @@ function openModalEdit()
 				}).get();
 			$('#update_id').val(arr[1]);
 			$('#update_cliente').val(arr[2]).attr('selected', 'selected');
-			$('#update_soles').val(arr[4]);
-			$('#update_dolares').val(arr[5]);
-			$('#update_fecha').val(arr[6]);
+			$('#update_moneda').val(arr[4]);
+			$('#update_soles').val(arr[5]);
+			$('#update_dolares').val(arr[6]);
+			$('#update_fecha').val(arr[7]);
 			
 		});
 }

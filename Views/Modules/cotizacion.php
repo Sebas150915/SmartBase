@@ -100,6 +100,7 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                                 <th>Op. Inafecta</th>
                                 <th>IGV</th>
                                 <th>Total</th>
+                                <th>Usuario</th>
                                 <th>Pdf</th>
                                 <th>Ticket</th>
                                 <th>Estado</th>
@@ -121,7 +122,7 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                             <td align="right"><?= $ventas['op_inafectas'] ?></td>
                             <td align="right"><?= $ventas['igv'] ?></td>
                             <td align="right"><?= $ventas['total'] ?></td>
-
+                            <td align="right"><?= $ventas['total'] ?></td>
                             <td><a target="_blank"  href="cotizacion_pdf/<?= $ventas['id'] ?>" class="btn btn-danger rounded-circle"><i class="fe fe-book"></i></a></td>
                              <td><a target="_blank" href="ticket_cotizacion/<?= $ventas['id'] ?>" class="btn btn-primary rounded-circle"><i class="fe fe-book"></i></a></td>
                            

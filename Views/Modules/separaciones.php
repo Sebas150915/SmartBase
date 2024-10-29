@@ -55,7 +55,8 @@ $num_reg_data=$resultado_data->rowCount();
                       <div class="col-md-12">
                         <div class="card shadow">
                           <div class="card-header">
-                             <h2><button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalSeparacion"><i class="fe fe-plus-circle"></i> Nueva Separación</button></h2>
+                             <h2><button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalSeparacion"><i class="fe fe-plus-circle"></i> Nueva Separación</button>
+                            </h2>
                           </div>
                          <div class="card-body">
                           
@@ -66,6 +67,7 @@ $num_reg_data=$resultado_data->rowCount();
                           <th>Id</th>
                           <th>Id Cliente</th>
                           <th>Cliente</th>
+                          <th>Moneda</th>
                           <th>Importe Soles</th>
                           <th>Importe Dólares</th>
                           <th>Fecha Separación</th>
@@ -86,10 +88,14 @@ $num_reg_data=$resultado_data->rowCount();
                           <tr>
                             <td>
                               <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
-                              <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button></td>
+                              <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button>
+                              <a class="btn btn-success rounded-circle" href="<?=base_url()?>\nueva_nota_venta\<?=$data['id_separacion']?>"> <i class="fe fe-dollar-sign"></i></a>
+                                
+                            </td>
                             <td><?= $usuario['id_separacion'] ?></td>
                             <td><?= $usuario['id_cliente'] ?></td>
                             <td><?= $row_clie['nombre_persona'] ?></td>
+                            <td><?= $usuario['moneda'] ?></td>
                             <td><?= $usuario['monto_separacion_soles'] ?></td>
                             <td><?= $usuario['monto_separacion_dolar'] ?></td>
                             <td><?= $usuario['fecha_separacion'] ?></td>
@@ -136,3 +142,6 @@ $num_reg_data=$resultado_data->rowCount();
 
   </body>
 </html>
+
+
+<!-- <button class="btn btn-success rounded-circle" onclick="openModalCash()"><i class="fe fe-dollar-sign"></i></button> -->

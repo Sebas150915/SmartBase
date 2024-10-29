@@ -60,15 +60,28 @@ $num_reg_cli=$resultado_cli->rowCount();
 
       </div>
       <hr>
-      <div class="row mt-3">
+      <div class="row">
+
+      <div class="col-sm-6">
+              <label>Moneda</label>
+              <select class="form-control" name="moneda" id="moneda" required="">
+                  <option value="PEN">SOLES</option>
+                  <option value="USD">DOLARES</option>
+              </select>
+          </div>
+
+
         <div class="col-sm-6">
           <label for="">Importe Soles</label>
           <input type="text" class="form-control text-right" name="importe_soles" id="importe_soles" value="0.00">
         </div>
+
         <div class="col-sm-6">
           <label for="">Importe Dólares</label>
           <input type="text" class="form-control text-right" name="importe_dolares" id="importe_dolares" value="0.00">
        </div>
+
+
       </div>
    
 </div> 
@@ -128,7 +141,14 @@ $num_reg_cli=$resultado_cli->rowCount();
 
       </div>
       <hr>
-      <div class="row mt-3">
+      <div class="row">
+      <div class="col-sm-6">
+              <label>Moneda</label>
+              <select class="form-control" name="update_moneda" id="update_moneda">
+                  <option value="PEN">SOLES</option>
+                  <option value="USD">DOLARES</option>
+              </select>
+          </div>
         <div class="col-sm-6">
           <label for="">Importe Soles</label>
           <input type="text" class="form-control text-right" name="update_soles" id="update_soles" value="0.00">

@@ -13,8 +13,8 @@ if($_POST['action'] == 'addSeparacion')
 {
     
     $moneda=$_POST['moneda'];
-	$query=$connect->prepare("INSERT INTO tbl_alq_separaciones(id_cliente,monto_separacion_soles,monto_separacion_dolar,fecha_separacion,estado) VALUES (?,?,?,?,?);");
-	$resultado=$query->execute([$_POST['cliente'],$_POST['importe_soles'],$_POST['importe_dolares'],$_POST['fecha'],'1']);
+	$query=$connect->prepare("INSERT INTO tbl_alq_separaciones(id_cliente,moneda,monto_separacion_soles,monto_separacion_dolar,fecha_separacion,estado) VALUES (?,?,?,?,?,?);");
+	$resultado=$query->execute([$_POST['cliente'],$_POST['moneda'],$_POST['importe_soles'],$_POST['importe_dolares'],$_POST['fecha'],'1']);
 
 
 	if($resultado)
@@ -33,8 +33,8 @@ if($_POST['action'] == 'addSeparacion')
 if($_POST['action'] == 'editSeparacion')
 {
 
-	$query=$connect->prepare("UPDATE tbl_alq_separaciones SET id_cliente=?,monto_separacion_soles=?,monto_separacion_dolar=?, fecha_separacion=? WHERE id_separacion = ?");
-	$resultado = $query->execute([$_POST['update_cliente'],$_POST['update_soles'],$_POST['update_dolares'],$_POST['update_fecha'],$_POST['update_id']]);
+	$query=$connect->prepare("UPDATE tbl_alq_separaciones SET id_cliente=?,moneda=?,monto_separacion_soles=?,monto_separacion_dolar=?, fecha_separacion=? WHERE id_separacion = ?");
+	$resultado = $query->execute([$_POST['update_cliente'],$_POST['update_moneda'],$_POST['update_soles'],$_POST['update_dolares'],$_POST['update_fecha'],$_POST['update_id']]);
 
 	if($resultado)
 	{

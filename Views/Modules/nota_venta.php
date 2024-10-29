@@ -56,7 +56,7 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
             <div class="col-12">
               <div class="row align-items-center mb-2">
                 <div class="col">
-                  <h2 class="h5 page-title">Nota de Venta </h2>
+                  <h2 class="h5 page-title">Nota de Venta / Recibo </h2>
                 </div>
                 <div class="col-auto">
                   <form class="form-inline">
@@ -80,7 +80,7 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                       <div class="col-md-12">
                         <div class="card shadow">
                           <div class="card-header">
-                      <h2><a href="nueva_nota_venta" type="button" class="btn btn-danger"><i class="fa fa-plus-circle"></i> Nota de Venta</a></h2>
+                      <h2><a href="nueva_nota_venta" type="button" class="btn btn-danger"><i class="fa fa-plus-circle"></i> Nota de Venta/ Recibo </a></h2>
 
                     <hr style="border-top: 1px solid #d5dde6;">
                     <form method="POST" class="form-inline"><label for=""> Fecha Inicial :</label><input type="date" class="form-control mr-3" name="f_ini" id="f_ini" value="<?=$fecha_ini?>"><label for=""> Fecha Final :</label><input type="date" class="form-control mr-3" name="f_fin" value="<?=$fecha_fin?>" id="f_fin"> <button class="btn btn-success" type="submit">Procesar</button></form>

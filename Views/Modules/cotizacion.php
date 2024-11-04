@@ -5,12 +5,24 @@ $vendedor = $_SESSION["id"];
 
 if(!empty($_POST))
 {
+     if($_SESSION['perfil']=='1')
+       {
     $fecha_ini = $_POST['f_ini'];
+    $fecha_fin = $_POST['f_fin'];
+    $query_venta = "SELECT * FROM vw_tbl_coti_cab  WHERE idempresa = $empresa  AND tipocomp in ('99','CT','NP') AND fecha_emision BETWEEN '$fecha_ini' AND '$fecha_fin' ";
+    $resultado_venta=$connect->prepare($query_venta);
+    $resultado_venta->execute();
+    $num_reg_venta=$resultado_venta->rowCount();
+       }
+       else
+       {
+          $fecha_ini = $_POST['f_ini'];
     $fecha_fin = $_POST['f_fin'];
     $query_venta = "SELECT * FROM vw_tbl_coti_cab  WHERE idempresa = $empresa AND vendedor=$vendedor AND tipocomp in ('99','CT','NP') AND fecha_emision BETWEEN '$fecha_ini' AND '$fecha_fin' ";
     $resultado_venta=$connect->prepare($query_venta);
     $resultado_venta->execute();
-    $num_reg_venta=$resultado_venta->rowCount();
+    $num_reg_venta=$resultado_venta->rowCount(); 
+       }
 
 }
 else
@@ -18,10 +30,20 @@ else
     $hoy = date('Y-m-d');
     $fecha_ini = $hoy;
     $fecha_fin = $hoy;
-    $query_venta = "SELECT * FROM vw_tbl_coti_cab  WHERE idempresa = $empresa AND vendedor=$vendedor AND tipocomp in ('99','CT','NP') AND fecha_emision='$hoy'";
+     if($_SESSION['perfil']=='1')
+       {
+    $query_venta = "SELECT * FROM vw_tbl_coti_cab  WHERE idempresa = $empresa AND  tipocomp in ('99','CT','NP') AND fecha_emision='$hoy'";
     $resultado_venta=$connect->prepare($query_venta);
     $resultado_venta->execute();
     $num_reg_venta=$resultado_venta->rowCount();
+       }
+       else
+       {
+          $query_venta = "SELECT * FROM vw_tbl_coti_cab  WHERE idempresa = $empresa AND vendedor=$vendedor AND tipocomp in ('99','CT','NP') AND fecha_emision='$hoy'";
+    $resultado_venta=$connect->prepare($query_venta);
+    $resultado_venta->execute();
+    $num_reg_venta=$resultado_venta->rowCount(); 
+       }
 }
 
 
@@ -100,7 +122,6 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                                 <th>Op. Inafecta</th>
                                 <th>IGV</th>
                                 <th>Total</th>
-                                <th>Usuario</th>
                                 <th>Pdf</th>
                                 <th>Ticket</th>
                                 <th>Estado</th>
@@ -122,7 +143,7 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                             <td align="right"><?= $ventas['op_inafectas'] ?></td>
                             <td align="right"><?= $ventas['igv'] ?></td>
                             <td align="right"><?= $ventas['total'] ?></td>
-                            <td align="right"><?= $ventas['total'] ?></td>
+
                             <td><a target="_blank"  href="cotizacion_pdf/<?= $ventas['id'] ?>" class="btn btn-danger rounded-circle"><i class="fe fe-book"></i></a></td>
                              <td><a target="_blank" href="ticket_cotizacion/<?= $ventas['id'] ?>" class="btn btn-primary rounded-circle"><i class="fe fe-book"></i></a></td>
                            

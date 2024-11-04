@@ -83,7 +83,7 @@ $output.='
   font-style: bold;
         }
         html {
-	margin: 50pt 15pt;
+  margin: 50pt 15pt;
 }
         table
         {

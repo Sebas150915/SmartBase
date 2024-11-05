@@ -72,6 +72,7 @@ $num_reg_data=$resultado_data->rowCount();
                           <th>Importe Dólares</th>
                           <th>Fecha Separación</th>
                           <th>Estado</th>
+                          <th>Recibo</th>
                           
                         </tr>
                       </thead>
@@ -112,6 +113,9 @@ $num_reg_data=$resultado_data->rowCount();
 
                             }?> 
                             <button class="btn btn-<?=$c?> btn-xs"><?=$e?></button></td>
+                            <td align="center">
+                              <a href=""><img src="<?=media()?>/images/recibo.png" alt="" width="25px"></a>
+                            </td>
                             
                           </tr>
                         <?php } ?>                     

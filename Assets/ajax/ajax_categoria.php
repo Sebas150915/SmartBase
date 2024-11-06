@@ -16,13 +16,34 @@ if($_POST['action'] == 'cargarDatos')
 	$columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 	$columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 	$searchValue = $_POST['search']['value']; // Search value
-	// Consulta para obtener las categorías
-	$query = "SELECT id,nombre,cuenta_compra,cuenta_venta,estado FROM tbl_categorias WHERE empresa = $_SESSION[id_empresa]";
+
+	## Search 
+	$searchQuery = " ";
+		
+	if($searchValue != ''){
+		$searchQuery .= " and ( nombre LIKE '%".$_POST['search']['value']."%' ";
+		$searchQuery .=" OR nombre LIKE '%".$_POST['search']['value']."%' ) ";
+	//$searchQuery .=" OR txtCOD_ARTICULO IN (SELECT cod_articulo FROM articulo_serie WHERE serie LIKE '%".$_POST['search']['value']."%' OR lote LIKE '%".$_POST['search']['value']."%' ) ";
+
+	//txtCOD_ARTICULO IN (SELECT cod_articulo FROM articulo_serie WHERE serie LIKE '%F0011%')
+	}
+    $query = "SELECT * FROM tbl_categorias WHERE empresa = $_SESSION[id_empresa]";
 	$stmt = $connect->prepare($query);
 	$stmt->execute();
-	$totalRecordwithFilter=$stmt->rowCount();
+	$totalRecords=$stmt->rowCount();
+
+
+	$query1 = "SELECT * FROM tbl_categorias WHERE empresa = $_SESSION[id_empresa] ".$searchQuery;
+	$stmt1 = $connect->prepare($query1);
+	$stmt1->execute();
+	$totalRecordwithFilter=$stmt1->rowCount();
+
+	// Consulta para obtener las categorías
+	$query2 = "SELECT id,nombre,cuenta_compra,cuenta_venta,estado FROM tbl_categorias WHERE empresa = $_SESSION[id_empresa] ".$searchQuery." limit ".$row.",".$rowperpage;
+	$stmt2 = $connect->prepare($query2);
+	$stmt2->execute();
 	// Obtener los resultados y convertirlos en un array
-	$categorias = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$categorias = $stmt2->fetchAll(PDO::FETCH_OBJ);
     
     foreach($categorias as  $categorias)
     {
@@ -56,7 +77,7 @@ if($_POST['action'] == 'cargarDatos')
     
     $jsondata = array(
     	"draw"=>intval($draw),
-        "recordsTotal"    =>$totalRecordwithFilter,
+        "recordsTotal"    =>$totalRecords,
         "recordsFiltered" =>$totalRecordwithFilter,
         "data" => $data);
 

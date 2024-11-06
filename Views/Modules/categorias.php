@@ -1,13 +1,5 @@
 <?php 
-
-
 $empresa = $_SESSION["id_empresa"];
-
-$query_data = "SELECT * FROM tbl_categorias WHERE empresa='$empresa'";
-$resultado_data=$connect->prepare($query_data);
-$resultado_data->execute();
-$num_reg_data=$resultado_data->rowCount();
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -35,18 +27,7 @@ $num_reg_data=$resultado_data->rowCount();
                   <h2 class="h5 page-title">Categorias </h2>
                 </div>
                 <div class="col-auto">
-                  <form class="form-inline">
-                    <div class="form-group d-none d-lg-inline">
-                      <label for="reportrange" class="sr-only">Date Ranges</label>
-                      <div id="reportrange" class="px-2 py-2 text-muted">
-                        <span class="small"></span>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <button type="button" class="btn btn-sm"><span class="fe fe-refresh-ccw fe-16 text-muted"></span></button>
-                      <button type="button" class="btn btn-sm mr-2"><span class="fe fe-filter fe-16 text-muted"></span></button>
-                    </div>
-                  </form>
+                 
                 </div>
               </div>
               <hr>
@@ -73,31 +54,7 @@ $num_reg_data=$resultado_data->rowCount();
                         </tr>
                       </thead>
                         <tbody>
-                        <?php foreach($resultado_data as $usuario ){ ?>
-                          <tr>
-                            <td>
-                              <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
-                              <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button></td>
-                            <td><?= $usuario['id'] ?></td>
-                            <td><?= $usuario['nombre'] ?></td>
-                            <td><?= $usuario['cuenta_compra'] ?></td>
-                            <td><?= $usuario['cuenta_venta'] ?></td>
-                            <td><?php $e = $usuario['estado'];
-                            if($e == '1')
-                            {
-                              $e ='Activo';
-                              $c = 'success';
-                            }
-                            else
-                            {
-                              $e ='Inactivo';
-                              $c = 'danger';
-
-                            }?> 
-                            <button class="btn btn-<?=$c?> btn-xs"><?=$e?></button></td>
-                            
-                          </tr>
-                        <?php } ?>                     
+                                           
                       </tbody>
                         </table>
                          </div>
@@ -121,8 +78,10 @@ $num_reg_data=$resultado_data->rowCount();
     <?php include 'views/template/pie.php' ?>
       
      
-      <script src="assets/js/categoria.js"></script>
-      <script src="assets/js/funciones_categoria.js"></script>
-
+      <script src="assets/js/categoria.js?v=4"></script>
+      <script src="assets/js/funciones_categoria.js?v=4"></script>
+<script>
+  cargarCategoria();
+</script>
   </body>
 </html>

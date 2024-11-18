@@ -408,6 +408,9 @@ $(document).on('keyup', '#ruc_persona', function(e)
  // $('#venta_nueva').submit(function(e)
 	 $("#btnGuardarft").click(function(e) 
 	{
+		var empresad = document.getElementById('empresa').value;
+	    var perfil = document.getElementById('perfil').value;
+
 		var user = document.getElementById('ruc_persona').value;
 		if(user.length == 0)
 		{
@@ -441,6 +444,24 @@ $(document).on('keyup', '#ruc_persona', function(e)
       		document.venta_nueva.tip_cpe.focus()
       		return 0;
    	}
+
+ 
+		 //let tipoDocumento = document.getElementById('tipoDocumento').value;
+         let tipoDocVenta = document.getElementById('tip_cpe').value;
+         //alert(tipoDocVenta);
+         let partes = tipoDocVenta.split('-');
+		if(user.length <11 &&  partes[1] == '01')
+		{
+			Swal.fire({
+			icon: 'error',
+			title: 'No puedes emitir Factura con un tipo Doc. diferente a RUC...',
+			text: 'Hacer los pasos indicados!',
+			});
+			document.venta_nueva.ruc_persona.focus()
+			return 0;
+
+		}
+
     /*alertas para */
 		swal.fire({
 					title: "Cargando...",
@@ -493,8 +514,16 @@ denyButtonText: "Imprime A4"
 if (result.isConfirmed) 
 {
 window.open(base_url+'/ticket_factura/'+ticket, '_blank');
-window.location = "ventas";
-} 
+
+    if(empresad == '21' && perfil == '3')
+    {
+    window.location = "ventas2";
+    }
+    else
+    {
+       window.location = "ventas"; 
+    }
+}
 else if (result.isDenied) 
 {
      if(empresa == '20565728645')/*HTP LOGISTICA*/
@@ -505,12 +534,29 @@ else if (result.isDenied)
      else
      {
         window.open(base_url+'/factura_pdf/'+ticket, '_blank');
-        window.location = "ventas";
+        
+            if(empresad == '21' && perfil == '3')
+            {
+            window.location = "ventas2";
+            }
+            else
+            {
+            window.location = "ventas"; 
+            }
+        
+        
      }
 }
 else
 {
-window.location = "ventas";
+        if(empresad == '21' && perfil == '3')
+        {
+        window.location = "ventas2";
+        }
+        else
+        {
+        window.location = "ventas"; 
+        }
 }
 });
          
@@ -574,9 +620,7 @@ window.location = "ventas";
 
 		}
         let condicionVenta = document.getElementById('condicion').value;
-        var saldo = document.getElementById('saldo').value;
-       
-
+        var saldo = document.getElementById('saldo').value;     
 
         if(condicionVenta =='1' &&  saldo > 0)
 		{

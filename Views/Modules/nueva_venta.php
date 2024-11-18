@@ -1,6 +1,6 @@
 <?php 
 $empresa = $_SESSION["id_empresa"];
-
+$perfil = $_SESSION["perfil"];
 
 $lista2=$connect->query("SELECT * FROM vw_tbl_coti_cab WHERE empresa= $empresa AND tipocomp in ('CT','NP') ORDER BY id DESC ");
 $resultado2=$lista2->fetchAll(PDO::FETCH_OBJ);
@@ -116,6 +116,10 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-danger go-class" data-toggle="modal" data-target="#ModalClientes"><i class="fe fe-search"></i></button>
                         </span>
+                        <input type="hidden" id="empresa" name="empresa" value="<?=$empresa?>">
+                        <input type="hidden" id="perfil" name="perfil" value="<?=$perfil?>">
+                        
+                        
                           <input type="hidden" id="id_ruc" name="id_ruc" value="">
                           <input type="hidden" id="detalles" name="detalles" value="0">
                           <input type="hidden" name="action" value="nueva_venta">
@@ -182,6 +186,9 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                         <input type="hidden" id="relacionado_id" name="relacionado_id" value="0">
                         <input type="hidden" id="estadopagoanticipo" name="estadopagoanticipo" value="0">
                         <input type="hidden" id="relacionado_serie" name="relacionado_serie" value="">
+
+
+
 
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-4">
@@ -470,18 +477,18 @@ else {?>
       </div>
       <div class="modal-body">      
                     
-    <div id="cargador">
-    <div>
-    <div class="row">
-    <div class="col-sm-12">
-       <div class="my-class-form-control-group">
-          <input type="numeric" class="form-control text-right mr-2" name="cuotas" id="cuotas" placeholder="Cuotas" value="0" /><input type="text" class="form-control text-center text-bold mr-2" name="importe_pago_cuota" id="importe_pago_cuota" readonly style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;" /><button class="btn btn-dark" type="button" onclick="agregar_campo();"><i class="fas fa-plus"></i></button>
-        </div>
+<div id="cargador">
+<div>
+<div class="row">
+<div class="col-sm-12">
+   <div class="my-class-form-control-group">
+      <input type="numeric" class="form-control text-right mr-2" name="cuotas" id="cuotas" placeholder="Cuotas" value="0" /><input type="text" class="form-control text-center text-bold mr-2" name="importe_pago_cuota" id="importe_pago_cuota" readonly style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;" /><button class="btn btn-dark" type="button" onclick="agregar_campo();"><i class="fas fa-plus"></i></button>
     </div>
+</div>
 
-    </div>
-    </div>
-    </div>
+</div>
+</div>
+</div>
        
       </div>
       <div class="modal-footer">
@@ -505,7 +512,7 @@ else {?>
 
 
 
-<script src="<?=media()?>/js/funciones_ventas.js?v=17"></script>
+<script src="<?=media()?>/js/funciones_ventas.js?v=1"></script>
    
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>
@@ -516,10 +523,10 @@ else {?>
             function agregar_campo() 
             { 
                cont++;
-	           detalles++;
+             detalles++;
               $("#cargador").append("<div class='row mt-1'><div class='col-sm-12'><div class='my-class-form-control-group'><input type='date' class='form-control mr-2' name='datepago[]' /><input type='text' class='form-control text-right' value='0.00' name='montocuota[]'><button class='btn btn-danger' type='button' onclick='eliminar_campo(this);''><i class='fas fa-minus'></i></button></div></div></div>"); 
               
-              	$('#valor_unitario').val(cuotas.value);
+                $('#valor_unitario').val(cuotas.value);
             } 
                 
             function eliminar_campo(campos) 

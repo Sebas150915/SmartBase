@@ -1,44 +1,15 @@
 
 <?php 
 //session_start();
-$empresa = $_SESSION["id_empresa"];
-$usuariov = $_SESSION["id"];
-$boton  = 'disabled';
+$id_empresa = $_SESSION["id_empresa"];
 
 
-$query_alm = "SELECT * FROM tbl_almacen WHERE empresa = $empresa";
+$query_alm = "SELECT * FROM tbl_almacen WHERE empresa = $id_empresa";
 $resultado_alm=$connect->prepare($query_alm);
 $resultado_alm->execute(); 
 $num_reg_alm=$resultado_alm->rowCount();
 
 
-if(!empty($_POST))
-{
-$fecha_ini = $_POST['fecha_ini'];
-$fecha_fin = $_POST['fecha_fin'];
-$almacen   = $_POST['almacen'];
-$boton  = '';
-
-if($almacen == '%')
-{
-   $query_pro = "SELECT codigo_producto as codpro, nombre_producto as nompro, empresa
-from vw_tbl_alm WHERE empresa = $empresa GROUP BY codigo_producto,nombre_producto,empresa";
-
-//echo $query_pro; exit();
-$resultado_pro = $connect->prepare($query_pro); 
-$resultado_pro->execute(); 
-}
-else{
- $query_pro = "SELECT codigo_producto as codpro, nombre_producto as nompro, empresa, local
-from vw_tbl_alm WHERE empresa = $empresa AND local = $almacen GROUP BY codigo_producto,nombre_producto,empresa,local";
-$resultado_pro = $connect->prepare($query_pro); 
-$resultado_pro->execute();   
-}
-
-
-
-
-}
 
 ?>
 <!DOCTYPE html>
@@ -111,6 +82,9 @@ $resultado_pro->execute();
                           <form class="form-inline" method="POST">
                                 <div class="form-group mr-3 ml-3">
                                   <label for="ex3" class="col-form-label"> Fecha Inicio: </label>
+                                  <input type="hidden" id="id_empresa" name="id_empresa" value="<?=$id_empresa?>">
+                                  <input type="hidden" id="action" name="action" value="kardexu">
+
                                   <input type="date" id="fecha_ini" name="fecha_ini" class="form-control" value="<?=$fecha_ini?>">
                                 </div>
                                 <div class="form-group mr-3 ml-3">
@@ -157,10 +131,9 @@ $resultado_pro->execute();
                             <th>Tipo</th>
                             <th>Serie</th>
                             <th>Número</th>
-                            <th>Cantidad</th>
-                            
-                            <th>Cantidad</th>
-                            
+
+                            <th>Cantidad</th>                            
+                            <th>Cantidad</th>                            
                             <th>Cantidad</th>
                             
                           </tr>
@@ -218,14 +191,15 @@ $resultado_pro->execute();
           },
           "ajax": 
           {
-            "url": base_url+'/assets/ajax/kardex_data1.php',
+            "url": base_url+'/assets/ajax/kardex_data.php',
             "data": function (d) 
             {
+              console.log(d);
               d.fecha_ini = $('#fecha_ini').val();
               d.fecha_fin = $('#fecha_fin').val();
               d.local     = $('#almacen').val();
               d.id_empresa = $('#id_empresa').val();
-              var action = 'kardexu';
+              d.action = $('#action').val();
             }
           },
           "columns": [
@@ -252,12 +226,7 @@ $resultado_pro->execute();
 
          });
           table.ajax.reload();
-          Swal.fire({
-          icon: 'success',
-          title: 'Procesado con exito...',
-          text: 'ok...!',
-          
-        }); 
+        
         });
       });
     </script> 

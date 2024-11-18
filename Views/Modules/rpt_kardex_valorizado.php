@@ -30,6 +30,7 @@ $id_empresa = $_SESSION["id_empresa"];
                           <div class="col-sm-4">                           
                             <label for="fecha_ini" class="col-form-label"> Fecha Inicio: </label>
                           <input type="hidden" id="id_empresa" name="id_empresa" value="<?=$id_empresa?>">
+                          <input type="hidden" id="action" name="action" value="kardexv">
                           <input type="date" id="fecha_ini" name="fecha_ini" class="form-control">
                           </div>
                           <div class="col-sm-4">
@@ -124,7 +125,7 @@ $id_empresa = $_SESSION["id_empresa"];
               d.fecha_ini = $('#fecha_ini').val();
               d.fecha_fin = $('#fecha_fin').val();
               d.id_empresa = $('#id_empresa').val();
-              var action = 'kardexv';
+              d.action = $('#action').val();
             }
           },
           "columns": [
@@ -156,12 +157,7 @@ $id_empresa = $_SESSION["id_empresa"];
 
          });
           table.ajax.reload();
-          Swal.fire({
-          icon: 'success',
-          title: 'Procesado con exito...',
-          text: 'ok...!',
-          
-        }); 
+         
         });
       });
     </script>

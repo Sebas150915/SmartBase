@@ -59,7 +59,7 @@ $output.='
        body
         {
           background: white;
-          font-size: 12px;
+          font-size: 14px;
           font-family: tahoma;
         }
         table

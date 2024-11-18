@@ -44,354 +44,354 @@ if($_POST['action']=='cargar_excel_compra')
     {
 
     //IMPORTAMOS LAS VENTAS
-$tipcomp=$sheet->getCell("A".$row)->getValue();
-if($tipcomp!='')
-{
-	
-$serie=$sheet->getCell("B".$row)->getValue();
-if($serie == '')
-{
-    $mensaje['error'] = 'LA SERIE NO PUEDE ESTAR VACIA';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-$correlativo=$sheet->getCell("C".$row)->getValue();
-if($correlativo == '')
-{
-    $mensaje['error'] = 'EL CORRELATIVO NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-$fecemision=$sheet->getCell("D".$row)->getValue();
-
-//$fecemision= date("d/m/Y",strtotime($fecemision));
-//echo 'la fecha es: '.$fecemision;
-if($fecemision == '')
-{
-    $mensaje['error'] = 'LA FECHA DE EMISION NO PUEDE ESTAR VACIA';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-// Validar el formato de la fecha (YYYY-MM-DD)
-//$fecemision=validateDate($fecemision, 'Y-m-d');
-if (validateDate($fecemision, 'Y-m-d')) 
-{
-
-} 
-else 
-{
-$mensaje['error'] = 'FORMATO DE FECHA EMISION NO VALIDO:'. $fecemision;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-
-}
-$fecvencimiento=$sheet->getCell("E".$row)->getValue();
-if($fecvencimiento == '')
-{
-    $mensaje['error'] = 'LA FECHA DE VENCIMIENTO NO PUEDE ESTAR VACIA'.$fecvencimiento;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-//$fecvencimiento=date('Y-m-d', strtotime($fecvencimiento));
-// Validar el formato de la fecha (YYYY-MM-DD)
-if (validateDate($fecvencimiento, 'Y-m-d')) 
-{
-
-} 
-else 
-{
-$mensaje['error'] = 'FORMATO DE FECHA DE VENCIMIENTO NO VALIDO:'. $fecvencimiento;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-
-}
-
-$tipcambio=$sheet->getCell("F".$row)->getValue();
-if($tipcambio==''){ $tipcambio='1'; }
-
-$oc=$sheet->getCell("G".$row)->getValue();
-
-$guiarem=$sheet->getCell("H".$row)->getValue();
-if($guiarem==''){$guiarem=' ';}
-$condicion=$sheet->getCell("I".$row)->getValue();
-if($condicion == '')
-{
-    $mensaje['error'] = 'LA CONDICION NO PUEDE ESTAR VACIA';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$moneda=$sheet->getCell("J".$row)->getValue();
-
-if($moneda == '')
-{
-    $mensaje['error'] = 'LA MONEDA NO PUEDE ESTAR VACIA';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-
-if($moneda == 'S'){$moneda = 'PEN';}
-if($moneda == 'D'){$moneda = 'USD';}
-//echo $moneda;
-$ruccliente=$sheet->getCell("K".$row)->getValue();
-if($ruccliente == '')
-{
-    $mensaje['error'] = 'EL RUC DEL CLIENTE NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc = $ruccliente AND empresa=$empresa";
-$resultado_cliente = $connect->prepare($query_cliente);
-$resultado_cliente->execute();
-$row_cliente = $resultado_cliente->fetch(PDO::FETCH_ASSOC);
-$id_ruc = $row_cliente['id_persona'];
-if($id_ruc == '')
-{
-    $mensaje['error'] = 'EL RUC INGRESADO NO EXISTE, DEBE CARGAR PRIMERO EL RUC DEL PROVEEDOR: '.$ruccliente;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-
-$nomcliente=$sheet->getCell("L".$row)->getValue();
-if($nomcliente == '')
-{
-    $mensaje['error'] = 'EL NOMBRE DEL PROVEEDOR NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$pordet=$sheet->getCell("M".$row)->getValue();
-if($pordet==''){ $pordet='0'; }
-
-$coddet=$sheet->getCell("N".$row)->getValue();
-if($coddet==''){ $coddet=' '; }
-
-$impdet=$sheet->getCell("O".$row)->getValue();
-if($impdet==''){ $impdet=' '; }
-
-$tipdocref=$sheet->getCell("P".$row)->getValue();
-if($tipdocref==''){ $tipdocref=' '; }
-
-$serdocref=$sheet->getCell("Q".$row)->getValue();
-if($serdocref==''){ $serdocref=' '; }
-
-$numdocref=$sheet->getCell("R".$row)->getValue();
-if($numdocref==''){ $numdocref=' '; }
-
-$codmotivo=$sheet->getCell("S".$row)->getValue();
-if($codmotivo=='')
-{ 
-    $codmotivo=''; 
-    $des_motivo = '';
-}
-else
-{
-$query_ncd = "SELECT * FROM tbl_not_cre_deb WHERE codigo = '$codmotivo'";
-$resultado_ncd = $connect->prepare($query_ncd);
-$resultado_ncd->execute();
-$row_ncd = $resultado_ncd->fetch(PDO::FETCH_ASSOC);
-//echo $query_ncd;
-$des_motivo = $row_ncd['descripcion'];
-}
-
-
-$codproducto=$sheet->getCell("T".$row)->getValue();
-/*if($codproducto == '')
-{
-    $mensaje['error'] = 'EL CODIGO DEL PRODUCTO NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}*/
-
-$nomproducto=$sheet->getCell("U".$row)->getValue();
-if($nomproducto == '')
-{
-    $mensaje['error'] = 'EL NOMBRE DEL PRODUCTO NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$query_prd = "SELECT * FROM tbl_productos WHERE empresa = $empresa AND nombre LIKE '%$nomproducto%'";
-$resultado_prd=$connect->prepare($query_prd);
-$resultado_prd->execute(); 
-$row_prd = $resultado_prd->fetch(PDO::FETCH_ASSOC);
-$num_reg_prd=$resultado_prd->rowCount();
-
-$codproducto = $row_prd['id'];
-if($codproducto == '')
-{
-    $mensaje['error'] = 'EL CODIGO DEL PRODUCTO NO PUEDE ESTAR VACIO '.$nomproducto;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$descripcion=$sheet->getCell("V".$row)->getValue();
-if($descripcion==''){ $descripcion=' '; }
-
-$cantidad=$sheet->getCell("W".$row)->getValue();
-if($cantidad == '')
-{
-    $mensaje['error'] = 'LA CANTIDAD NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$afectacion=$sheet->getCell("X".$row)->getValue();
-if($afectacion == '')
-{
-    $mensaje['error'] = 'LA AFECTACION NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$porigv=$sheet->getCell("Y".$row)->getValue();
-if($porigv == '')
-{
-    $mensaje['error'] = 'EL PORCENTAJE DE IGV NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$precio=$sheet->getCell("Z".$row)->getValue();
-if($precio == '')
-{
-    $mensaje['error'] = 'PRECIO NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-
-$costo=$sheet->getCell("AA".$row)->getValue();
-if($costo==''){ $costo='0'; }
-
-$obs=$sheet->getCell("AB".$row)->getValue();
-if($obs==''){ $obs=' '; }
-
-$feestado=$sheet->getCell("AC".$row)->getValue();
-if($feestado==''){ $costo='0'; }
-
-$cuotas ='1';
-
-
-$codalm=$sheet->getCell("AD".$row)->getValue();
-if($codalm == '')
-{
-    $mensaje['error'] = 'EL CODIGO DEL ALMACEN NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-
-$query_vta = "SELECT * FROM tbl_compra_cab WHERE idempresa = $empresa AND tipocomp = '$tipcomp' AND serie = '$serie' AND correlativo = $correlativo ";
-$resultado_vta=$connect->prepare($query_vta);
-$resultado_vta->execute(); 
-$row_vta = $resultado_vta->fetch(PDO::FETCH_ASSOC);
-$num_reg_vta=$resultado_vta->rowCount();
-//$des_motivo = $row_ncd['descripcion'];
-//echo $query_vta;
-
-if($impdet==' '){$impdet=0;}
-if($numdocref==' '){$numdocref=0;}
-
-    if($num_reg_vta == 0)
+    $tipcomp=$sheet->getCell("A".$row)->getValue();
+    if($tipcomp!='')
     {
-        $hora = date('h:i:s');
-        $item =1;
-        $query=$connect->prepare("INSERT INTO tbl_compra_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,orden_compra,tipocomp_ref,serie_ref,correlativo_ref,cod_motivo,des_motivo,feestado,idalmacen) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$empresa,$tipcomp,$serie,$correlativo,$fecemision,$fecvencimiento,$condicion,$op_gravadas,$op_exoneradas,$op_inafectas,$igv_total,$total,$ruccliente, $vendedor,$obs,$cuotas,$hora,$id_ruc,$pordet,$coddet,$impdet,$guiarem,$oc,$tipdocref,$serdocref,$numdocref,$codmotivo,$des_motivo,$feestado,$codalm]);
-        
-        $lastInsertId = $connect->lastInsertId();
-        $k++;
-        $op_gravadas=0;
-        $op_exoneradas=0;
-        $op_inafectas=0;
-        $igv =0;
-        $total=0;
+    	
+    $serie=$sheet->getCell("B".$row)->getValue();
+    if($serie == '')
+    {
+        $mensaje['error'] = 'LA SERIE NO PUEDE ESTAR VACIA';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    $correlativo=$sheet->getCell("C".$row)->getValue();
+    if($correlativo == '')
+    {
+        $mensaje['error'] = 'EL CORRELATIVO NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    $fecemision=$sheet->getCell("D".$row)->getValue();
+
+    //$fecemision= date("d/m/Y",strtotime($fecemision));
+    //echo 'la fecha es: '.$fecemision;
+    if($fecemision == '')
+    {
+        $mensaje['error'] = 'LA FECHA DE EMISION NO PUEDE ESTAR VACIA';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    // Validar el formato de la fecha (YYYY-MM-DD)
+    //$fecemision=validateDate($fecemision, 'Y-m-d');
+    if (validateDate($fecemision, 'Y-m-d')) 
+    {
+
+    } 
+    else 
+    {
+    $mensaje['error'] = 'FORMATO DE FECHA EMISION NO VALIDO:'. $fecemision;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+
+    }
+    $fecvencimiento=$sheet->getCell("E".$row)->getValue();
+    if($fecvencimiento == '')
+    {
+        $mensaje['error'] = 'LA FECHA DE VENCIMIENTO NO PUEDE ESTAR VACIA'.$fecvencimiento;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    //$fecvencimiento=date('Y-m-d', strtotime($fecvencimiento));
+    // Validar el formato de la fecha (YYYY-MM-DD)
+    if (validateDate($fecvencimiento, 'Y-m-d')) 
+    {
+
+    } 
+    else 
+    {
+    $mensaje['error'] = 'FORMATO DE FECHA DE VENCIMIENTO NO VALIDO:'. $fecvencimiento;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+
+    }
+
+    $tipcambio=$sheet->getCell("F".$row)->getValue();
+    if($tipcambio==''){ $tipcambio='1'; }
+
+    $oc=$sheet->getCell("G".$row)->getValue();
+
+    $guiarem=$sheet->getCell("H".$row)->getValue();
+    if($guiarem==''){$guiarem=' ';}
+    $condicion=$sheet->getCell("I".$row)->getValue();
+    if($condicion == '')
+    {
+        $mensaje['error'] = 'LA CONDICION NO PUEDE ESTAR VACIA';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+    $moneda=$sheet->getCell("J".$row)->getValue();
+
+    if($moneda == '')
+    {
+        $mensaje['error'] = 'LA MONEDA NO PUEDE ESTAR VACIA';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+
+    if($moneda == 'S'){$moneda = 'PEN';}
+    if($moneda == 'D'){$moneda = 'USD';}
+    //echo $moneda;
+    $ruccliente=$sheet->getCell("K".$row)->getValue();
+    if($ruccliente == '')
+    {
+        $mensaje['error'] = 'EL RUC DEL CLIENTE NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+    $query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc = $ruccliente AND empresa=$empresa";
+    $resultado_cliente = $connect->prepare($query_cliente);
+    $resultado_cliente->execute();
+    $row_cliente = $resultado_cliente->fetch(PDO::FETCH_ASSOC);
+    $id_ruc = $row_cliente['id_persona'];
+    if($id_ruc == '')
+    {
+        $mensaje['error'] = 'EL RUC INGRESADO NO EXISTE, DEBE CARGAR PRIMERO EL RUC DEL PROVEEDOR: '.$ruccliente;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+
+    $nomcliente=$sheet->getCell("L".$row)->getValue();
+    if($nomcliente == '')
+    {
+        $mensaje['error'] = 'EL NOMBRE DEL PROVEEDOR NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+    $pordet=$sheet->getCell("M".$row)->getValue();
+    if($pordet==''){ $pordet='0'; }
+
+    $coddet=$sheet->getCell("N".$row)->getValue();
+    if($coddet==''){ $coddet=' '; }
+
+    $impdet=$sheet->getCell("O".$row)->getValue();
+    if($impdet==''){ $impdet=' '; }
+
+    $tipdocref=$sheet->getCell("P".$row)->getValue();
+    if($tipdocref==''){ $tipdocref=' '; }
+
+    $serdocref=$sheet->getCell("Q".$row)->getValue();
+    if($serdocref==''){ $serdocref=' '; }
+
+    $numdocref=$sheet->getCell("R".$row)->getValue();
+    if($numdocref==''){ $numdocref=' '; }
+
+    $codmotivo=$sheet->getCell("S".$row)->getValue();
+    if($codmotivo=='')
+    { 
+        $codmotivo=''; 
+        $des_motivo = '';
     }
     else
     {
-        $lastInsertId = $row_vta['id'];
-        $k++;
-        $item++;
+    $query_ncd = "SELECT * FROM tbl_not_cre_deb WHERE codigo = '$codmotivo'";
+    $resultado_ncd = $connect->prepare($query_ncd);
+    $resultado_ncd->execute();
+    $row_ncd = $resultado_ncd->fetch(PDO::FETCH_ASSOC);
+    //echo $query_ncd;
+    $des_motivo = $row_ncd['descripcion'];
     }
-    $item                   = $item;
-    $idarticulo             = $codproducto;
-    $cantidad_total         = $cantidad;
-    $porigv                 = $porigv/100;
-    $precio_venta_unitario  = $precio/(1+$porigv);
-    $precio_venta           = $precio;
-    
-    
-    $valor_total            = $cantidad_total*$precio_venta_unitario;
-    $importe_total          = $cantidad_total*$precio_venta;
-    $igv_total              = $valor_total*($porigv);
-    $costo                  = $costo;
-    $cantidad               = $cantidad;
-    $factor                 = 1;
-    $cantidadu              = 0;
-    $mxmn                   = 'MIN';
-    $nomarticulo            = $nomproducto;
-    
-    $insert_query_detalle =$connect->prepare("INSERT INTO tbl_compra_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn,nombre_producto) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn,$nomarticulo]);
-    
-   
-    if($afectacion == '10')
+
+
+    $codproducto=$sheet->getCell("T".$row)->getValue();
+    /*if($codproducto == '')
     {
-       $op_gravadas=($valor_total) + $op_gravadas;
-       $igv = $op_gravadas*0.18 + $igv;
-    
+        $mensaje['error'] = 'EL CODIGO DEL PRODUCTO NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }*/
+
+    $nomproducto=$sheet->getCell("U".$row)->getValue();
+    if($nomproducto == '')
+    {
+        $mensaje['error'] = 'EL NOMBRE DEL PRODUCTO NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
     }
-    else if($afectacion == '20')
+
+    $query_prd = "SELECT * FROM tbl_productos WHERE empresa = $empresa AND nombre LIKE '%$nomproducto%'";
+    $resultado_prd=$connect->prepare($query_prd);
+    $resultado_prd->execute(); 
+    $row_prd = $resultado_prd->fetch(PDO::FETCH_ASSOC);
+    $num_reg_prd=$resultado_prd->rowCount();
+
+    $codproducto = $row_prd['id'];
+    if($codproducto == '')
     {
-        $op_exoneradas=$valor_total  + $op_exoneradas;
-    
+        $mensaje['error'] = 'EL CODIGO DEL PRODUCTO NO PUEDE ESTAR VACIO '.$nomproducto;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
     }
-    else if($afectacion == '30')
+
+    $descripcion=$sheet->getCell("V".$row)->getValue();
+    if($descripcion==''){ $descripcion=' '; }
+
+    $cantidad=$sheet->getCell("W".$row)->getValue();
+    if($cantidad == '')
     {
-       $op_inafectas=$valor_total  + $op_inafectas;
+        $mensaje['error'] = 'LA CANTIDAD NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+    $afectacion=$sheet->getCell("X".$row)->getValue();
+    if($afectacion == '')
+    {
+        $mensaje['error'] = 'LA AFECTACION NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+    $porigv=$sheet->getCell("Y".$row)->getValue();
+    if($porigv == '')
+    {
+        $mensaje['error'] = 'EL PORCENTAJE DE IGV NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+    $precio=$sheet->getCell("Z".$row)->getValue();
+    if($precio == '')
+    {
+        $mensaje['error'] = 'PRECIO NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+
+    $costo=$sheet->getCell("AA".$row)->getValue();
+    if($costo==''){ $costo='0'; }
+
+    $obs=$sheet->getCell("AB".$row)->getValue();
+    if($obs==''){ $obs=' '; }
+
+    $feestado=$sheet->getCell("AC".$row)->getValue();
+    if($feestado==''){ $costo='0'; }
+
+    $cuotas ='1';
+
+
+    $codalm=$sheet->getCell("AD".$row)->getValue();
+    if($codalm == '')
+    {
+        $mensaje['error'] = 'EL CODIGO DEL ALMACEN NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+
+    $query_vta = "SELECT * FROM tbl_compra_cab WHERE idempresa = $empresa AND tipocomp = '$tipcomp' AND serie = '$serie' AND correlativo = $correlativo ";
+    $resultado_vta=$connect->prepare($query_vta);
+    $resultado_vta->execute(); 
+    $row_vta = $resultado_vta->fetch(PDO::FETCH_ASSOC);
+    $num_reg_vta=$resultado_vta->rowCount();
+    //$des_motivo = $row_ncd['descripcion'];
+    //echo $query_vta;
+
+    if($impdet==' '){$impdet=0;}
+    if($numdocref==' '){$numdocref=0;}
+
+        if($num_reg_vta == 0)
+        {
+            $hora = date('h:i:s');
+            $item =1;
+            $query=$connect->prepare("INSERT INTO tbl_compra_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,orden_compra,tipocomp_ref,serie_ref,correlativo_ref,cod_motivo,des_motivo,feestado,idalmacen) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+            $resultado=$query->execute([$empresa,$tipcomp,$serie,$correlativo,$fecemision,$fecvencimiento,$condicion,$op_gravadas,$op_exoneradas,$op_inafectas,$igv_total,$total,$ruccliente, $vendedor,$obs,$cuotas,$hora,$id_ruc,$pordet,$coddet,$impdet,$guiarem,$oc,$tipdocref,$serdocref,$numdocref,$codmotivo,$des_motivo,$feestado,$codalm]);
+            
+            $lastInsertId = $connect->lastInsertId();
+            $k++;
+            $op_gravadas=0;
+            $op_exoneradas=0;
+            $op_inafectas=0;
+            $igv =0;
+            $total=0;
+        }
+        else
+        {
+            $lastInsertId = $row_vta['id'];
+            $k++;
+            $item++;
+        }
+        $item                   = $item;
+        $idarticulo             = $codproducto;
+        $cantidad_total         = $cantidad;
+        $porigv                 = $porigv/100;
+        $precio_venta_unitario  = $precio/(1+$porigv);
+        $precio_venta           = $precio;
+        
+        
+        $valor_total            = $cantidad_total*$precio_venta_unitario;
+        $importe_total          = $cantidad_total*$precio_venta;
+        $igv_total              = $valor_total*($porigv);
+        $costo                  = $costo;
+        $cantidad               = $cantidad;
+        $factor                 = 1;
+        $cantidadu              = 0;
+        $mxmn                   = 'MIN';
+        $nomarticulo            = $nomproducto;
+        
+        $insert_query_detalle =$connect->prepare("INSERT INTO tbl_compra_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn,nombre_producto) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn,$nomarticulo]);
+        
+       
+        if($afectacion == '10')
+        {
+           $op_gravadas=($valor_total) + $op_gravadas;
+           $igv = $op_gravadas*0.18 + $igv;
+        
+        }
+        else if($afectacion == '20')
+        {
+            $op_exoneradas=$valor_total  + $op_exoneradas;
+        
+        }
+        else if($afectacion == '30')
+        {
+           $op_inafectas=$valor_total  + $op_inafectas;
+         
+        }
+        $total = $op_gravadas + $igv + $op_inafectas + $op_exoneradas;
+        $query=$connect->prepare("UPDATE tbl_compra_cab SET op_gravadas=?,op_exoneradas=?,op_inafectas=?,igv=?,total=? WHERE id = ?");
+    	$resultado = $query->execute([$op_gravadas,$op_exoneradas,$op_inafectas,$igv,$total,$lastInsertId]);
+    	//sleep(1);
+       
+    }	
+
+    }
+    $mensaje['respuesta'] = 'REGISTROS PROCESADOS : '.$num.' EN TOTAL';
+    $mensaje['procesados']  = 'SE CARGARON        : '.$k.'   EN TOTAL';
+    $mensaje['noprocesados']  = 'NO SE CARGARON     : '.($num - $k).'   EN TOTAL';
+    }
+        
      
-    }
-    $total = $op_gravadas + $igv + $op_inafectas + $op_exoneradas;
-    $query=$connect->prepare("UPDATE tbl_compra_cab SET op_gravadas=?,op_exoneradas=?,op_inafectas=?,igv=?,total=? WHERE id = ?");
-	$resultado = $query->execute([$op_gravadas,$op_exoneradas,$op_inafectas,$igv,$total,$lastInsertId]);
-	//sleep(1);
-   
-}	
+       $data = json_encode($mensaje,true);
 
-}
-$mensaje['respuesta'] = 'REGISTROS PROCESADOS : '.$num.' EN TOTAL';
-$mensaje['procesados']  = 'SE CARGARON        : '.$k.'   EN TOTAL';
-$mensaje['noprocesados']  = 'NO SE CARGARON     : '.($num - $k).'   EN TOTAL';
-}
-    
- 
-   $data = json_encode($mensaje,true);
+       echo $data;
 
-   echo $data;
-
-   exit();
+       exit();
 
 }
 

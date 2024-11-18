@@ -124,6 +124,7 @@ $id_empresa = $_SESSION["id_empresa"];
               d.fecha_ini = $('#fecha_ini').val();
               d.fecha_fin = $('#fecha_fin').val();
               d.id_empresa = $('#id_empresa').val();
+              var action = 'kardexv';
             }
           },
           "columns": [
@@ -147,7 +148,20 @@ $id_empresa = $_SESSION["id_empresa"];
 
         // Filtrar datos al hacer clic en "Procesar"
         $('#btn_filtrar').on('click', function() {
+           swal.fire({
+           type: "success",
+           title: "Procesando..!",
+           showConfirmButton: true,
+           confirmButtonText: "Cerrar"
+
+         });
           table.ajax.reload();
+          Swal.fire({
+          icon: 'success',
+          title: 'Procesado con exito...',
+          text: 'ok...!',
+          
+        }); 
         });
       });
     </script>

@@ -226,6 +226,9 @@
                     </div> <!-- /. card-body -->
                   </div> <!-- /. card -->
                 </div> <!-- /. col -->
+                
+                <?php  if($_SESSION['perfil']=='1')
+                   {?>
                 <div class="col-md-3">
                   <div class="card shadow mb-4">
                     <div class="card-body bg-danger" style="border: 2px solid white;">
@@ -242,6 +245,8 @@
                     </div> <!-- /. card-body -->
                   </div> <!-- /. card -->
                 </div> <!-- /. col -->
+                
+                <?php } ?>
                 <div class="col-md-3">
                   <div class="card shadow mb-4">
                     <div class="card-body bg-info" style="border: 2px solid white;">

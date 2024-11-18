@@ -22,26 +22,13 @@
                     <ul class="dropdown-menu" aria-labelledby="contactDropdown">
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/ventas"><span class="ml-1">Ventas</span></a>
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/cotizacion"><span class="ml-1">Cotizacion/Pedidos</span></a>
-                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/productos_ventas"><span class="ml-1">Consulta Productos</span></a>
-                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/resumen_cpe"><span class="ml-1">Resumen de Boletas</span></a>
-                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/nota_venta"><span class="ml-1">Nota de Venta</span></a>
                        <a class="nav-link pl-lg-2" href="<?=base_url()?>/pos"><span class="ml-1">POS</span>
                        <span class="badge badge-pill badge-danger">Nuevo</span></a>
                       <a class="#" href="#"><span class="ml-1">Cuentas x Cobrar</span></a>
                     </ul>
                   </li>
-                  
-                  <li class="nav-item dropdown">
-                    <a class="dropdown-toggle nav-link pl-lg-2" href="#" id="contactDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="ml-1">Reportes</span>
-                    </a>
-                <ul class="dropdown-menu" aria-labelledby="appsDropdown">
-                 <li class="nav-item dropdown">
-                    <a class="nav-link pl-lg-2" data-toggle="modal" data-target="#modalReporteZ" href="#"><span class="ml-1">Reporte Z</span></a>
-                     <a class="nav-link pl-lg-2"  href="<?=base_url()?>/cuentas_por_pagar"><span class="ml-1">Cuentas x Pagar</span></a>
-                  
-                </ul>
-              </li>
+                 
+               
 
               
                             
@@ -324,6 +311,7 @@
   </div>
 </nav>
  -->
+ 
  
  
 

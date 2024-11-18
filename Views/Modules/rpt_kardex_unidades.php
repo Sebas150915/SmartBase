@@ -134,7 +134,7 @@ $resultado_pro->execute();
                                 
                                 
                                 <div class="form-group">
-                                  <button type="submit" class="btn btn-success mx-1">Procesar</button>
+                                  <button type="button" id="btn_filtrar" class="btn btn-success mx-1 btn-block">Procesar</button>
                                   
                                 </div>
                           </form>
@@ -142,74 +142,31 @@ $resultado_pro->execute();
 
                   <div class="card-body">
 
-                    <table id="examplex1" class="table table-striped table-bordered  nowrap" cellspacing="0" width="100%">
-                      <thead class="bg-dark" style="color: white">
-                          
-                          
+                    <table id="kardex_tableu" class="table table-striped table-bordered  nowrap" cellspacing="0" width="100%">
+                     <thead class="bg-dark" style="color: white">
                           <tr>
                              <th rowspan="2">Producto</th>
-                            <th colspan="4">DOCUMENTO DE TRASLADO, COMPROBANTE DE PAGO, DOCUMENTO INTERNO O SIMILAR</th>
-                            <th rowspan="2">Tipo Operacion</th>
-                            <th rowspan="2">Entradas</th>
-                            <th rowspan="2">Salidas</th>
-                            <th rowspan="2">Saldo Final</th>
-                            
+                             <th colspan="4">DOCUMENTO DE TRASLADO, COMPROBANTE DE PAGO, DOCUMENTO INTERNO O SIMILAR</th>
+                             <th rowspan="2">Tipo Operacion</th>
+                             <th colspan="1" class="text-center">Entradas</th>
+                             <th colspan="1" class="text-center">Salidas</th>
+                             <th colspan="1" class="text-center">Saldo Final</th>
                           </tr>
                           <tr>
                             <th>Fecha</th>
                             <th>Tipo</th>
                             <th>Serie</th>
                             <th>Número</th>
+                            <th>Cantidad</th>
+                            
+                            <th>Cantidad</th>
+                            
+                            <th>Cantidad</th>
+                            
                           </tr>
-                      </thead>
+                        </thead>
                       <tbody>
-                        <?php foreach($resultado_pro as $pro)
-                        {
-                           $prod = $pro['nompro']; 
-                           $codp = $pro['codpro']; 
-
-                         if($almacen == '%')
-                         {
-                          $query_data = "SELECT * FROM vw_tbl_alm WHERE fecha BETWEEN '$fecha_ini' AND '$fecha_fin' AND empresa = $empresa AND codigo_producto = $codp  ORDER BY nombre_producto,fecha,tipo_movimiento";
-                         }
-                         else
-                         {
-                             $query_data = "SELECT * FROM vw_tbl_alm WHERE fecha BETWEEN '$fecha_ini' AND '$fecha_fin' AND empresa = $empresa AND local = $almacen AND codigo_producto = $codp  ORDER BY nombre_producto,fecha,tipo_movimiento";
-                         }
-                         
-                         //echo $query_data;exit(); 
-                          $resultado_data=$connect->prepare($query_data);
-                          $resultado_data->execute();
-                          $num_reg_data=$resultado_data->rowCount();
-
-                          $saldo_pro = 0;
-                              foreach($resultado_data as $data) 
-                              {
-                                if($data['tipo_movimiento']=='1')
-                                {
-                                $tipo_mov = '01';
-                                $saldo_pro = $saldo_pro + $data['cantidad_entrada'];
-                                }
-                                else
-                                {
-                                $tipo_mov = '02';
-                                $saldo_pro =  $saldo_pro-$data['cantidad_salida'];
-                                } 
-                                
-
-                                ?>
-                              <tr>
-                                <td><?=$data['nombre_producto'].'-'.$data['codigo_producto']?></td>
-                                <td><?=$data['fecha']?></td>
-                                <td><?=$data['tipo_doc']?></td>
-                                <td><?=$data['serie_doc']?></td>
-                                <td><?=$data['num_doc']?></td>
-                                <td><?=$tipo_mov?></td>
-                                <td><?=$data['cantidad_entrada']?></td>
-                                <td><?=$data['cantidad_salida']?></td>
-                                <td><?=$saldo_pro?></td>
-                              </tr>
-                        <?php } } ?>
+                        
                         
                       </tbody>
                       
@@ -237,27 +194,73 @@ $resultado_pro->execute();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-      <script>
-    $(document).ready(function() {
-    $('#examplex1').DataTable( {
-        //responsive: true,
-         "scrollX": true,
-         paging: false,
+  <script src="<?=media()?>/js/kardex.js"></script>
+      
 
-        order: [[0, 'asc'],[1, 'asc']],
-        dom: 'Bfrtip',
-        buttons: [
+
+
+     <script>
+      $(document).ready(function() {
+        var table = $('#kardex_tableu').DataTable({
+          "scrollX": true,
+          "paging": false,
+          "order": [[0, 'asc'], [1, 'asc']],
+          "dom": 'Bfrtip',
+          "buttons": [
             { extend: 'copyHtml5', footer: true },
-            { extend: 'excelHtml5',footer: true, title: 'Registro de ventas'},
-            { extend: 'csvHtml5',  footer: true },
-            { extend: 'pdfHtml5',  footer: true }
-                ],
-        rowGroup: {
-            dataSrc: 0
-        }
-    } );
-} );
-  </script>  
+            { extend: 'excelHtml5', footer: true, title: 'Kardex Valorizado' },
+            { extend: 'csvHtml5', footer: true },
+            { extend: 'pdfHtml5', footer: true }
+          ],
+          "rowGroup": 
+          {
+            dataSrc: 'nombre_producto'
+          },
+          "ajax": 
+          {
+            "url": base_url+'/assets/ajax/kardex_data1.php',
+            "data": function (d) 
+            {
+              d.fecha_ini = $('#fecha_ini').val();
+              d.fecha_fin = $('#fecha_fin').val();
+              d.local     = $('#almacen').val();
+              d.id_empresa = $('#id_empresa').val();
+              var action = 'kardexu';
+            }
+          },
+          "columns": [
+            { "data": "nombre_producto" },
+            { "data": "fecha" },
+            { "data": "tipo_doc" },
+            { "data": "serie_doc" },
+            { "data": "num_doc" },
+            { "data": "tipo_movimiento" },
+            { "data": "cantidad_entrada" },            
+            { "data": "cantidad_salida" },            
+            { "data": "saldo_final" }
+            
+          ]
+        });
+
+        // Filtrar datos al hacer clic en "Procesar"
+        $('#btn_filtrar').on('click', function() {
+           swal.fire({
+           type: "success",
+           title: "Procesando..!",
+           showConfirmButton: true,
+           confirmButtonText: "Cerrar"
+
+         });
+          table.ajax.reload();
+          Swal.fire({
+          icon: 'success',
+          title: 'Procesado con exito...',
+          text: 'ok...!',
+          
+        }); 
+        });
+      });
+    </script> 
 
       
   </body>

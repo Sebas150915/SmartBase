@@ -13,29 +13,79 @@
 
       <div class="row">
           <div class="col-sm-6">
-              <label for="">Nombre Local</label>
+              <label for="">Código Local</label>
               <input type="hidden" name="action" value="addLocal">
               <input type="hidden" name="empresa" value="<?=$empresa?>">
-            <input type="text" name="local" id="local" class="form-control" required="" onkeyup="javascript:this.value=this.value.toUpperCase();">
+            <input type="text" name="local" id="local" class="form-control text-right" required="" onkeyup="javascript:this.value=this.value.toUpperCase();">
           </div>
+
+          <div class="col-sm-6">
+          <label for="">Ubicación</label>
+          <input type="text" class="form-control text-right"  name="ubicacion" id="ubicacion">
+       </div>
+       
           
-             <div class="col-sm-6">
-             <label for="">Importe</label>
-             <input type="text" class="form-control text-right" name="importe" id="importe">
-        </div>
+          <div class="col-sm-6">
+            <label for="">Nivel</label>
+            <input type="text" class="form-control text-right"  name="nivel" id="nivel">
+         </div>
+
+         <div class="col-sm-6">
+            <label for="">Meses Garantia</label>
+            <input type="text" class="form-control text-right"  name="meses_garantia" id="meses_garantia" onkeyup="calcula_garantia_soles();">
+         </div>
 
 
       </div>
-      <hr>
-      <div class="row mt-3">
-        <div class="col-sm-6">
-          <label for="">Area Local</label>
-          <input type="text" class="form-control text-right" name="arealocal" id="arealocal">
-        </div>
-        <div class="col-sm-6">
-          <label for="">Ubicacion</label>
-          <input type="text" class="form-control text-right"  name="ubilocal" id="ubilocal">
+
+      <div class="row">
+
+       <div class="col-sm-6">
+       <label for="">Escala</label>
+            <select name="escala" id="escala" class="form-control select2" >
+              <option value="5" selected >5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+            </select>
        </div>
+
+          <div class="col-sm-6">
+          <label for="">Metrado</label>
+          <input type="text" class="form-control text-right" name="metrado" id="metrado" onkeyup="calcula_metrado();">
+        </div>
+
+       <div class="col-sm-6">
+          <label for="">Precio Metrado</label>
+          <input type="text" class="form-control text-right"  name="precio_metrado" id="precio_metrado" onkeyup="calcula_metrado();">
+       </div>
+
+       <div class="col-sm-6">
+          <label for="">Tipo de Cambio</label>
+          <input type="text" class="form-control text-right" name="tc" id="tc" onkeyup="calcula_soles();">
+       </div>
+
+       <div class="col-sm-6">
+          <label for="">Importe Soles</label>
+             <input type="text" class="form-control text-right" name="importe_soles" id="importe_soles" readonly="" onkeyup="calcula_garantia_soles();">
+        </div>
+
+        <div class="col-sm-6">
+          <label for="">Importe Dólares</label>
+          <input type="text" class="form-control text-right"  name="importe_dolar" id="importe_dolar" readonly="" onkeyup="calcula_soles();">
+       </div>
+
+       <div class="col-sm-6">
+          <label for="">Importe Garantia Soles</label>
+          <input type="text" class="form-control text-right"  name="importe_garantia_soles" id="importe_garantia_soles" readonly="" onkeyup="calcula_garantia_soles();">
+       </div>
+
+       <div class="col-sm-6">
+          <label for="">Importe Garantia Dólares</label>
+          <input type="text" class="form-control text-right"  name="importe_garantia_dolar" id="importe_garantia_dolar" readonly="" onkeyup="calcula_soles();">
+       </div>
+
       </div>
    
 </div> 
@@ -69,14 +119,14 @@
 
       <div class="row">
           <div class="col-sm-6">
-              <label for="">Nombre  Local</label>
+              <label for="">Nombre Local</label>
             <input type="hidden" name="update_id" id="update_id" value="">
             <input type="hidden" name="action" value="ediLocal">
             <input type="text"  name="update_nombre" id="update_nombre" class="form-control" required="" onkeyup="javascript:this.value=this.value.toUpperCase();">
           </div>
           
         <div class="col-sm-6">
-         <label for="">Importe</label>
+         <label for="">Importe Soles</label>
             <input type="text" class="form-control text-right" name="update_importe" id="update_importe">
        </div>
           
@@ -84,13 +134,42 @@
       <hr>
       <div class="row mt-3">
         <div class="col-sm-6">
-          <label for="">Area</label>
+          <label for="">Area Local (M²)</label>
           <input type="text" class="form-control text-right"  name="update_area" id="update_area">
         </div>
         <div class="col-sm-6">
           <label for="">Ubicacion</label>
           <input type="text" class="form-control text-right" name="update_ubi" id="update_ubi">
        </div>
+
+       <div class="col-sm-6">
+       <label for="">Escala</label>
+            <select name="update_escala" id="update_escala" class="form-control select2" >
+              <option value="5" selected >5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+            </select>
+       </div>
+
+       <div class="col-sm-6">
+          <label for="">Nivel</label>
+          <input type="text" class="form-control text-right"  name="update_nivel" id="update_nivel">
+       </div>
+
+
+       <div class="col-sm-6">
+          <label for="">Precio M² - Dólar</label>
+          <input type="text" class="form-control text-right"  name="update_precio_m2" id="update_precio_m2" onchange="multiplicar();">
+       </div>
+
+       <div class="col-sm-6">
+          <label for="">Tipo de Cambio</label>
+          <input type="text" class="form-control text-right"  name="update_tc" id="update_tc" onchange="multiplicar();" >
+       </div>
+
+
       </div>
       
     <div class="modal-footer mt-3">

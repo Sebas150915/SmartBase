@@ -63,15 +63,19 @@ $num_reg_data=$resultado_data->rowCount();
                           <table id="dataTable-1" class="table table-bordered table-hover table-striped datatables dataTable no-footer">
                           <thead class="bg-dark" style="color: white">
                         <tr>
-                          <th width="10%">Acciones</th>
-                          <th width="8%">Id</th>
-                          <th width="8%">Local</th>
-                          <th width="8%">Area</th>
-                          <th width="8%">Ubicación</th>
-                          <th width="8%">Importe</th>
-                          <th width="10%">Contratos</th>
-                          <th width="8%">Separaciones</th>
-                          <th width="10%">Estado</th>
+                          <th>Acciones</th>
+                          <th>Id</th>
+                          <th>Local</th>
+                          <th>Nivel</th>
+                          <th>Escala</th>
+                          <th>Metrado</th>
+                          <th>Precio Metrado</th>
+                          <th>Tc</th>
+                          <th>Importe Soles</th>
+                          <th>Importe Dolar</th>
+                          <th>Contratos</th>
+                          <th>Separaciones</th>
+                          <th>Estado</th>
                           
                         </tr>
                       </thead>
@@ -83,10 +87,14 @@ $num_reg_data=$resultado_data->rowCount();
                               <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button></td>
                             <td><?= $usuario['id'] ?></td>
                             <td><?= $usuario['nombre'] ?></td>
+                            <td><?= $usuario['nivel'] ?></td>
+                            <td><?= $usuario['escala'] ?></td>
                             <td><?= $usuario['area'] ?></td>
-                            <td><?= $usuario['ubi'] ?></td>
-                            <td><?= $usuario['imp_alqui'] ?></td>
-                             <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/contratos/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
+                            <td><?= $usuario['precio_metrado'] ?></td>
+                            <td><?= $usuario['tc'] ?></td>
+                            <td><?= $usuario['importe_soles'] ?></td>
+                            <td><?= $usuario['importe_dolar'] ?></td> 
+                            <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/contratos/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
                             <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/separaciones/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
                             
                             <td><?php $e = $usuario['estado'];
@@ -137,11 +145,11 @@ $num_reg_data=$resultado_data->rowCount();
       </main> <!-- main -->
     </div> <!-- .wrapper -->
 <?php include 'views/modules/modals/locales.php' ?>
-    <?php include 'views/template/pie.php' ?>
-      
-     
-      <script src="assets/js/locales.js?v=3"></script>
-      <script src="assets/js/funciones_locales.js?v=3"></script>
+    <?php include 'views/template/pie.php' ?> 
+      <script src="assets/js/locales.js"></script>
+      <script src="assets/js/funciones_locales.js"></script>
+      <script src="assets/js/funciones_locales_calcula.js?v=1"></script>
+
 
   </body>
 </html>

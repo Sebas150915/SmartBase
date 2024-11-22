@@ -11,8 +11,8 @@ session_start();
 
 if($_POST['action'] == 'addLocal')
 {
-	$query=$connect->prepare("INSERT INTO tbl_alq_local(idempresa,nombre,area,ubi,imp_alqui,estado) VALUES (?,?,?,?,?,?);");
-	$resultado=$query->execute([$_POST['empresa'],$_POST['local'],$_POST['arealocal'],$_POST['ubilocal'],$_POST['importe'],'1']);
+	$query=$connect->prepare("INSERT INTO tbl_alq_local(idempresa,nombre,area,precio_metrado,tc,importe_dolar,importe_soles,nivel,escala,estado) VALUES (?,?,?,?,?,?,?,?,?,?);");
+	$resultado=$query->execute([$_POST['empresa'],$_POST['local'],$_POST['metrado'],$_POST['precio_metrado'],$_POST['tc'],$_POST['importe_dolar'],$_POST['importe_soles'],$_POST['nivel'],$_POST['escala'],'0']);
 
 
 	if($resultado)
@@ -30,7 +30,7 @@ if($_POST['action'] == 'addLocal')
 //####################################EDITAR CLIENTE####################################////
 if($_POST['action'] == 'ediLocal')
 {
-	$query=$connect->prepare("UPDATE tbl_alq_local SET nombre=?,area=?,ubi=?,imp_alqui=? WHERE id = ?");
+	$query=$connect->prepare("UPDATE tbl_alq_local SET nombre=?,area=?,ubi=?,precio_m2=?,tc=?,importe=?,nivel=?,escala=? WHERE id = ?");
 	$resultado = $query->execute([$_POST['update_nombre'],$_POST['update_area'],$_POST['update_ubi'],$_POST['update_importe'],$_POST['update_id']]);
 
 	if($resultado)

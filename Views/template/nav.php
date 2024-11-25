@@ -343,20 +343,17 @@
                 </span>
                 <strong class="text-bold text-danger"><?=$_SESSION["nombre"]?></strong>
               </a>
-              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <li class="nav-item">
-                  <a class="nav-link pl-3"  href="#"><?= $_SESSION["ruc"]; ?></a>
-                </li>
-                <hr>
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  href="#"><?=$row_empresas['razon_social'] ?></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="<?=base_url()?>/cerrar">Cerrar Sesion</a>
-                </li>
-                
-                
-              </ul>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#"><?=$_SESSION['empresa']?></a>
+              <a class="dropdown-item" href="#"><?=$_SESSION['ruc']?></a>
+              <a class="dropdown-item" href="#"><?=$_SESSION['sucursal']?></a>
+              <hr>
+              <a class="dropdown-item" href="#">vencimiento : <?=$_SESSION['fecha_vencimiento']?></a>
+              <a class="dropdown-item" href="#">servidor : <?=$_SESSION['nombre_svr'].'-'.$_SESSION['tipo_svr']?></a>
+              <a class="dropdown-item" href="#">vencimiento Certificado : <?=$row_empresas['fecha_vencimiento']?></a>
+              <hr>
+              <a class="dropdown-item" href="<?=base_url()?>/cerrar">Cerrar Sesion</a>
+            </div>
             </li>
           </ul>
         </div>

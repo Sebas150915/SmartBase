@@ -7,7 +7,7 @@ date_default_timezone_set('America/Lima');
 
 //DATOS DE CONEXION DE LA BASE DE DATOS
 
-  const BD_HOST   = "37.60.241.157";
+  const BD_HOST   = "161.132.39.31";
   const BD_NAME   = "smartdemo";
   const BD_USER   = "smartdemo";
   const BD_PASSWORD = "smartdemo";

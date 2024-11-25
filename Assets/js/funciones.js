@@ -689,3 +689,76 @@ function enviacorreo(id,cl)
 
 
 }
+
+
+
+function cargarDatosini(top1) {
+    var action = 'Datosini'; // Define el parámetro 'action'
+    var num = top1;
+
+    $.ajax({
+        url: base_url + '/assets/ajax/ajax.php', // Ruta al archivo PHP
+        type: "POST",
+        async: true,
+        dataType: 'json', // Especifica que la respuesta será JSON
+        data: { action: action, num: num }, // Enviar los datos al servidor
+        success: function (response) {
+            const tbody = $('#top-products');
+            tbody.empty(); // Limpiar la tabla
+            
+            // Iterar sobre los datos y agregar filas dinámicamente
+            response.forEach(item => {
+                // Usa template literals para interpolar las variables
+                const row = `
+                    <tr>
+                        <td>${item.idproducto}</td>
+                        <td>${item.nombre}</td>
+                        <td>${item.cantidad}</td>
+                    </tr>`;
+                tbody.append(row); // Agregar la fila a la tabla
+            });
+
+            console.log("Datos cargados exitosamente:", response);
+        },
+        error: function (error) {
+            console.error("Error en la solicitud:", error);
+        }
+    });
+}
+
+
+function cargarDatosini1(top2) {
+    var action = 'Datosini1'; // Define el parámetro 'action'
+    var num = top2;
+
+    $.ajax({
+        url: base_url + '/assets/ajax/ajax.php', // Ruta al archivo PHP
+        type: "POST",
+        async: true,
+        dataType: 'json', // Especifica que la respuesta será JSON
+        data: { action: action, num: num }, // Enviar los datos al servidor
+        success: function (response) {
+            const tbody = $('#top-customers');
+            tbody.empty(); // Limpiar la tabla
+            
+            // Iterar sobre los datos y agregar filas dinámicamente
+            response.forEach(item => {
+                // Usa template literals para interpolar las variables
+                const row = `
+                    <tr>
+                        <td>${item.idproducto}</td>
+                        <td>${item.nombre}</td>
+                        <td>${item.venta}</td>
+                    </tr>`;
+                tbody.append(row); // Agregar la fila a la tabla
+            });
+
+            console.log("Datos cargados exitosamente:", response);
+        },
+        error: function (error) {
+            console.error("Error en la solicitud:", error);
+        }
+    });
+}
+
+

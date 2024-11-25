@@ -67,33 +67,7 @@
         $row_ventas = $resultado_ventas->fetch(PDO::FETCH_ASSOC);
         $ventas = $row_ventas['total_ventas'];
         
-        /*top de producto y clientes*/
-
-        $query_productos_top = "SELECT  d.idproducto,p.nombre,sum(d.cantidad) as cantidad,c.idempresa FROM tbl_venta_det
-                            as d LEFT JOIN tbl_productos as p
-                            on d.idproducto = p.id
-                            LEFT JOIN tbl_venta_cab as c
-                            ON d.idventa = c.id
-                            where c.idempresa =$_SESSION[id_empresa]
-                            GROUP BY d.idproducto,p.nombre
-                            ORDER BY sum(d.cantidad) DESC 
-                            limit $top1";
-        $resultado_productos_top=$connect->prepare($query_productos_top);
-        $resultado_productos_top->execute();
-        $num_reg_productos_top=$resultado_productos_top->rowCount();   
-
-
-        $query_clientes_top = "SELECT  x.id_persona as id,x.nombre_persona as nombre,x.num_doc,sum(c.total) as total, x.empresa
-                                FROM tbl_venta_cab as c 
-                                LEFT JOIN tbl_contribuyente as x
-                                ON c.idcliente = x.id_persona
-                                WHERE x.empresa=$_SESSION[id_empresa]
-                                GROUP BY x.id_persona,x.nombre_persona,x.num_doc
-                                ORDER BY sum(c.total) desc
-                                LIMIT $top2";
-        $resultado_clientes_top=$connect->prepare($query_clientes_top);
-        $resultado_clientes_top->execute();
-        $num_reg_clientes_top=$resultado_clientes_top->rowCount();   
+      
 
 
  ?>
@@ -141,42 +115,7 @@
                 </div>
               </div>
               <hr>
-              <div class="row my-4">
-                <div class="col-md-6">
-                  <div class="card shadow mb-4">
-                    <div class="card-body" style="border: 2px solid darkred;">
-                      <div class="row align-items-center">
-                        <div class="col">
-                          <div class="row">
-                             <span class="ml-lg-2 text-bold" style="font-size:20px"><strong><?=$row_empresas['razon_social'] ?></strong></span>
-                            </div>
-                            <hr>
-                            <div class="row">
-                             <span class="ml-lg-2 text-bold" style="font-size:20px">RUC: <strong><?=$_SESSION["ruc"] ?></strong></span>
-                            </div>
-                            <div class="row">
-                             <span class="ml-lg-2 text-bold" style="font-size:20px">Fecha Vencimiento: <strong><?=$_SESSION['fecha_vencimiento']?></strong></span>
-                            </div>
-                            <div class="row">
-                             <span class="ml-lg-2 text-bold" style="font-size:20px">Servidor: <strong><?=$_SESSION['nombre_svr'].'-'.$_SESSION['tipo_svr']?></strong></span>
-                            </div>
-                            <div class="row">
-                             <span class="ml-lg-2 text-bold" style="font-size:20px">Estado Certificado: <strong><?=$estado_certificado?></strong></span>
-                            </div>
-                            <div class="row">
-                             <span class="ml-lg-2 text-bold" style="font-size:20px">Vencimiento Certificado: <strong><?=$row_empresas['fecha_certificado']?></strong></span>
-                            </div>
-                            <div class="row">
-                             <span class="ml-lg-2 text-bold" style="font-size:20px">Direccion:  <strong><?=$_SESSION['sucursal']  ?></strong></span>
-                            </div>
-                          
-                        </div>
-                        
-                      </div> <!-- /. row -->
-                    </div> <!-- /. card-body -->
-                  </div> <!-- /. card -->
-                </div> <!-- /. col -->
-              </div>              <!-- widgets -->
+              <!-- widgets -->
               <div class="row my-4">
                 <div class="col-md-3 rounded-3">
                   <div class="card shadow mb-4">
@@ -330,14 +269,8 @@
                               <th>Cantidad</th>
                             </tr>
                         </thead>
-                        <tbody>
-                          <?php foreach($resultado_productos_top as $productos ){ ?>
-                           <tr> 
-                            <td><?= $productos['idproducto'] ?></td>
-                            <td><?= $productos['nombre'] ?></td>
-                            <td align="right"><?= number_format($productos['cantidad'],0,'.',',') ?></td>
-                           </tr> 
-                          <?php } ?>  
+                        <tbody id="top-products">
+                         
                         </tbody>
                         </table>
                          </div>
@@ -356,14 +289,8 @@
                               <th>Ventas</th>
                             </tr>
                         </thead>
-                        <tbody>
-                          <?php foreach($resultado_clientes_top as $clientes ){ ?>
-                           <tr> 
-                            <td><?= $clientes['id'] ?></td>
-                            <td><?= $clientes['nombre'] ?></td>
-                            <td align="right"><?= number_format($clientes['total'],0,'.',',') ?></td>
-                           </tr> 
-                          <?php } ?>  
+                        <tbody id="top-customers">
+                          
                         </tbody>
                         </table>
 
@@ -404,5 +331,11 @@
          echo "<script>alerta()</script>";
         }
  ?>
+
+ <script>
+
+cargarDatosini(<?=$top1?>);
+cargarDatosini1(<?=$top2?>);
+ </script>
   </body>
 </html>

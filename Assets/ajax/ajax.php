@@ -4,7 +4,58 @@ require_once("../../config/config.php");
 require_once("../../helpers/helpers.php"); 
 require_once("../../libraries/conexion.php"); 
 session_start();
-////////////carga desde excel/////////////
+////////////carga desde excel/////////////Datosini
+
+if ($_POST['action'] == 'Datosini') 
+{
+    $top1 = $_POST['num'];
+
+    $query_productos_top = "SELECT d.idproducto, p.nombre, SUM(d.cantidad) AS cantidad, c.idempresa 
+    FROM tbl_venta_det AS d 
+    LEFT JOIN tbl_productos AS p ON d.idproducto = p.id
+    LEFT JOIN tbl_venta_cab AS c ON d.idventa = c.id
+    WHERE c.idempresa = :empresa
+    GROUP BY d.idproducto, p.nombre
+    ORDER BY SUM(d.cantidad) DESC 
+    LIMIT :top";
+
+    $resultado_productos_top = $connect->prepare($query_productos_top);
+    $resultado_productos_top->bindParam(':empresa', $_SESSION['id_empresa'], PDO::PARAM_INT);
+    $resultado_productos_top->bindParam(':top', $top1, PDO::PARAM_INT);
+    $resultado_productos_top->execute();
+
+    $row1 = $resultado_productos_top->fetchAll(PDO::FETCH_ASSOC);
+
+    header('Content-Type: application/json');
+    echo json_encode($row1);
+    exit;
+}
+
+if ($_POST['action'] == 'Datosini1') 
+{
+    $top2 = $_POST['num'];
+
+    $query_clientes_top = "SELECT  x.id_persona as id,x.nombre_persona as nombre,x.num_doc,sum(c.total) as total, x.empresa
+                                FROM tbl_venta_cab as c 
+                                LEFT JOIN tbl_contribuyente as x
+                                ON c.idcliente = x.id_persona
+                                WHERE x.empresa=$_SESSION[id_empresa]
+                                GROUP BY x.id_persona,x.nombre_persona,x.num_doc
+                                ORDER BY sum(c.total) desc
+                                LIMIT $top2";
+        $resultado_clientes_top=$connect->prepare($query_clientes_top);
+        $resultado_clientes_top->execute();
+        $num_reg_clientes_top=$resultado_clientes_top->rowCount();   
+
+    $row2 = $resultado_clientes_top->fetchAll(PDO::FETCH_ASSOC);
+
+    header('Content-Type: application/json');
+    echo json_encode($row2);
+    exit;
+}
+
+
+
 if($_POST['action']=='cargar_excel_compra')
 {
     
@@ -435,73 +486,73 @@ if($_POST['action']=='cargar_excel_venta')
     {
 
     //IMPORTAMOS LAS VENTAS
-$tipcomp=$sheet->getCell("A".$row)->getValue();
-if($tipcomp!='')
-{
-	
-$serie=$sheet->getCell("B".$row)->getValue();
-if($serie == '')
-{
-    $mensaje['error'] = 'LA SERIE NO PUEDE ESTAR VACIA';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-$correlativo=$sheet->getCell("C".$row)->getValue();
-if($correlativo == '')
-{
-    $mensaje['error'] = 'EL CORRELATIVO NO PUEDE ESTAR VACIO';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-$fecemision=$sheet->getCell("D".$row)->getValue();
+    $tipcomp=$sheet->getCell("A".$row)->getValue();
+    if($tipcomp!='')
+    {
+    	
+    $serie=$sheet->getCell("B".$row)->getValue();
+    if($serie == '')
+    {
+        $mensaje['error'] = 'LA SERIE NO PUEDE ESTAR VACIA';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    $correlativo=$sheet->getCell("C".$row)->getValue();
+    if($correlativo == '')
+    {
+        $mensaje['error'] = 'EL CORRELATIVO NO PUEDE ESTAR VACIO';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    $fecemision=$sheet->getCell("D".$row)->getValue();
 
-//$fecemision= date("d/m/Y",strtotime($fecemision));
-//echo 'la fecha es: '.$fecemision;
-if($fecemision == '')
-{
-    $mensaje['error'] = 'LA FECHA DE EMISION NO PUEDE ESTAR VACIA';
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-// Validar el formato de la fecha (YYYY-MM-DD)
-//$fecemision=validateDate($fecemision, 'Y-m-d');
-if (validateDate($fecemision, 'Y-m-d')) 
-{
+    //$fecemision= date("d/m/Y",strtotime($fecemision));
+    //echo 'la fecha es: '.$fecemision;
+    if($fecemision == '')
+    {
+        $mensaje['error'] = 'LA FECHA DE EMISION NO PUEDE ESTAR VACIA';
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    // Validar el formato de la fecha (YYYY-MM-DD)
+    //$fecemision=validateDate($fecemision, 'Y-m-d');
+    if (validateDate($fecemision, 'Y-m-d')) 
+    {
 
-} 
-else 
-{
-$mensaje['error'] = 'FORMATO DE FECHA EMISION NO VALIDO:'. $fecemision;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
+    } 
+    else 
+    {
+    $mensaje['error'] = 'FORMATO DE FECHA EMISION NO VALIDO:'. $fecemision;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
 
-}
-$fecvencimiento=$sheet->getCell("E".$row)->getValue();
-if($fecvencimiento == '')
-{
-    $mensaje['error'] = 'LA FECHA DE VENCIMIENTO NO PUEDE ESTAR VACIA'.$fecvencimiento;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
-}
-//$fecvencimiento=date('Y-m-d', strtotime($fecvencimiento));
-// Validar el formato de la fecha (YYYY-MM-DD)
-if (validateDate($fecvencimiento, 'Y-m-d')) 
-{
+    }
+    $fecvencimiento=$sheet->getCell("E".$row)->getValue();
+    if($fecvencimiento == '')
+    {
+        $mensaje['error'] = 'LA FECHA DE VENCIMIENTO NO PUEDE ESTAR VACIA'.$fecvencimiento;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
+    }
+    //$fecvencimiento=date('Y-m-d', strtotime($fecvencimiento));
+    // Validar el formato de la fecha (YYYY-MM-DD)
+    if (validateDate($fecvencimiento, 'Y-m-d')) 
+    {
 
-} 
-else 
-{
-$mensaje['error'] = 'FORMATO DE FECHA DE VENCIMIENTO NO VALIDO:'. $fecvencimiento;
-    $data = json_encode($mensaje,true);
-   echo $data;
-   exit();
+    } 
+    else 
+    {
+    $mensaje['error'] = 'FORMATO DE FECHA DE VENCIMIENTO NO VALIDO:'. $fecvencimiento;
+        $data = json_encode($mensaje,true);
+       echo $data;
+       exit();
 
-}
+    }
 
 $tipcambio=$sheet->getCell("F".$row)->getValue();
 if($tipcambio==''){ $tipcambio='1'; }

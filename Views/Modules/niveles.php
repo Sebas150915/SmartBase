@@ -1,7 +1,6 @@
 <?php 
-$idlocal = $rutas[1];
 $empresa = $_SESSION["id_empresa"];
-$query_data = "SELECT * FROM tbl_alq_garantias";
+$query_data = "SELECT * FROM tbl_alq_nivel WHERE id_empresa='$empresa'";
 $resultado_data=$connect->prepare($query_data);
 $resultado_data->execute();
 $num_reg_data=$resultado_data->rowCount();
@@ -30,7 +29,7 @@ $num_reg_data=$resultado_data->rowCount();
             <div class="col-12">
               <div class="row align-items-center mb-2">
                 <div class="col">
-                  <h2 class="h5 page-title">Garantias </h2>
+                  <h2 class="h5 page-title">Niveles</h2>
                 </div>
                 <div class="col-auto">
                   <form class="form-inline">
@@ -54,7 +53,7 @@ $num_reg_data=$resultado_data->rowCount();
                       <div class="col-md-12">
                         <div class="card shadow">
                           <div class="card-header">
-                             <h2><button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalGarantia"><i class="fe fe-plus-circle"></i> Nueva Garantia</button></h2>
+                             <h2><button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ModalNivel"><i class="fe fe-plus-circle"></i>Nuevo</button></h2>
                           </div>
                          <div class="card-body">
                           
@@ -63,10 +62,7 @@ $num_reg_data=$resultado_data->rowCount();
                         <tr>
                           <th>Acciones</th>
                           <th>Id</th>
-                          <th>Importe Soles</th>
-                          <th>Importe Dólares</th>
-                          <th>Fecha</th>
-                          <th>Meses</th>
+                          <th>Nombre</th>
                           <th>Estado</th>
                           
                         </tr>
@@ -77,21 +73,18 @@ $num_reg_data=$resultado_data->rowCount();
                             <td>
                               <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
                               <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button></td>
-                            <td><?= $usuario['id_garantia'] ?></td>
-                            <td><?= $usuario['importe_soles'] ?></td>
-                            <td><?= $usuario['importe_dolares'] ?></td>
-                            <td><?= $usuario['fecha_garantia'] ?></td>
-                            <td><?= $usuario['meses_garantia'] ?></td>
+                            <td><?= $usuario['id'] ?></td>
+                            <td><?= $usuario['nombre'] ?></td>
                             <td><?php $e = $usuario['estado'];
                             if($e == '1')
                             {
-                              $e ='Por entregar';
-                              $c = 'primary';
+                              $e ='Activo';
+                              $c = 'success';
                             }
                             else
                             {
-                              $e ='Entregado';
-                              $c = 'success';
+                              $e ='Inactivo';
+                              $c = 'danger';
 
                             }?> 
                             <button class="btn btn-<?=$c?> btn-xs"><?=$e?></button></td>
@@ -117,12 +110,12 @@ $num_reg_data=$resultado_data->rowCount();
         
       </main> <!-- main -->
     </div> <!-- .wrapper -->
-<?php include 'views/modules/modals/garantias.php' ?>
+<?php include 'views/modules/modals/niveles.php' ?>
     <?php include 'views/template/pie.php' ?>
       
-     
-      <script src="../assets/js/garantias.js?v=<?=date('s')?>"></script>
-      <script src="../assets/js/funciones_garantias.js?v=<?=date('s')?>"></script>
+      <script src="assets/js/funciones_nivel.js"></script>                      
+      <script src="assets/js/niveles.js?v=3"></script>
+      
 
   </body>
 </html>

@@ -19,3 +19,10 @@ function calcula_garantia_soles(){
 	document.getElementById("importe_garantia_soles").value = a;
 	}	
 	
+function calcula_garantia_dolar(){
+	a1 = document.getElementById("importe_dolar").value;
+	a2 = document.getElementById("meses_garantia").value;
+	b = a1*a2;
+	document.getElementById("importe_garantia_dolar").value = b;
+	}	
+			

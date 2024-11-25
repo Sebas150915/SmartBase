@@ -1,6 +1,6 @@
 $(document).ready(function(){
-//##################################CREAR##################################//
-	$('#form_add_local').submit(function(e)
+//##################################CREAR CLIENTE##################################//
+	$('#form_add_nivel').submit(function(e)
 	{
 		swal.fire({
 					title: "Cargando...",
@@ -11,18 +11,15 @@ $(document).ready(function(){
 					});
 		e.preventDefault();
 		$.ajax({
-			url  :  base_url+'/assets/ajax/ajax_locales.php',
+			url  :  base_url+'/assets/ajax/ajax_nivel.php',
 			type : "POST",
 			async: true,
-			data : $('#form_add_local').serialize(),
+			data : $('#form_add_nivel').serialize(),
 
 			success: function(response)
 			{
-                Swal.fire({
-                title: "Guardado con exito...!",
-                text: response,
-                icon: "success"
-                }); 
+			 
+             $('#exito').modal('show'); 
              console.log(response);
              location.reload(); 
 			},
@@ -34,9 +31,9 @@ $(document).ready(function(){
 		});
 	});
 	
-//##################################EDITAR CLIENTE##################################//
-	$('#form_edi_local').submit(function(e)
-	{
+//##################################EDITAR ##################################//
+$('#form_edit_nivel').submit(function(e)
+{
 		swal.fire({
 					title: "Cargando...",
 					text: "Por favor espere",
@@ -46,19 +43,15 @@ $(document).ready(function(){
 					});
 		e.preventDefault();
 		$.ajax({
-			url  :  base_url+'/assets/ajax/ajax_locales.php',
+			url  :  base_url+'/assets/ajax/ajax_nivel.php',
 			type : "POST",
 			async: true,
-			data : $('#form_edi_local').serialize(),
+			data : $('#form_edit_nivel').serialize(),
 
 			success: function(response)
 			{
 			 
-              Swal.fire({
-                title: "Guardado con exito...!",
-                text: response,
-                icon: "success"
-                }); 
+             $('#exito').modal('show'); 
              console.log(response);
              location.reload(); 
 			},
@@ -68,10 +61,10 @@ $(document).ready(function(){
 			}
 
 		});
-	});
+});
 
-	//##################################ELIMINAR CATEGORIA##################################//
-	$('#form_del_local').submit(function(e)
+	//##################################ELIMINAR##################################//
+	$('#form_del_nivel').submit(function(e)
 	{
 		swal.fire({
 					title: "Cargando...",
@@ -82,18 +75,15 @@ $(document).ready(function(){
 					});
 		e.preventDefault();
 		$.ajax({
-			url  :  base_url+'/assets/ajax/ajax_locales.php',
+			url  :  base_url+'/assets/ajax/ajax_nivel.php',
 			type : "POST",
 			async: true,
-			data : $('#form_del_local').serialize(),
+			data : $('#form_del_nivel').serialize(),
 
 			success: function(response)
 			{
-			  Swal.fire({
-                title: "Guardado con exito...!",
-                text: response,
-                icon: "success"
-                });  
+			 
+             $('#exito').modal('show'); 
              console.log(response);
              location.reload(); 
 			},
@@ -105,4 +95,5 @@ $(document).ready(function(){
 		});
 	});
 });// en ready
+
 

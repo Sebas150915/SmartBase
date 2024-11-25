@@ -99,7 +99,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="contactDropdown">
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/locales"><span class="ml-1">Locales</span></a>
-                   
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/niveles"><span class="ml-1">Niveles</span></a>
                     </ul>
                   </li>
                   <?php } ?>

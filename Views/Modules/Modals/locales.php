@@ -1,3 +1,9 @@
+<?php
+$query_nivel = "SELECT * FROM tbl_alq_nivel WHERE estado='1' AND id_empresa=$_SESSION[id_empresa]";
+$resultado_nivel=$connect->prepare($query_nivel);
+$resultado_nivel->execute(); 
+$num_reg_nivel=$resultado_nivel->rowCount();
+?>
 <!-- Modal -->
 <div class="modal fade" id="ModalCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <form action="" name="form_add_local" id="form_add_local">
@@ -25,10 +31,18 @@
        </div>
        
           
-          <div class="col-sm-6">
-            <label for="">Nivel</label>
-            <input type="text" class="form-control text-right"  name="nivel" id="nivel">
-         </div>
+       <div class="col-sm-6">
+                      <label for="">Nivel</label>
+               <select class="form-control select2" style="width: 100%;" name="nivel" id="nivel" required>
+                          
+            <option value="">Seleccionar Nivel</option>
+            <?php 
+                    while($row_nivel = $resultado_nivel->fetch(PDO::FETCH_ASSOC) )
+               {?>
+                <option value="<?= $row_nivel['id'] ?>"><?=$row_nivel['nombre']?></option>;
+               <?php  } ?>
+          </select>
+                  </div>
 
          <div class="col-sm-6">
             <label for="">Meses Garantia</label>
@@ -73,7 +87,7 @@
 
         <div class="col-sm-6">
           <label for="">Importe Dólares</label>
-          <input type="text" class="form-control text-right"  name="importe_dolar" id="importe_dolar" readonly="" onkeyup="calcula_soles();">
+          <input type="text" class="form-control text-right"  name="importe_dolar" id="importe_dolar" readonly="" onkeyup="calcula_garantia_dolar();">
        </div>
 
        <div class="col-sm-6">
@@ -83,7 +97,7 @@
 
        <div class="col-sm-6">
           <label for="">Importe Garantia Dólares</label>
-          <input type="text" class="form-control text-right"  name="importe_garantia_dolar" id="importe_garantia_dolar" readonly="" onkeyup="calcula_soles();">
+          <input type="text" class="form-control text-right"  name="importe_garantia_dolar" id="importe_garantia_dolar" readonly="" onkeyup="calcula_garantia_dolar();">
        </div>
 
       </div>

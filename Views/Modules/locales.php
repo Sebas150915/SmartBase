@@ -74,20 +74,29 @@ $num_reg_data=$resultado_data->rowCount();
                           <th>Importe Soles</th>
                           <th>Importe Dolar</th>
                           <th>Contratos</th>
+                          <th>Garantias</th>
                           <th>Separaciones</th>
                           <th>Estado</th>
                           
                         </tr>
                       </thead>
                         <tbody>
-                        <?php foreach($resultado_data as $usuario ){ ?>
+                        <?php foreach($resultado_data as $usuario ){
+                          $nivel1=$usuario['nivel'];
+                          
+                          $query_nivel = "SELECT * FROM tbl_alq_nivel WHERE id=$nivel1";
+                          $resultado_nivel = $connect->prepare($query_nivel);
+                          $resultado_nivel->execute();
+                          $row_nivel = $resultado_nivel->fetch(PDO::FETCH_ASSOC);
+                          
+                          ?>
                           <tr>
                             <td>
                               <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
                               <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button></td>
                             <td><?= $usuario['id'] ?></td>
                             <td><?= $usuario['nombre'] ?></td>
-                            <td><?= $usuario['nivel'] ?></td>
+                            <td><?= $row_nivel['nombre'] ?></td>
                             <td><?= $usuario['escala'] ?></td>
                             <td><?= $usuario['area'] ?></td>
                             <td><?= $usuario['precio_metrado'] ?></td>
@@ -95,6 +104,7 @@ $num_reg_data=$resultado_data->rowCount();
                             <td><?= $usuario['importe_soles'] ?></td>
                             <td><?= $usuario['importe_dolar'] ?></td> 
                             <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/contratos/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
+                            <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/garantias/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
                             <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/separaciones/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
                             
                             <td><?php $e = $usuario['estado'];
@@ -147,8 +157,8 @@ $num_reg_data=$resultado_data->rowCount();
 <?php include 'views/modules/modals/locales.php' ?>
     <?php include 'views/template/pie.php' ?> 
       <script src="assets/js/locales.js"></script>
-      <script src="assets/js/funciones_locales.js"></script>
-      <script src="assets/js/funciones_locales_calcula.js?v=1"></script>
+      <script src="assets/js/funciones_locales.js?v=1"></script>
+      <script src="assets/js/funciones_locales_calcula.js?v=3"></script>
 
 
   </body>

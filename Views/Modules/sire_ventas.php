@@ -4,7 +4,7 @@
 //session_start();
 $empresa = $_SESSION["id_empresa"];
 $boton  = 'disabled';
-
+$anio = date('Y');
 if(!empty($_POST))
 {
 $mes = $_POST['periodo'];
@@ -69,7 +69,7 @@ $num_reg_data=$resultado_data->rowCount();
                                   </div>
                                   <div class="form-group mr-3 ml-3">
                                     <label for="ex4" class="col-form-label">Año: </label>
-                                    <input type="number" id="anio" name="anio" class="form-control text-right" max="2030" min="2023" value="2023">
+                                    <input type="number" id="anio" name="anio" class="form-control text-right" max="2030" min="2023" value="<?=$anio?>">
                                   </div>
                         
                         

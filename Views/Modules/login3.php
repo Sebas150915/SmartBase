@@ -104,7 +104,7 @@ if(!empty($_POST))
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('<?=media()?>/images/fondo6.jpg') no-repeat center center fixed;
+            background: url('<?=media()?>/images/bg1.jpg') no-repeat center center fixed;
             background-size: cover;
         }
         .login-container {

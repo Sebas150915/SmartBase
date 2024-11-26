@@ -240,6 +240,11 @@ class GeneradorXML
             $xml .='<cbc:ProfileID schemeName="Tipo de Operacion" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">1001</cbc:ProfileID>';
           }
 
+          if($comprobante['exportacion'] == 'SI')
+          {
+            $xml .='<cbc:ProfileID schemeName="Tipo de Operacion" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">0200</cbc:ProfileID>';
+          }
+
 
          $xml .='<cbc:ID>'.$comprobante['serie'].'-'.$comprobante['correlativo'].'</cbc:ID>
          <cbc:IssueDate>'.$comprobante['fecha_emision'].'</cbc:IssueDate>
@@ -251,7 +256,15 @@ class GeneradorXML
          }
          else
          {
-           $InvoiceTypeCode = '0101';
+            if($comprobante['exportacion'] == 'SI')
+            {
+
+              $InvoiceTypeCode = '0200';
+            }
+            else
+            {
+               $InvoiceTypeCode = '0101';
+            }
          }
          $xml .='
          <cbc:InvoiceTypeCode listID="'.$InvoiceTypeCode.'">'.$comprobante['tipodoc'].'</cbc:InvoiceTypeCode>

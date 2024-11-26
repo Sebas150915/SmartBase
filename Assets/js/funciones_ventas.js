@@ -465,7 +465,7 @@ $(document).on('keyup', '#ruc_persona', function(e)
 
 			}
          }
-         
+
 		
 
     /*alertas para */
@@ -1284,7 +1284,7 @@ function agregar(id,nombre,precio,afectacion,precio_compra,factor,mxmn,calculaig
 		afectacion = 40;
 	}
 
-	alert(afectacion);
+	//alert(afectacion);
 
 	if(afectacion==10)
 	{

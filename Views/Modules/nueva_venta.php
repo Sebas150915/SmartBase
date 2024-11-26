@@ -1,4 +1,5 @@
 <?php 
+
 $empresa = $_SESSION["id_empresa"];
 $perfil = $_SESSION["perfil"];
 

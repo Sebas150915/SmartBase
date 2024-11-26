@@ -465,6 +465,7 @@ $(document).on('keyup', '#ruc_persona', function(e)
 
 			}
          }
+         
 		
 
     /*alertas para */

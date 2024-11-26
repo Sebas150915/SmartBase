@@ -424,6 +424,7 @@ $xml .=
            $forma_pago = 'Credito';  
          }
 
+
          $xml .=
          '<cac:PaymentTerms>
                <cbc:ID>FormaPago</cbc:ID>

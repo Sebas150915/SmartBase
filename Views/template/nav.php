@@ -118,17 +118,7 @@ $sql_empresas="SELECT * FROM tbl_empresas WHERE id_empresa = $_SESSION[id_empres
                   <?php } ?>
                     </ul>
                   </li>
-                  <?php if($_SESSION['ruc'] == '10441689166'){ ?>
-                  <li class="nav-item dropdown">
-                    <a class="dropdown-toggle nav-link pl-lg-2" href="#" id="contactDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="ml-1">Alquileres</span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="contactDropdown">
-                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/locales"><span class="ml-1">Locales</span></a>
-                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/niveles"><span class="ml-1">Niveles</span></a>
-                    </ul>
-                  </li>
-                  <?php } ?>
+                
                   
                   
                  </ul>
@@ -209,12 +199,21 @@ $sql_empresas="SELECT * FROM tbl_empresas WHERE id_empresa = $_SESSION[id_empres
 
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/transportista"><span class="ml-1"><i class="fe fe-users"></i> Transportista</span></a>
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/gre"><span class="ml-1">GRE</span></a>
-                       
                     </ul>
                   </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link pl-lg-2" href="#" id="contactDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="ml-1">Alquileres</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="contactDropdown">
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/locales"><span class="ml-1">Locales</span></a>
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/niveles"><span class="ml-1">Niveles</span></a>
+                    </ul>
+                  </li>
+
                   <li class="nav-item dropdown">
                     <a class="nav-link pl-lg-2" href="<?=base_url()?>/contabilidad"><span class="ml-1">Contabilidad</span></a>
-                    
                   </li>
                   
                 </ul>

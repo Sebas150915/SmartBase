@@ -98,7 +98,27 @@ if($_POST['action'] == 'buscar_destino')
         exit;
 }
 
+if($_POST['action'] == 'buscar_vehiculo')
+{
+        $empresa =$_SESSION['id_empresa'];
+        $html ="";
+        //$html= '<option value="">-SELECCIONE-</option>';
 
+
+        $query = "SELECT * FROM tbl_gre_vehiculo WHERE idempresa ='$empresa' ORDER BY id DESC";
+        $resultado=$connect->prepare($query);
+        $resultado->execute(); 
+        $num_reg=$resultado->rowCount();
+
+
+        while($row = $resultado->fetch(PDO::FETCH_ASSOC) )
+        {
+        $html.='<option value="'.$row['id'].'">'.$row["placa"].'</option>';
+        }
+
+        echo $html;
+        exit;
+}
 
 // guardar nueva venta
 

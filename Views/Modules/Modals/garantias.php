@@ -27,7 +27,7 @@ $num_reg_con=$resultado_con->rowCount();
               <label for="">Fecha</label>
               <input type="hidden" name="action" value="addGarantia">
               <input type="hidden" name="empresa" value="<?=$empresa?>">
-            <input type="date" name="fecha_garantia" id="fecha_garantia" class="form-control" required="">
+            <input type="date" name="fecha_garantia" id="fecha_garantia" class="form-control" required="" value="<?php echo date("Y-m-d"); ?>">
           </div>
 
           <div class="col-sm-6">

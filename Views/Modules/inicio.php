@@ -115,6 +115,7 @@
                 </div>
               </div>
               <hr>
+              
               <!-- widgets -->
               <div class="row my-4">
                 <div class="col-md-3 rounded-3">

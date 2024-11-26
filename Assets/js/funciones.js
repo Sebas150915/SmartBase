@@ -746,9 +746,9 @@ function cargarDatosini1(top2) {
                 // Usa template literals para interpolar las variables
                 const row = `
                     <tr>
-                        <td>${item.idproducto}</td>
+                        <td>${item.id}</td>
                         <td>${item.nombre}</td>
-                        <td>${item.venta}</td>
+                        <td>${item.total}</td>
                     </tr>`;
                 tbody.append(row); // Agregar la fila a la tabla
             });

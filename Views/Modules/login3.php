@@ -7,7 +7,7 @@ if(!empty($_POST))
   $clave   = $_POST['clave'];
   $usuario = trim($usuario);
   $clave = trim($clave);
-  $ruc   = $_POST['ruc'];
+  $ruc   = trim($_POST['ruc']);
 
   if(empty($usuario) || empty($clave) || empty($ruc))
       {
@@ -19,16 +19,20 @@ if(!empty($_POST))
         $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql="SELECT * FROM vw_tbl_usuarios WHERE usuario= :user AND clave= :pass AND ruc=:ruc";
         $resultado=$connect->prepare($sql);
-        $ruc=htmlentities(addslashes($ruc));
-        $usuario=htmlentities(addslashes($usuario));
-        $clave=htmlentities(addslashes($clave));
-        $clave=md5($clave);
-        //echo $clave;
+
+
+        // Sanitizar entradas
+        $ruc = trim($ruc);
+        $usuario = trim($usuario);
+        $clave = md5(trim($clave)); // Hash MD5 para la clave
+
         $resultado->bindValue(":user",$usuario);
         $resultado->bindValue(":pass",$clave);
         $resultado->bindValue(":ruc",$ruc);
         $resultado->execute();
         $num_reg=$resultado->rowCount();
+        // Liberar recursos
+        $resultado->closeCursor();
         //echo $num_reg;
         $row_resultado=$resultado->fetch(PDO::FETCH_ASSOC);
         if($num_reg!=0)
@@ -47,7 +51,6 @@ if(!empty($_POST))
             $_SESSION["farmacia"]           =$row_resultado['farmacia'];
             $_SESSION["usabarras"]          =$row_resultado['usabarras'];
             $_SESSION["servidor_cpe"]       =$row_resultado['servidor_cpe'];
-
             $_SESSION["nombre_svr"]       =$row_resultado['nombre_svr'];
             $_SESSION["tipo_svr"]       =$row_resultado['tipo_svr'];
             $_SESSION["venta_por_mayor"]       =$row_resultado['venta_por_mayor'];
@@ -57,12 +60,13 @@ if(!empty($_POST))
             $_SESSION["usaexportacion"]       =$row_resultado['usaexportacion'];
 
 
-            $hoy                            = date('Y-m-d');
+            $hoy  = date('Y-m-d');
                 if($row_resultado['fecha_vencimiento'] <= $hoy)
                 {
+                    $fv = $row_resultado['fecha_vencimiento'];
                   echo '<script>
 
-                    alert("Cuenta con fecha de vencimiento");
+                    alert("Cuenta con fecha de vencimiento " '.$fv.');
 
                   </script>';
                   session_destroy();
@@ -187,11 +191,14 @@ if(!empty($_POST))
             font-weight: bold;
             text-decoration: underline;
         }
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.12/sweetalert2.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.12/sweetalert2.all.js"></script>
     </style>
 </head>
 <body>
     <div class="login-container">
-         <form class="" method="POST">
+        
             <img src="<?=media()?>/images/logo.png" alt="Logo del Sistema"> <!-- Cambia 'logo.png' por la ruta de tu logo -->
             <div class="input-group">
                 <input type="text" id="ruc" name="ruc" placeholder="Ingresar RUC" required>
@@ -202,9 +209,60 @@ if(!empty($_POST))
             <div class="input-group">
                 <input type="password" class="input-line" id="clave" name="clave" placeholder="Ingresar Clave" required>
             </div>
-            <button type="submit" class="btn btn-success">Iniciar Sesión</button>
-        </form>
+            <button type="submit" class="btn btn-success" onclick="iniciarSesion()">Iniciar Sesión</button>
+        
     </div>
+
+  <script src="<?=media()?>/js/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.23/sweetalert2.all.js"></script>
+    <script type="text/javascript">
+        function iniciarSesion() {
+            // Obtener valores de los inputs
+            var ruc = $("#ruc").val();
+            var usuario = $("#usuario").val();
+            var clave = $("#clave").val();
+
+            // Validar que los campos no estén vacíos
+            if (ruc.trim() === "" || usuario.trim() === "" || clave.trim() === "") {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Debe llenar todos los datos',
+                  text: 'ok...!',
+                  
+                });
+            }
+
+            // Enviar datos al servidor con AJAX
+            $.ajax({
+                url: 'procesar_login.php', // Archivo PHP que procesará los datos
+                type: 'POST',
+                data: {
+                    ruc: ruc,
+                    usuario: usuario,
+                    clave: clave
+                },
+                success: function(response) {
+                    // Procesar respuesta del servidor
+                    try {
+                        var data = JSON.parse(response);
+                        if (data.success) {
+                            // Redirigir al inicio si el login es exitoso
+                            window.location.href = data.redirect_url;
+                        } else {
+                            // Mostrar mensaje de error
+                            $("#mensaje").text(data.message);
+                        }
+                    } catch (e) {
+                        $("#mensaje").text("Error al procesar la respuesta del servidor.");
+                    }
+                },
+                error: function() {
+                    $("#mensaje").text("Error en la comunicación con el servidor.");
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>
 

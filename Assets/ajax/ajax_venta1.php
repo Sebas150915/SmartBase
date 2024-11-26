@@ -6,10 +6,6 @@ require_once("../../libraries/conexion.php");
 require_once("../../sunat/api/xml.php");
 require_once("../../sunat/api/ApiFacturacion.php");
 session_start();
-
-
-
-
 if($_POST['action'] == 'nota_venta_editar')
 {
 
@@ -320,8 +316,8 @@ if($_POST['action'] == 'nueva_venta')
         $resultado_cli = $query_cli->execute([$_POST['correo_cliente'],$_POST['id_ruc']]);
 
         $hora = date('h:i:s');
-        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,orden_compra,codmoneda,local,redondeo, relacionado_id, relacionado_serie, estadopagoanticipo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['orden_compra'],$moneda,$localemp,$redondeo, $relacionado_id, $relacionado_serie, $estadopagoanticipo]);
+        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,orden_compra,codmoneda,local,redondeo, relacionado_id, relacionado_serie, estadopagoanticipo,exportacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['orden_compra'],$moneda,$localemp,$redondeo, $relacionado_id, $relacionado_serie, $estadopagoanticipo,$_POST['exportacion']]);
 
         $lastInsertId = $connect->lastInsertId();
 
@@ -555,8 +551,8 @@ if($_POST['action'] == 'nueva_venta')
         );
         //buscar datos cliente
         
-
-        $query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc = $_POST[ruc_persona] AND empresa = $_POST[empresa]";
+        $rucpersona = $_POST['ruc_persona'];
+        $query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc = '$rucpersona'  AND empresa = $_POST[empresa]";
         $resultado_cliente = $connect->prepare($query_cliente);
         $resultado_cliente->execute();
         $row_cliente = $resultado_cliente->fetch(PDO::FETCH_ASSOC);
@@ -681,6 +677,7 @@ if($_POST['action'] == 'nueva_venta')
         'tc'                 => $row_cpe_cab['tc'],
         'total_texto'        => $texto,
         'redondeo'           => $row_cpe_cab['redondeo'],
+        'exportacion'           => $row_cpe_cab['exportacion'],
         /*CUERPO DE ANTICIPOS*/
         "totalanticipo"=> $totanticipo,
         "subanticipo"=> $subanticipo,
@@ -1593,8 +1590,6 @@ if($_POST['action'] == 'sunat')
            
                 //echo json_encode($_POST['enviar_id']);
                 exit;
-
-
 
 }
 // guardar nueva nota de venta

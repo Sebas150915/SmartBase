@@ -255,6 +255,15 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                         <label for="">Guia Remision</label>
                         <input type="text" class="form-control"  name="nguiar" id="nguiar" value="">
                       </div>
+                      <?php if($_SESSION['usaexportacion'] == 'SI'){ ?>
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Exportacion</label>
+                        <select class="form-control select2" name="exportacion" id="exportacion" >
+                          <option value="NO">NO</option>
+                          <option value="SI">SI</option>
+                        </select>
+                      </div>
+                    <?php } ?>
                     </div>
 
 <!--div class="row justify-content-left">
@@ -512,7 +521,7 @@ else {?>
 
 
 
-<script src="<?=media()?>/js/funciones_ventas.js?v=1"></script>
+<script src="<?=media()?>/js/funciones_ventas.js?v=4"></script>
    
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>

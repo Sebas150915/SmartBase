@@ -54,6 +54,7 @@ if(!empty($_POST))
 
             $_SESSION["detalle"]       =$row_resultado['detalle'];
             $_SESSION["precio"]       =$row_resultado['precio'];
+            $_SESSION["usaexportacion"]       =$row_resultado['usaexportacion'];
 
 
             $hoy                            = date('Y-m-d');

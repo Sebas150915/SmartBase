@@ -448,10 +448,13 @@ $(document).on('keyup', '#ruc_persona', function(e)
  
 		 //let tipoDocumento = document.getElementById('tipoDocumento').value;
          let tipoDocVenta = document.getElementById('tip_cpe').value;
+         let exportacionx = document.getElementById('exportacion').value;
          //alert(tipoDocVenta);
          let partes = tipoDocVenta.split('-');
-		if(user.length <11 &&  partes[1] == '01')
-		{
+         if(exportacionx == 'NO')
+         {
+			if(user.length <11 &&  partes[1] == '01')
+			{
 			Swal.fire({
 			icon: 'error',
 			title: 'No puedes emitir Factura con un tipo Doc. diferente a RUC...',
@@ -460,7 +463,9 @@ $(document).on('keyup', '#ruc_persona', function(e)
 			document.venta_nueva.ruc_persona.focus()
 			return 0;
 
-		}
+			}
+         }
+		
 
     /*alertas para */
 		swal.fire({
@@ -1153,9 +1158,7 @@ function teclas(event)
 
 					}
 			          });     
-     
-       
-    }
+}
 
 
 
@@ -1192,11 +1195,6 @@ function teclas(event)
   {
   parametro = $('#modalCliente').modal('show');
 
-  /*parametro.document.getElementById('1').value = "id";
-  parametro.document.getElementById('2').value = "doc";
-  parametro.document.getElementById('3').value = "nom";
-  parametro.document.getElementById('4').value = "dir";*/
-
   }
 
 
@@ -1214,12 +1212,6 @@ function teclas(event)
     function cliente2()
   {
   parametro = $('#modalCliente').modal('show');
-
- /* parametro.document.getElementById('1').value = "id";
-  parametro.document.getElementById('2').value = "doc";
-  parametro.document.getElementById('3').value = "nom";
-  parametro.document.getElementById('4').value = "dir";*/
-
   }
 
 
@@ -1236,12 +1228,6 @@ function teclas(event)
   function cliente3()
   {
   parametro = $('#modalCliente').modal('show');
-
-  /*parametro.document.getElementById('1').value = "id";
-  parametro.document.getElementById('2').value = "doc";
-  parametro.document.getElementById('3').value = "nom";
-  parametro.document.getElementById('4').value = "dir";*/
-
   }
 
 
@@ -1260,12 +1246,6 @@ function teclas(event)
   function cliente4()
   {
   parametro = $('#modalCliente').modal('show');
-
-  /*parametro.document.getElementById('1').value = "id";
-  parametro.document.getElementById('2').value = "doc";
-  parametro.document.getElementById('3').value = "nom";
-  parametro.document.getElementById('4').value = "dir";*/
-
   }
 
 
@@ -1296,6 +1276,14 @@ $("#btnCuota").hide();
 
 function agregar(id,nombre,precio,afectacion,precio_compra,factor,mxmn,calculaigv,edidetalle,ediprecio)
 {
+	var exportacion  = $('#exportacion').val();
+
+	if(exportacion == 'SI')
+	{
+		afectacion = 40;
+	}
+
+	alert(afectacion);
 
 	if(afectacion==10)
 	{
@@ -1518,7 +1506,7 @@ function calcularTotales()
        	op_gravadas +=  document.getElementsByName("subtotal")[i].value;
        }
 
-       else if(inpA.value==20)
+       else if(inpA.value==20 || inpA.value==40 )
        {
        	op_exoneradas +=  document.getElementsByName("subtotal")[i].value;
        }

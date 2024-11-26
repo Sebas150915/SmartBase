@@ -5,26 +5,7 @@
         
       
 
-        $sql_empresas="SELECT * FROM tbl_empresas WHERE id_empresa = $_SESSION[id_empresa]";
-        $resultado_empresas=$connect->prepare($sql_empresas);
-        $resultado_empresas->execute();
-        $row_empresas = $resultado_empresas->fetch(PDO::FETCH_ASSOC);
-
-        $top1 = $row_empresas['top1'];
-        $top2 = $row_empresas['top2'];
-
-        $fecha_certificado = $row_empresas['fecha_certificado'];
-
-        if($hoy>$fecha_certificado)
-        {
-          $estado_certificado = 'Cerificado Vencido';
-
-       
-        }
-        else
-        {
-          $estado_certificado = 'Cerificado Activo';
-        }
+        
 
 
         $sql_almacenes="SELECT * FROM tbl_almacen WHERE empresa = $_SESSION[id_empresa]";

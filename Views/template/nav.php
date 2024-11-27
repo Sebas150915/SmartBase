@@ -1,5 +1,5 @@
 <?php 
-
+$hoy  = date('Y-m-d');
 $sql_empresas="SELECT * FROM tbl_empresas WHERE id_empresa = $_SESSION[id_empresa]";
         $resultado_empresas=$connect->prepare($sql_empresas);
         $resultado_empresas->execute();

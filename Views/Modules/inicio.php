@@ -2,11 +2,7 @@
        $hoy = date('Y-m-d');
         
         $mes = date('m');
-        
-      
-
-        
-
+       
 
         $sql_almacenes="SELECT * FROM tbl_almacen WHERE empresa = $_SESSION[id_empresa]";
         $resultado_almacenes=$connect->prepare($sql_almacenes);

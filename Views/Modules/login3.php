@@ -60,7 +60,7 @@ if(!empty($_POST))
             $_SESSION["usaexportacion"]       =$row_resultado['usaexportacion'];
 
 
-            $hoy  = date('Y-m-d');
+           
                 if($row_resultado['fecha_vencimiento'] <= $hoy)
                 {
                     $fv = $row_resultado['fecha_vencimiento'];
@@ -212,55 +212,72 @@ if(!empty($_POST))
             <button type="submit" class="btn btn-success" onclick="iniciarSesion()">Iniciar Sesión</button>
         
     </div>
-
+<script>
+      const base_url = "<?= base_url(); ?>";
+    </script>
   <script src="<?=media()?>/js/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.23/sweetalert2.all.js"></script>
-    <script type="text/javascript">
-        function iniciarSesion() {
-            // Obtener valores de los inputs
-            var ruc = $("#ruc").val();
-            var usuario = $("#usuario").val();
-            var clave = $("#clave").val();
 
-            // Validar que los campos no estén vacíos
-            if (ruc.trim() === "" || usuario.trim() === "" || clave.trim() === "") {
+
+    <script type="text/javascript">
+function iniciarSesion() {
+    // Obtener valores de los campos de entrada
+    var ruc = $("#ruc").val();
+    var usuario = $("#usuario").val();
+    var clave = $("#clave").val();
+
+    // Validación de campos vacíos
+    if (ruc.trim() === "" || usuario.trim() === "" || clave.trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Debe llenar todos los datos',
+            text: 'Por favor, complete todos los campos.',
+        });
+        return; // Detener ejecución si hay campos vacíos
+    }
+
+    // Solicitud AJAX
+    $.ajax({
+        url: 'assets/ajax/procesar_login.php', // Archivo que procesa la solicitud
+        type: 'POST', // Tipo de petición
+        dataType: 'json', // Especificamos que esperamos una respuesta en JSON
+        data: {
+            ruc: ruc,
+            usuario: usuario,
+            clave: clave
+        },
+        success: function(response) {
+            console.log("Respuesta del servidor:", response);
+
+            // Verificar si el inicio de sesión fue exitoso
+            if (response.success)
+            {
+                // Redirigir a la URL especificada en la respuesta
+              window.location = base_url+'/'+response.redirect_url;
+            } 
+            else 
+            {
+                // Mostrar mensaje de error si no tuvo éxito
                 Swal.fire({
-                  icon: 'error',
-                  title: 'Debe llenar todos los datos',
-                  text: 'ok...!',
-                  
+                    icon: 'error',
+                    title: 'Error de inicio de sesión',
+                    text: response.message || 'Error desconocido.',
                 });
             }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en AJAX:", status, error);
 
-            // Enviar datos al servidor con AJAX
-            $.ajax({
-                url: 'procesar_login.php', // Archivo PHP que procesará los datos
-                type: 'POST',
-                data: {
-                    ruc: ruc,
-                    usuario: usuario,
-                    clave: clave
-                },
-                success: function(response) {
-                    // Procesar respuesta del servidor
-                    try {
-                        var data = JSON.parse(response);
-                        if (data.success) {
-                            // Redirigir al inicio si el login es exitoso
-                            window.location.href = data.redirect_url;
-                        } else {
-                            // Mostrar mensaje de error
-                            $("#mensaje").text(data.message);
-                        }
-                    } catch (e) {
-                        $("#mensaje").text("Error al procesar la respuesta del servidor.");
-                    }
-                },
-                error: function() {
-                    $("#mensaje").text("Error en la comunicación con el servidor.");
-                }
+            // Mostrar mensaje de error si ocurrió un problema con la solicitud
+            Swal.fire({
+                icon: 'error',
+                title: 'Error en la comunicación',
+                text: 'No se pudo conectar con el servidor.',
             });
         }
+    });
+}
+
     </script>
 
 </body>

@@ -1,7 +1,6 @@
 <?php 
-
 $usabarras  = $_SESSION["usabarras"];
-$pormayor  = $_SESSION["venta_por_mayor"];
+$pormayor   = $_SESSION["venta_por_mayor"];
 //echo $usabarras;
 $empresa = $_SESSION["id_empresa"];
 $hoy = date('Y-m-d');

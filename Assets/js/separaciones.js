@@ -39,3 +39,36 @@ function openModalDel()
 			
 		});
 }
+
+
+
+function listarseparacion(id)
+{
+		var id = id;
+		var action = 'listarseparacion';
+	
+	  $.ajax({
+	  	url: base_url+'/assets/ajax/ajax_listar_separacion.php',
+	  	type: "POST",
+	  	async: true,
+	  	data: {action:action,id:id},
+
+	  	success: function(response)
+	  	{
+	  		  console.log(response);
+	  		  var data = $.parseJSON(response);
+	  		  $('#id_ruc').val(data.serie);
+			  $('#ruc_persona').val(data.codcliente);
+			  $('#moneda').val(data.codmoneda).attr('selected', 'selected');
+              $('#serie').val(data.serie);
+			  $('#numero').val(data.correlativo);
+	  		
+	  	},
+	  	error: function(response)
+	  	{
+	  		console.log(response);
+	  	}
+       });
+
+	
+}

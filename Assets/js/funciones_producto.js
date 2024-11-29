@@ -28,7 +28,7 @@ $(document).ready(function(){
 				  
 				});
              console.log(response);
-             location.reload(); 
+             //location.reload(); 
 			},
 			error: function(response)
 			{

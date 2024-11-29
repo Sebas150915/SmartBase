@@ -73,6 +73,7 @@ $num_reg_data=$resultado_data->rowCount();
                           <th>Tc</th>
                           <th>Importe Soles</th>
                           <th>Importe Dolar</th>
+                          <th>Obs</th>
                           <th>Contratos</th>
                           <th>Garantias</th>
                           <th>Separaciones</th>
@@ -102,7 +103,8 @@ $num_reg_data=$resultado_data->rowCount();
                             <td><?= $usuario['precio_metrado'] ?></td>
                             <td><?= $usuario['tc'] ?></td>
                             <td><?= $usuario['importe_soles'] ?></td>
-                            <td><?= $usuario['importe_dolar'] ?></td> 
+                            <td><?= $usuario['importe_dolar'] ?></td>
+                            <td><?= $usuario['obs'] ?></td>  
                             <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/contratos/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
                             <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/garantias/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
                             <td class="text-center" ><a class="btn btn-primary" href="<?=base_url()?>/separaciones/<?= $usuario['id'] ?>"><i class="fas fa-file-alt"></i></a></td>
@@ -157,7 +159,7 @@ $num_reg_data=$resultado_data->rowCount();
 <?php include 'views/modules/modals/locales.php' ?>
     <?php include 'views/template/pie.php' ?> 
       <script src="assets/js/locales.js"></script>
-      <script src="assets/js/funciones_locales.js?v=1"></script>
+      <script src="assets/js/funciones_locales.js?v=2"></script>
       <script src="assets/js/funciones_locales_calcula.js?v=3"></script>
 
 

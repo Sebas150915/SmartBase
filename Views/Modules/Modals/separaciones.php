@@ -24,7 +24,7 @@ $num_reg_cli=$resultado_cli->rowCount();
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header bg-dark">
-        <h5 class="modal-title" id="exampleModalLongTitle">Nueva Garantia</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Nueva Separación</h5>
         <button type="button" class="close" style="color: white" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -52,14 +52,13 @@ $num_reg_cli=$resultado_cli->rowCount();
           
           <div class="col-sm-6">
               <label for="">Fecha</label>
-            <input type="date" name="fecha" id="fecha" class="form-control" required="">
+            <input type="date" name="fecha" id="fecha" class="form-control" required="" value="<?php echo date("Y-m-d"); ?>" >
           </div>
 
          
 
 
       </div>
-      <hr>
       <div class="row">
 
       <div class="col-sm-6">
@@ -81,6 +80,10 @@ $num_reg_cli=$resultado_cli->rowCount();
           <input type="text" class="form-control text-right" name="importe_dolares" id="importe_dolares" value="0.00">
        </div>
 
+       <div class="col-sm-6">
+          <label for="">Tipo Cambio</label>
+          <input type="text" class="form-control text-right" name="tc" id="tc" value="0.00">
+       </div>
 
       </div>
    

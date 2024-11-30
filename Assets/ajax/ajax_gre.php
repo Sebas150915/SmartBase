@@ -147,7 +147,7 @@ if($_POST['action'] == 'nueva_gre')
         {
                 $item                  = $_POST['itemarticulo'][$i];
                 $idarticulo            = $_POST['idarticulo'][$i];
-                $nomarticulo           = $_POST['nomarticulo'][$i];
+                $nomarticulo           = $_POST['nomproducto'][$i];
                 $cantidad              = $_POST['cantidad'][$i];
 
                 $afectacion            = $_POST['afectacion'][$i];
@@ -206,8 +206,8 @@ if($_POST['action'] == 'nueva_gre')
 
 
 
-                $insert_query_detalle =$connect->prepare("INSERT INTO tbl_gre_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn]);
+                $insert_query_detalle =$connect->prepare("INSERT INTO tbl_gre_det(idventa,item,idproducto,nomproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$nomarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn]);
 
                 // actualizar serie + correlativo
                 $update_query_serie = $connect->prepare("UPDATE tbl_series SET correlativo = correlativo + ? WHERE serie = ? and correlativo = ? and id_empresa = ?");

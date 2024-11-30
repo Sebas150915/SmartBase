@@ -6,6 +6,7 @@ require_once("../../libraries/conexion.php");
 session_start();
 header('Content-Type: application/json');
 
+
 try 
 {
     if (!empty($_POST['ruc']) && !empty($_POST['usuario']) && !empty($_POST['clave'])) 

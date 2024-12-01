@@ -248,14 +248,6 @@ if(!empty($_POST))
                 success: function(response) {
                     // Procesar respuesta del servidor
                    
-                        var data = JSON.parse(response);
-                        Swal.fire({
-                  icon: 'success',
-                  title: 'Bienvenido al Sistema',
-                  text: 'ok...!',
-                  
-                });
-                     
                             // Redirigir al inicio si el login es exitoso
                             window.location = base_url+'/inicio';
                        

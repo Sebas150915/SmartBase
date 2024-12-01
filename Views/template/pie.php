@@ -48,7 +48,7 @@
 
 <script src="https://unpkg.com/sweetalert2@9.5.3/dist/sweetalert2.all.min.js"></script>
 
-<script src="<?=media()?>/js/funciones_gre.js?v=1"></script>
+<script src="<?=media()?>/js/funciones_gre.js?v=2"></script>
 
 
 <script src="<?=media()?>/js/sunat_reniec.js"></script>

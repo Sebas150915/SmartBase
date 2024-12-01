@@ -1,7 +1,6 @@
 <?php 
-
 $usabarras  = $_SESSION["usabarras"];
-$pormayor  = $_SESSION["venta_por_mayor"];
+$pormayor   = $_SESSION["venta_por_mayor"];
 //echo $usabarras;
 $empresa = $_SESSION["id_empresa"];
 $hoy = date('Y-m-d');
@@ -123,7 +122,7 @@ while($row_documento = $resultado_documento->fetch(PDO::FETCH_ASSOC) )
 </div>
 <div class="col-lg-2 col-sm-6 col-sm-4">
 <label>Tipo.Transportista:</label>
-<select name="ttransporte" id="ttransporte" onchange="MostrarTras()" class="form-control select2">
+<select name="ttransporte" id="ttransporte" class="form-control select2">
 <option value="02">Transporte privado</option>
 <option value="01">Transporte público</option>
 </select>
@@ -173,7 +172,7 @@ while($row_chofer = $resultado_chofer->fetch(PDO::FETCH_ASSOC) )
 <?php  } ?>
 </select>
 <div class="input-group-append">
-<button class="btn btn-danger" type="button"><i class="fe fe-plus"></i></button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#ModalChofer" type="button"><i class="fe fe-plus"></i></button>
 </div>
 </div>
 </div>
@@ -423,7 +422,8 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
 
           <!-- /fin modal pagos -->
     <?php include 'views/modules/modals/persona.php'?>
-    <?php include 'views/modules/modals/vehiculo_add.php'?>  
+    <?php include 'views/modules/modals/vehiculo_add.php'?>
+    <?php include 'views/modules/modals/chofer_add.php'?>  
     <?php include 'views/modules/modals/buscar_doc_ref_gre.php' ?> 
     <?php include 'views/modules/modals/buscar_contribuyente_nv.php' ?> 
     <?php include 'views/modules/modals/articulo_venta.php' ?>

@@ -453,7 +453,7 @@ function agregar(id,nombre,precio,afectacion,precio_compra,factor,mxmn)
 	var fila='<tr id="fila'+cont+'">'+
 	         '<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fe fe-trash-2"></i></button></td>'+
 	         '<td>'+cont+'</td>'+
-	          '<td><input type="hidden" name="itemarticulo[]" value="'+cont+'"><input type="hidden" name="idarticulo[]" value="'+id+'"><input type="hidden" name="nomarticulo[]" value="'+nombre+'"><input type="hidden" name="mxmn[]" value="'+mxmn+'">'+nombre+'-'+mxmn+'</td>'+
+	          '<td><input type="hidden" name="itemarticulo[]" value="'+cont+'"><input type="hidden" name="idarticulo[]" value="'+id+'"><input type="hidden" name="nomarticulo[]" value="'+nombre+'"><input type="hidden" name="mxmn[]" value="'+mxmn+'"><input class="form-control" name="nomproducto" id="nomproducto" value="'+nombre+'" ></td>'+
 	          '<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'"><input type="hidden" name="factor[]" value="'+factor+'"><input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="'+cantidad+'" onkeyup="modificarSubtotales()" required ></td>'+
 	          '<td><input type="text" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="'+cantidadu+'" required onkeyup="modificarSubtotales()"></td>'+
 	          '<td><input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="'+valor_unitario+'" readonly>'+

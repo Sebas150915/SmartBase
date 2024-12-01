@@ -13,8 +13,8 @@ if($_POST['action'] == 'addSeparacion')
 {
     
     $moneda=$_POST['moneda'];
-	$query=$connect->prepare("INSERT INTO tbl_alq_separaciones(id_cliente,moneda,monto_separacion_soles,monto_separacion_dolar,fecha_separacion,estado) VALUES (?,?,?,?,?,?);");
-	$resultado=$query->execute([$_POST['cliente'],$_POST['moneda'],$_POST['importe_soles'],$_POST['importe_dolares'],$_POST['fecha'],'1']);
+	$query=$connect->prepare("INSERT INTO tbl_alq_separaciones(id_cliente,moneda,monto_separacion_soles,monto_separacion_dolar,fecha_separacion,tc,estado) VALUES (?,?,?,?,?,?,?);");
+	$resultado=$query->execute([$_POST['cliente'],$_POST['moneda'],$_POST['importe_soles'],$_POST['importe_dolares'],$_POST['fecha'],$_POST['tc'],'1']);
 
 
 	if($resultado)

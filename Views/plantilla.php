@@ -133,6 +133,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "separaciones" ||
                      $rutas[0] == "contratos_pdf" ||
                      $rutas[0] == "niveles" ||
+                     $rutas[0] == "nueva_venta_alq" ||
 
                      $rutas[0] == "ticket1" ||
                      $rutas[0] == "usuarios")

@@ -101,6 +101,13 @@ $num_reg_nivel=$resultado_nivel->rowCount();
        </div>
 
       </div>
+
+      <div class="row">
+            <div class="col-sm-12">
+              <label for="">Observaciones</label>
+              <textarea name="obs" id="obs" cols="10" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
    
 </div> 
       <div class="modal-footer">

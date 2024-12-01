@@ -210,7 +210,7 @@ $num_reg_data2=$resultado_data2->rowCount();
                              <td width="10%"><?php echo $row2['precio2'] ?></td>
                              <td width="10%"><?php echo $row2['costo'] ?></td>
                             <td width="10%">
-                              <button type="button" class="btn btn-primary rounded-circle" onclick="agregar('<?=$row2['id']?>','<?php echo $row2['nombre'] ?>',<?php echo $row2['precio2'] ?>,'<?php echo $row2['afectacion'] ?>','<?php echo $row2['costo'] ?>',<?php echo $row2['factor'] ?>,'MAY','<?php echo $calculaigv?>','<?=$_SESSION["detalle"]?>','<?=$_SESSION["precio"]?>')"><i class="fe fe-plus"></i></button>
+                              <button type="button" class="btn btn-primary rounded-circle" onclick="agregar('<?=$row2['id']?>','<?php echo $row2['nombre'] ?>',<?php echo $row2['precio2'] ?>,'<?php echo $row2['afectacion'] ?>','<?php echo $row2['costo'] ?>',<?php echo $row2['factor'] ?>,'MAY','NO','<?=$_SESSION["detalle"]?>','<?=$_SESSION["precio"]?>')"><i class="fe fe-plus"></i></button>
                             </td>
                           </tr>
                         <?php } ?>

@@ -162,11 +162,16 @@ class ApiFacturacion
 				$fecRecepcion=$response2->fecRecepcion;
 				$mensaje['ticket2'] =$ticket;
 				$mensaje['fecRecepcion2'] =$fecRecepcion;
+				$mensaje['cod_sunat2']='';
+				$mensaje['hash_cdr2'] ='';
+				$mensaje['numerror2']='';
+				$mensaje['msj_sunat2']='';
 
 				//var_dump($response2->message);
 				//echo $ticket;
 
-				if(isset($response2->status)=='401'){
+				if(isset($response2->status)=='401')
+				{
 
 				$mensaje['cod_sunat2']=$response2->status;
 				$mensaje['numerror2']='88';
@@ -181,6 +186,7 @@ class ApiFacturacion
 				$mensaje['msj_sunat2']=$response2->error_description;
 				$mensaje['msj_link']='';
 				$mensaje['hash_cdr2'] ='';
+
 
 				}else{
 
@@ -219,6 +225,10 @@ class ApiFacturacion
 				$mensaje['msj_link']='';
 				$mensaje['hash_cdr'] ='';
 				$mensaje['arcCdr']   = '';
+				$mensaje['cod_sunat2']='';
+
+				$mensaje['numerror2 ']='';
+				$mensaje['hash_cdr2'] ='';
 
 				}else if($codRespuesta=='98'){
 
@@ -227,6 +237,10 @@ class ApiFacturacion
 				$mensaje['msj_link']='';
 				$mensaje['hash_cdr'] ='';
 				$mensaje['arcCdr']   = '';
+				$mensaje['cod_sunat2']='';
+
+				$mensaje['numerror2 ']='';
+				$mensaje['hash_cdr2'] ='';
 
 				}else if($codRespuesta=='0'){
 
@@ -274,6 +288,10 @@ class ApiFacturacion
 				$mensaje['msj_sunat'] = $doc_cdr->getElementsByTagName('Description')->item(0)->nodeValue;
 				$mensaje['hash_cdr'] = $doc_cdr->getElementsByTagName('DigestValue')->item(0)->nodeValue;
 				$mensaje['msj_link'] = $doc_cdr->getElementsByTagName('DocumentDescription')->item(0)->nodeValue;
+				$mensaje['cod_sunat2']='';
+				$mensaje['numerror2 ']='';
+				$mensaje['msj_sunat2  ']='';
+				$mensaje['hash_cdr2'] ='';
 
 
 				}else{
@@ -282,6 +300,10 @@ class ApiFacturacion
 				$mensaje['msj_sunat']='SUNAT FUERA DE SERVICIO';
 				$mensaje['hash_cdr'] ='';
 				$mensaje['msj_link'] ='';
+				$mensaje['cod_sunat2']='';
+				$mensaje['numerror2 ']='';
+				$mensaje['msj_sunat2  ']='';
+				$mensaje['hash_cdr2'] ='';
 
 				}
 

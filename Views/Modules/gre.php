@@ -121,13 +121,13 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
 
                             <td><a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/xml/<?=$row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.$ventas['correlativo'].'.ZIP'?>" class="btn btn-primary rounded-circle"><i class="fe fe-book"></i></a></td>
 
-                            <td><?php if($ventas['feestado']==1){$x = ''; } else{$x='not-active';}?>
+                            <td><?php if($ventas['feestadosunat']==1){$x = ''; } else{$x='not-active';}?>
                               <a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/cdr/<?= 'R-'. $row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.$ventas['correlativo'].'.ZIP'?>" class="btn btn-secondary rounded-circle <?=$x?>"  ><i class="fe fe-book"></i></a>
                             </td>
 
                             <td><a href="gre_pdf/<?= $ventas['id'] ?>" class="btn btn-danger rounded-circle"><i class="fe fe-book"></i></a></td>
                             <td><?=$ventas['fecodigoerror']?></td>
-                            <td><?php $e = $ventas['feestado'];
+                            <td><?php $e = $ventas['fecodigoerror'];
                             if($e == 1)
                             {
                               $e ='fe fe-check';

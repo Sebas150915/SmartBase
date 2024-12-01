@@ -212,7 +212,9 @@ if(!empty($_POST))
             <button type="submit" class="btn btn-success" onclick="iniciarSesion()">Iniciar Sesión</button>
         
     </div>
-
+ <script>
+      const base_url = "<?= base_url(); ?>";
+    </script>
 
   <script src="<?=media()?>/js/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.23/sweetalert2.all.js"></script>
@@ -236,7 +238,7 @@ if(!empty($_POST))
 
             // Enviar datos al servidor con AJAX
             $.ajax({
-                url: 'procesar_login.php', // Archivo PHP que procesará los datos
+                url: 'assets/ajax/procesar_login.php', // Archivo PHP que procesará los datos
                 type: 'POST',
                 data: {
                     ruc: ruc,
@@ -245,18 +247,19 @@ if(!empty($_POST))
                 },
                 success: function(response) {
                     // Procesar respuesta del servidor
-                    try {
+                   
                         var data = JSON.parse(response);
-                        if (data.success) {
+                        Swal.fire({
+                  icon: 'success',
+                  title: 'Bienvenido al Sistema',
+                  text: 'ok...!',
+                  
+                });
+                     
                             // Redirigir al inicio si el login es exitoso
-                            window.location.href = data.redirect_url;
-                        } else {
-                            // Mostrar mensaje de error
-                            $("#mensaje").text(data.message);
-                        }
-                    } catch (e) {
-                        $("#mensaje").text("Error al procesar la respuesta del servidor.");
-                    }
+                            window.location = base_url+'/inicio';
+                       
+                    
                 },
                 error: function() {
                     $("#mensaje").text("Error en la comunicación con el servidor.");

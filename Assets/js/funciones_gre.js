@@ -58,7 +58,7 @@ $(document).ready(function()
 		Swal.fire({
 		  title: 'Procesando!',
 		  html: 'Se cerrara en <b></b> milliseconds.',
-		  timer: 2000,
+		  timer: 50,
 		  timerProgressBar: true,
 		  didOpen: () => {
 		    Swal.showLoading()

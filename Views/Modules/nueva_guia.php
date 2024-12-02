@@ -171,7 +171,6 @@ while($row_vehiculo = $resultado_vehiculo->fetch(PDO::FETCH_ASSOC) )
 <div class="col-lg-3 col-sm-6 col-sm-4">
 <label for="">Chofer</label>
 <div class="input-group">
-
 <select class="form-control select2"  name="chofer" id="chofer">
 <?php 
 while($row_chofer = $resultado_chofer->fetch(PDO::FETCH_ASSOC) )
@@ -184,10 +183,10 @@ while($row_chofer = $resultado_chofer->fetch(PDO::FETCH_ASSOC) )
 </div>
 </div>
 </div>
+
 <div class="col-lg-3 col-sm-6 col-sm-4">
 <label for="">Transportista</label>
 <div class="input-group">
-
 <select class="form-control select2"  name="transportista" id="transportista">
 <option value="" selected="">-NINGUNO-</option>
 <?php 
@@ -201,6 +200,7 @@ while($row_transporte = $resultado_transporte->fetch(PDO::FETCH_ASSOC) )
 </div>
 </div>
 </div>
+
 <div class="col-lg-2 col-sm-6 col-sm-3">
 <label for="">Peso en KG.</label>
 <input type="text" class="form-control" name="peso" id="peso" value="1">
@@ -453,13 +453,15 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
           <!-- /fin modal pagos -->
     <?php include 'views/modules/modals/persona.php'?>
     <?php include 'views/modules/modals/vehiculo_add.php'?>
+    <?php include 'views/modules/modals/destino_add.php'?>
     <?php include 'views/modules/modals/chofer_add.php'?>  
     <?php include 'views/modules/modals/buscar_doc_ref_gre.php' ?> 
     <?php include 'views/modules/modals/buscar_contribuyente_nv.php' ?> 
     <?php include 'views/modules/modals/articulo_venta.php' ?>
-    <?php include 'views/template/pie.php' ?>
+    <?php include 'views/template/pie.php'?>
 
-    <script src="assets/js/nuevo_vehiculo.js?v=5"></script>    
+    <script src="assets/js/nuevo_vehiculo.js?v=5"></script>
+    <script src="assets/js/nuevo_chofer.js?v=2"></script>    
 
 <script>
     /*$("#motivo").change(() => $("#motros").val($( "#motivo option:selected" ).text()));*/

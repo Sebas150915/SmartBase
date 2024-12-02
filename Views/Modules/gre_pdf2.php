@@ -249,12 +249,12 @@ line-height: 20px;
                      <th align="left">'.$row_cabecera['dam'].'</th>
                 </tr>
                 <tr>
-                   <th align="left">Documento Relacionado</th>
+                   <th align="left">Documento Relacionado:</th>
                    <th align="left">'.$row_cabecera[''].'</th>
-                   <th align="left">Contenedor</th>
-                   <th align="left">'.$row_cabecera['contenedor'].'</th>
-                   <th align="left">Precinto</th>
-                   <th align="left">'.$row_cabecera['precinto'].'</th>
+                   <th align="left">Contenedor:</th>
+                   <th align="left">'.$row_cabecera['cont'].'</th>
+                   <th align="left">Precinto:</th>
+                   <th align="left">'.$row_cabecera['prec'].'</th>
                 </tr>
                   
                 </thead>
@@ -272,10 +272,10 @@ line-height: 20px;
                   
                   </tr>
                   <tr>
-                    <th width="250px" align="left">Documento de Identidad</th>
-                     <th width="150px" class=" text-left">'.$row_cabecera['nro_doc_cliente'].'</th>
+                    <th align="left">Documento de Identidad</th>
+                     <th class=" text-left">'.$row_cabecera['nro_doc_cliente'].'</th>
                   
-                    <th width="250px" align="left">Razon Social</th>
+                    <th align="left">Razon Social</th>
                      <th class=" text-left">'.$row_cabecera['razon_social_cliente'].'</th>
                   </tr>
                   
@@ -293,11 +293,11 @@ line-height: 20px;
                    <th  align="left" class="text-bold" colspan="2">DATOS DEL PUNTO DE PARTIDA Y LLEGADA</th>
                 </tr>
                 <tr>
-                <th width="250px">Direccion del punto de partida :</th>
+                <th >Dirección del punto de partida:</th>
                 <th align="left">'.$row_cabecera['direccion_partida'].'</th>
                 </tr>
                 <tr>
-                <th  width="250px">Direccion del punto de llegada :</th>
+                <th >Dirección del punto de llegada:</th>
                 <th align="left">'.$row_cabecera['direccion_destino'].'</th>
                 </tr>
                   <tr><td></td></tr>
@@ -315,19 +315,19 @@ line-height: 20px;
                    <th  align="left" class="text-bold" colspan="2">DATOS DEL VEHICULO Y TRANSPORTISTA</th>
                 </tr>
                 <tr>
-                <th width="250px">CONDUCTOR :</th>
+                <th >Conductor:</th>
                 <th align="left">'.$row_cabecera['nombre_chofer'].'</th>
-                 <th>DNI :</th>
+                 <th>DNI:</th>
                 <th align="left">'.$row_cabecera['nro_doc_chofer'].'</th>
-                 <th>LICENCIA :</th>
+                 <th>Licencia:</th>
                 <th align="left">'.$row_cabecera['licencia'].'</th>
                 </tr>
                 <tr>
-                <th  width="250px">MARCA :</th>
+                <th>Marca:</th>
                 <th align="left">'.$row_cabecera['marca_vehiculo'].'</th>
-                <th  >PLACA :</th>
+                <th >Placa:</th>
                 <th align="left">'.$row_cabecera['placa_vehiculo'].'</th>
-                <th>CARRETA :</th>
+                <th>Carreta:</th>
                 <th align="left">'.$row_cabecera['carreta'].'</th>
                 </tr>
                   <tr><td></td></tr>
@@ -359,13 +359,13 @@ line-height: 20px;
                   
                   $output.='
                      <tr>
-                       <th class="text-right">'.$detalle->item.'</th>
-                       <th class="text-left">'.$detalle->codigoproducto.'</th>
-                       <th class="text-left">'.$detalle->nombreproducto.'</th>
+                       <th class="text-center">'.$detalle->item.'</th>
+                       <th class="text-center">'.$detalle->codigoproducto.'</th>
+                       <th class="text-center">'.$detalle->nombreproducto.'</th>
                       
-                       <th class="text-right">'.$detalle->cantidad.'</th>
+                       <th class="text-center">'.$detalle->cantidad.'</th>
                        <th  class="text-center">'.$detalle->unidadmedida.'</th>
-                       <th  class="text-right">'.number_format($detalle->peso,2).'</th>
+                       <th  class="text-center">'.number_format($detalle->peso,2).'</th>
                      </tr>';
                   } 
 
@@ -377,8 +377,15 @@ line-height: 20px;
        
         
           </tr>
+
+                <tr>
+                <th >OBSERVACIÓN:</th>
+                <th >'.$row_cabecera['obs'].'</th>
+                </tr>
+                
         </tbody>
-        
+
+
       </table>
     </div>
     <footer>
@@ -409,7 +416,6 @@ line-height: 20px;
                   </th>
                   
                 </tr>
-                
                 
               </table>
     

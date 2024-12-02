@@ -14,14 +14,15 @@ if($_POST['action'] == 'listarCompraCab')
         $resultado_cab->execute();
         $row_cab = $resultado_cab->fetch(PDO::FETCH_ASSOC);
 
-        
-        $query_cli = "SELECT * FROM tbl_contribuyente WHERE id_persona ='$row_cab[idcliente]'";
+        $idempresa = $_SESSION["id_empresa"];
+        $query_cli = "SELECT * FROM tbl_contribuyente WHERE id_persona ='$row_cab[idcliente]' AND empresa = $idempresa";
         $resultado_cli = $connect->prepare($query_cli);
         $resultado_cli->execute();
         $row_cli = $resultado_cli->fetch(PDO::FETCH_ASSOC);
 
         $row_cab['direccionpro'] =$row_cli['direccion_persona'];
         $row_cab['nombrepro'] =$row_cli['nombre_persona'];
+        $row_cab['idcliente'] =$row_cli['id_persona'];
 
         echo json_encode($row_cab,JSON_UNESCAPED_UNICODE);
 

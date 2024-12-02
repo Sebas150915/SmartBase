@@ -567,26 +567,25 @@ function buscarftgre()
       {
         console.log(response);
         var data = $.parseJSON(response);
-       /* $('#id_ruc').val(data.serie);
-        $('#ruc_persona').val(data.codcliente);
-        $('#id_ruc').val(data.codcliente);
-        $('#razon_social').val(data.nombrepro);
-        $('#razon_direccion').val(data.direccionpro);
+       $('#id_ruc').val(data.codcliente);
+        $('#ruc_persona').val(data.nro_doc_cliente);        
+        $('#razon_social').val(data.razon_social_cliente);
+       $('#razon_direccion').val(data.direccionpro);
         $('#fecha_emision').val(data.fecha_emision);
-        $('#fecha_vencimiento').val(data.fecha_vencimiento);
+        $('#fecha_vencimiento').val(data.fecha_emision);
 
-        $('#condicion').val(data.condicion_venta).attr('selected', 'selected');
+        /*  $('#condicion').val(data.condicion_venta).attr('selected', 'selected');
         $('#moneda').val(data.codmoneda).attr('selected', 'selected');
         $('#tip_cpe').val(data.tipocomp).attr('selected', 'selected');
 
         $('#serie').val(data.serie);
-        $('#numero').val(data.correlativo);
+        $('#numero').val(data.correlativo);*/
 
         $('#op_g').val(data.op_gravadas);
         $('#op_e').val(data.op_exoneradas);
         $('#op_i').val(data.op_inafectas);
         $('#igv').val(data.igv);
-        $('#total').val(data.total);*/
+        $('#total').val(data.total);
 
         
         

@@ -137,8 +137,8 @@ if($_POST['action'] == 'nueva_gre')
         }
         $doc_ref_gre = $_POST['serie_ref'].'-'.$_POST['num_ref'];
         $hora = date('h:i:s');
-        $query=$connect->prepare("INSERT INTO tbl_gre_cab(idempresa,fecha_emision,fecha_traslado,hora_emision,tipo_doc,serie_doc,correlativo,tipo_transportista,motivo,vehiculo,chofer,transportista,peso,nro_cajas,nro_carga,tip_doc_ref,num_doc_ref,op_gravadas,op_exoneradas,op_inafectas,igv,total,idpartida,idcliente,idllegada,dam,carreta) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$_POST['empresa'],$_POST['fecha_emision'],$_POST['fecha_traslado'],$hora,$tdoc,$_POST['serie'],$_POST['numero'],$_POST['ttransporte'],$_POST['motivo'],$_POST['vehiculo'],$_POST['chofer'],$_POST['transportista'],$_POST['peso'],$_POST['ncajas'],$_POST['ncarga'],$_POST['tip_ref'],$doc_ref_gre,$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ppartida'],$_POST['id_ruc'],$_POST['pllegada'],$_POST['dam'],$_POST['carreta']]);
+        $query=$connect->prepare("INSERT INTO tbl_gre_cab(idempresa,fecha_emision,fecha_traslado,hora_emision,tipo_doc,serie_doc,correlativo,tipo_transportista,motivo,vehiculo,chofer,transportista,peso,nro_cajas,nro_carga,tip_doc_ref,num_doc_ref,op_gravadas,op_exoneradas,op_inafectas,igv,total,idpartida,idcliente,idllegada,dam,carreta,contenedor,precinto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $resultado=$query->execute([$_POST['empresa'],$_POST['fecha_emision'],$_POST['fecha_traslado'],$hora,$tdoc,$_POST['serie'],$_POST['numero'],$_POST['ttransporte'],$_POST['motivo'],$_POST['vehiculo'],$_POST['chofer'],$_POST['transportista'],$_POST['peso'],$_POST['ncajas'],$_POST['ncarga'],$_POST['tip_ref'],$doc_ref_gre,$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ppartida'],$_POST['id_ruc'],$_POST['pllegada'],$_POST['dam'],$_POST['carreta'],$_POST['contenedor'],$_POST['precinto']]);
 
         $lastInsertId = $connect->lastInsertId();
 

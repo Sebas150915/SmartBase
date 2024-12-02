@@ -217,6 +217,14 @@ while($row_transporte = $resultado_transporte->fetch(PDO::FETCH_ASSOC) )
 <label for="">DAM</label>
 <input type="text" class="form-control" name="dam" id="dam">
 </div>
+<div class="col-lg-2 col-sm-6 col-sm-3">
+<label for="">Contenedor</label>
+<input type="text" class="form-control" name="contenedor" id="contenedor">
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-3">
+<label for="">Precinto</label>
+<input type="text" class="form-control" name="precinto" id="precinto">
+</div>
 
 <!--
 <div class="col-lg-2 col-sm-6 col-sm-3">

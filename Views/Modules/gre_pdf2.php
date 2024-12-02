@@ -323,6 +323,8 @@ line-height: 20px;
                 <th align="left">'.$row_cabecera['marca_vehiculo'].'</th>
                 <th  >PLACA :</th>
                 <th align="left">'.$row_cabecera['placa_vehiculo'].'</th>
+                <th>CARRETA :</th>
+                <th align="left">'.$row_cabecera['carreta'].'</th>
                 </tr>
                   <tr><td></td></tr>
                 </thead>

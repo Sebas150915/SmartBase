@@ -5,6 +5,36 @@ require_once("../../helpers/helpers.php");
 require_once("../../libraries/conexion.php"); 
 session_start();
 
+if($_POST['action'] == 'buscagrefact')
+{
+       $movkey = $_POST['refgre'];
+       $idempresa = $_SESSION["id_empresa"];
+       //echo $idventa;
+        $query_cab = "SELECT * FROM vw_tbl_gre_cab WHERE movkey ='$movkey' AND idempresa= $idempresa";
+        $resultado_cab = $connect->prepare($query_cab);
+        $resultado_cab->execute();
+        $row_cab = $resultado_cab->fetch(PDO::FETCH_ASSOC);
+
+        $codigocliente = $row_cab['codcliente'];
+        $query_cli = "SELECT * FROM tbl_contribuyente WHERE id_persona ='$codigocliente'";
+        $resultado_cli = $connect->prepare($query_cli);
+        $resultado_cli->execute();
+        $row_cli = $resultado_cli->fetch(PDO::FETCH_ASSOC);
+
+        $row_cab['direccionpro'] =$row_cli['direccion_persona'];
+        $row_cab['nombrepro'] =$row_cli['nombre_persona'];
+
+        echo json_encode($row_cab,JSON_UNESCAPED_UNICODE);
+
+
+        exit();
+}
+
+
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////buscar clientes
 if($_POST['action'] == 'searchCliente')
 {

@@ -563,22 +563,39 @@ function buscarftgre()
       async: true,
       data: {action:action,refgre:refgre},
 
-
-
       success: function(response)
       {
         console.log(response);
-         var info = JSON.parse(response);
-         console.log(info);
-         $('#detalleventa').html(info.detalle);
-         //$("#btnListar").hide();
-         //$("#btnGuardar").show();
+        var data = $.parseJSON(response);
+       /* $('#id_ruc').val(data.serie);
+        $('#ruc_persona').val(data.codcliente);
+        $('#id_ruc').val(data.codcliente);
+        $('#razon_social').val(data.nombrepro);
+        $('#razon_direccion').val(data.direccionpro);
+        $('#fecha_emision').val(data.fecha_emision);
+        $('#fecha_vencimiento').val(data.fecha_vencimiento);
+
+        $('#condicion').val(data.condicion_venta).attr('selected', 'selected');
+        $('#moneda').val(data.codmoneda).attr('selected', 'selected');
+        $('#tip_cpe').val(data.tipocomp).attr('selected', 'selected');
+
+        $('#serie').val(data.serie);
+        $('#numero').val(data.correlativo);
+
+        $('#op_g').val(data.op_gravadas);
+        $('#op_e').val(data.op_exoneradas);
+        $('#op_i').val(data.op_inafectas);
+        $('#igv').val(data.igv);
+        $('#total').val(data.total);*/
+
+        
+        
       },
       error: function(response)
       {
         console.log(response);
       }
-    });
+       });
 
   }
   

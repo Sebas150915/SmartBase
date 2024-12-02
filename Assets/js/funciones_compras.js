@@ -599,9 +599,9 @@ function listarCompraCab(id)
 	  	{
 	  		//console.log(response);
 	  		var data = $.parseJSON(response);
-	  		$('#id_ruc').val(data.serie);
+	  		$('#id_ruc').val(data.idcliente);
 			  $('#ruc_persona').val(data.codcliente);
-			  $('#id_ruc').val(data.codcliente);
+			 
 			  $('#razon_social').val(data.nombrepro);
 			  $('#razon_direccion').val(data.direccionpro);
 			  $('#fecha_emision').val(data.fecha_emision);

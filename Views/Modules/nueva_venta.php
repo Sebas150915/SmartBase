@@ -254,7 +254,7 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-2">
                         <label for="">Guia Remision</label>
-                        <input type="text" class="form-control"  name="nguiar" id="nguiar" value="">
+                        <input type="text" class="form-control" onkeyup="buscarftgre()"  name="nguiar" id="nguiar" value="">
                       </div>
                       <?php if($_SESSION['usaexportacion'] == 'SI'){ ?>
                       <div class="col-lg-2 col-sm-6 col-sm-2">
@@ -548,6 +548,42 @@ else {?>
 
 listarcliente(); 
    
+</script>
+
+<script>
+function buscarftgre()
+{
+  var refgre = $('#nguiar').val();
+  var action = 'buscagrefact';
+  if(refgre.length>=13)
+  {
+      $.ajax({
+      url: base_url+'/assets/ajax/ajax_venta.php',
+      type: "POST",
+      async: true,
+      data: {action:action,refgre:refgre},
+
+
+
+      success: function(response)
+      {
+        console.log(response);
+         var info = JSON.parse(response);
+         console.log(info);
+         $('#detalleventa').html(info.detalle);
+         //$("#btnListar").hide();
+         //$("#btnGuardar").show();
+      },
+      error: function(response)
+      {
+        console.log(response);
+      }
+    });
+
+  }
+  
+}
+
 </script>
   </body>
 </html>

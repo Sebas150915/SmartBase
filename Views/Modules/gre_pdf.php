@@ -422,16 +422,17 @@ $output.='
 
 </html>';
 
-/*echo $output; exit();*/
+//echo $output; exit();
 
 $dompdf = new DOMPDF();
 $dompdf->set_paper('A4','portrait');
 $dompdf->load_html($output);
 $dompdf->render();
+$font = $dompdf->getFontMetrics()->getFont("Arial", "bold");
 $pdf = $dompdf->output();
-
-$dompdf->stream($invoiceFileName, array("Attachment" => true));
-file_put_contents($rutaGuardado.$invoiceFileName, $pdf);
+header('Content-Type: application/pdf');
+header("Content-Disposition: inline; filename=".$invoiceFileName.".pdf");
+echo $pdf;
 
 
 

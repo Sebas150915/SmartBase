@@ -226,31 +226,35 @@ line-height: 20px;
         <tbody>
         <tr>
             <td colspan="3">
-              <table>
+              <table">
                 <thead>
                 <tr>
                   <th align="left" class="text-bold" colspan="2">DATOS DE INICIO DEL TRASLADO</th>
                 </tr>
                 <tr>
                     
-                    <th width="250px" align="left">Fecha de Emision :</th>
-                    <th width="150px" align="left">'.$row_cabecera['fecha_emision'].'</th>
-                    <th width="250px" align="left">Motivo de traslado :</th>
+                    <th align="left">Fecha de Emision :</th>
+                    <th align="left">'.$row_cabecera['fecha_emision'].'</th>
+                    <th align="left">Motivo de traslado :</th>
                     <th align="left">'.$row_cabecera['motivo_traslado'].'</th>
                     <th align="left">Peso :</th>
                     <th align="left">'.$row_cabecera['peso'].'</th>
                 </tr>
                 <tr>
-                    <th width="250px" align="left">Fecha de inicio de traslado :</th>
-                    <th width="150px" align="left">'.$row_cabecera['fecha_traslado'].'</th>
-                     <th width="250px" align="left">Modalidad de Transporte</th>
-                     <th align="left"></th>
+                     <th align="left">Fecha de inicio de traslado:</th>
+                     <th align="left">'.$row_cabecera['fecha_traslado'].'</th>
+                     <th align="left">Modalidad de Transporte:</th>
+                     <th align="left">'.$row_cabecera['descripcion'].'</th>
+                     <th align="left">DAM:</th>
+                     <th align="left">'.$row_cabecera['dam'].'</th>
                 </tr>
                 <tr>
-                   <th width="250px" align="left">Fecha de Entrega</th>
-                   <th width="150px" align="left"></th>
-                   <th width="250px" align="left">Documento Relacionado</th>
-                   <th align="left"></th>
+                   <th align="left">Documento Relacionado</th>
+                   <th align="left">'.$row_cabecera[''].'</th>
+                   <th align="left">Contenedor</th>
+                   <th align="left">'.$row_cabecera['contenedor'].'</th>
+                   <th align="left">Precinto</th>
+                   <th align="left">'.$row_cabecera['precinto'].'</th>
                 </tr>
                   
                 </thead>

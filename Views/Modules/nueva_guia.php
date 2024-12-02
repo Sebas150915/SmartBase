@@ -346,28 +346,37 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
                       <div class="row mt-3">
                         <?php if($pormayor == 'SI'){ ?>
                         <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProdcuto"><i class="fa fa-plus-circle"></i> P. Minorista</button>
+
+                          <button class="btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#addProdcuto"><i class="fa fa-plus-circle"></i> P. Minorista</button>
                            
                         </div>
                         <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> P. Mayorista</button>
+                          <button class="btn btn-secondary mt-4" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> P. Mayorista</button>
                         </div>
                         <?php } ?>
                         <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-info" type="button" data-toggle="modal" data-target="#addProdcuto2"><i class="fa fa-plus-circle"></i> Productos</button>
+
+                          <button class="btn btn-info mt-4" type="button" data-toggle="modal" data-target="#addProdcuto2"><i class="fa fa-plus-circle"></i> Productos</button>
                         </div>
 
                          <div class="col-lg-2 col-sm-6 col-sm-4">
-                          <button class="btn btn-success" type="button" id="btnGuardarGRE"><i class="fa fa-save"></i> Guardar</button>
+
+                          <button class="btn btn-success mt-4" type="button" id="btnGuardarGRE"><i class="fa fa-save"></i> Guardar</button>
                          </div>
                          
                           <div class="col-lg-2 col-sm-6 col-sm-4">                                                
-                          <a href="<?=base_url()?>/gre" class="btn btn-danger" type="button"><i class="fa fa-close"></i> Cancelar</a>
+                          <a href="<?=base_url()?>/gre" class="btn btn-danger mt-4" type="button"><i class="fa fa-close"></i> Cancelar</a>
                           </div>
 
-                       
-                      </div>
+                          <div class="col-lg-6 col-sm-6 col-sm-6">   
+                          <label for="">Obs</label>
+                          <textarea class="form-control" name="obs" id="obs" col="10" row="15" ></textarea>     
+                          </div>
+
+                        </div>
                     </div>
+
+
                     <?php if($usabarras == 'SI'){ ?>
                     <hr>
                       <div class="row">

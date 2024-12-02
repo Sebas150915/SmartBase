@@ -138,9 +138,17 @@ while($row_forma = $resultado_forma->fetch(PDO::FETCH_ASSOC) )
 <?php  } ?>
 </select>
 </div>
-<div class="col-lg-2 col-sm-6 col-sm-3">
+
+
+<div class="col-lg-2 col-sm-6 col-sm-3" style="display: none">
    <label for="">Otros</label>
 <input type="text" class="form-control" value="" name="motros" id="motros" onkeyup="javascript:this.value=this.value.toUpperCase();" disabled=""> 
+</div>
+
+
+<div class="col-lg-2 col-sm-6 col-sm-3">
+<label for="">Placa Carreta</label>
+<input type="text" class="form-control" name="carreta" id="carreta">
 </div>
 
 <div class="col-lg-2 col-sm-6 col-sm-3">
@@ -205,6 +213,11 @@ while($row_transporte = $resultado_transporte->fetch(PDO::FETCH_ASSOC) )
 <label for="">Nro Carga</label>
 <input type="text" class="form-control" name="ncarga" id="ncarga">
 </div>
+<div class="col-lg-2 col-sm-6 col-sm-3">
+<label for="">DAM</label>
+<input type="text" class="form-control" name="dam" id="dam">
+</div>
+
 <!--
 <div class="col-lg-2 col-sm-6 col-sm-3">
 <label for="">Tip. Doc</label>
@@ -222,7 +235,7 @@ while($row_transporte = $resultado_transporte->fetch(PDO::FETCH_ASSOC) )
 <input type="text" class="form-control" name="nserie" id="nserie">
 </div>
 -->
-<div class="col-sm-2">
+<div class="col-sm-2" style="display: none">
 <label for="">Tipo Doc Ref.</label>
 <div class="input-group">
 <input type="hidden" name="id_venta_ref" id="id_venta_ref">
@@ -233,11 +246,11 @@ while($row_transporte = $resultado_transporte->fetch(PDO::FETCH_ASSOC) )
 </span>
 </div>
 </div>
-<div class="col-sm-2">
+<div class="col-sm-2" style="display: none">
 <label for="">Serie Doc Ref.</label>
 <input type="text" class="form-control" id="serie_ref" name="serie_ref" readonly>
 </div>
-<div class="col-sm-2">
+<div class="col-sm-2" style="display: none">
 <label for="">Num Doc Ref</label>
 <input type="text" class="form-control" id="num_ref" name="num_ref" readonly>
 </div>

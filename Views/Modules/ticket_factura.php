@@ -468,6 +468,8 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
             else if($row_cabecera['tipocomp']=='99' )
             {
                 $mensaje = 'REPRESENTACION IMPRESA DE '.' '. $doc;
+                $mensaje1='';
+                $mensaje2='';
 
             }
             else if($row_cabecera['tipocomp']=='01' || $row_cabecera['tipocomp']=='07' || $row_cabecera['tipocomp']=='08')
@@ -482,6 +484,7 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
                {
                   $mensaje ='REPRESENTACION IMPRESA DE '.' '. $doc;
                   $mensaje1 ='';
+                  $mensaje2='';
                }
             }
 

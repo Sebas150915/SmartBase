@@ -10,7 +10,16 @@ session_start();
 
 if($_POST['action'] == 'nuevo_destino')
 {
-	
+	var_dump($_POST);
+    $empresa = $_SESSION["id_empresa"];
+	$query_data = "SELECT * FROM tbl_contribuyente WHERE empresa=$empresa";
+	$resultado = $connect->prepare($query_data);
+	$resultado->execute();
+	$row_empresa = $resultado->fetch(PDO::FETCH_ASSOC);
+
+
+
+
     $query = $connect->prepare("INSERT INTO tbl_contribuyente_direccion(id_contribuyente,direccion,ubigeo,empresa) VALUES(?,?,?,?) ");
     $resultado = $query->execute([$_POST['contribuyente'],$_POST['destino'],$_POST['ubigeo'],$_POST['empresa']]);
 
@@ -29,6 +38,8 @@ if($_POST['action'] == 'nuevo_destino')
 }
 
 //####################################EDITAR CLIENTE####################################////
+
+
 
 //####################################ELIMINAR CATEGORIA####################################////
 if($_POST['action'] == 'delete_destino')

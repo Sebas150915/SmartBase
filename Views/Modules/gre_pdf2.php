@@ -312,7 +312,7 @@ line-height: 20px;
               <table>
                 <thead>
                 <tr>
-                   <th  align="left" class="text-bold" colspan="2">DATOS DEL VEHICULO Y TRANSPORTISTA</th>
+                   <th  align="left" class="text-bold" colspan="2">DATOS DEL CHOFER Y VEHICULO</th>
                 </tr>
                 <tr>
                 <th >Conductor:</th>
@@ -337,6 +337,32 @@ line-height: 20px;
             </td>
           </tr>
           <tr><td></td></tr>';
+                    
+          $output.='
+          <tr>
+          <td colspan="3">
+            <table>
+              <thead>
+              <tr>
+                 <th  align="left" class="text-bold" colspan="2">DATOS DEL TRANSPORTISTA</th>
+              </tr>
+              <tr>
+              <th >Empresa:</th>
+              <th align="left">'.$row_cabecera['razon_social_transporte'].'</th>
+               <th>Ruc:</th>
+              <th align="left">'.$row_cabecera['nro_documento_transporte'].'</th>
+
+                <tr><td></td></tr>
+              </thead>
+            </table>
+            <hr>
+          </td>
+        </tr>
+        <tr><td></td></tr>';
+
+
+
+          
 
 
           $output.='
@@ -378,10 +404,23 @@ line-height: 20px;
         
           </tr>
 
-                <tr>
-                <th >OBSERVACIÓN:</th>
-                <th >'.$row_cabecera['obs'].'</th>
-                </tr>
+                
+              
+                  <th width="90%">
+                    <table width="100%">
+                      <thead>
+                        
+                  
+                          <tr>
+                      <th  align="left" class="text-bold" colspan="2">OBSERVACIONES:</th>
+                      </tr>
+                        </tr>
+                        <tr>
+                          <td> '.$row_cabecera['obs'].' </td>
+                        </tr>
+                      </thead>
+                    </table>
+                  </th>
                 
         </tbody>
 

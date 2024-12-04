@@ -328,8 +328,9 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
 <option value="">-SELECCIONAR-</option>
 
 </select>
+
 <div class="input-group-append">
-<button class="btn btn-danger" type="button"><i class="fe fe-plus"></i></button>
+<button class="btn btn-danger"  data-toggle="modal" data-target="#ModalDestino" type="button"><i class="fe fe-plus"></i></button>
 </div>
 </div>
 </div>
@@ -460,8 +461,9 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
     <?php include 'views/modules/modals/articulo_venta.php' ?>
     <?php include 'views/template/pie.php'?>
 
-    <script src="assets/js/nuevo_vehiculo.js?v=5"></script>
-    <script src="assets/js/nuevo_chofer.js?v=2"></script>    
+    <script src="assets/js/nuevo_vehiculo.js?v=3"></script>
+    <script src="assets/js/nuevo_chofer.js?v=3"></script>
+    <script src="assets/js/nuevo_destino.js?v=3"></script>     
 
 <script>
     /*$("#motivo").change(() => $("#motros").val($( "#motivo option:selected" ).text()));*/

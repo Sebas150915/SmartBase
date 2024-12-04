@@ -219,12 +219,12 @@ $output.='
                   <tr>
                     <th  class="border5"  style="background:black;color:white">FECHA DE EMISION</th>
                     <th  class="border5" style="background:black;color:white">FECHA TRASLADO</th>
-                    <th  style="background:black;color:white">DOC. REFERE</th>
+                    <th  class="border5" style="background:black;color:white">MOTIVO</th>
                   </tr>
                   <tr>
                     <th width="" class="border4 text-center">'.$row_cabecera['fecha_emision'].'</th>
                     <th width="" class="border4 text-center">'.$row_cabecera['fecha_traslado'].'</th>
-                     <th class=" text-left"></th>
+                    <th width="" class="border4 text-center">'.$row_cabecera['motivo_traslado'].'</th>
                   </tr>
                   
                 </thead>
@@ -272,8 +272,12 @@ $output.='
           </tr>
           <tr><td></td></tr>';
 
-
           $output.='
+
+  
+
+
+
           <tr>
             <td colspan="3">
               <table class="border1 border2 border3 border4">
@@ -285,7 +289,6 @@ $output.='
                    
                     <th width="8%"  class="text-center border5" style="background:black;color:white">CANT.</th>
                     <th width="8%"  class="text-center border5" style="background:black;color:white">UNID.</th>
-                    <th width="8%"  class="text-center" style="background:black;color:white">PESO</th>
                   </tr>
                 </thead>
                 <tbody>';
@@ -299,7 +302,6 @@ $output.='
                       
                        <th class="text-right border3">'.$detalle->cantidad.'</th>
                        <th  class="text-center border3">'.$detalle->unidadmedida.'</th>
-                       <th  class="text-right border3">'.number_format($detalle->peso,2).'</th>
                      </tr>';
                   } 
 
@@ -337,23 +339,37 @@ $output.='
                     <td class"text-left">'.$row_cabecera['nro_doc_chofer'].'</td>
                     </tr>
                     <tr>
-                    <td>licencia</td>
+                    <td>Licencia</td>
                     <td class"text-left">'.$row_cabecera['licencia'].'</td>
                     </tr>
+
+                    
+
                     </table>
                     </th>
                      <th class="text-left"><br />
                      <table border="0">
                     <tr>
-                    <td width="20%">Marca</td>
+                    <td >Marca</td>
                     <td class"text-left">'.$row_cabecera['marca_vehiculo'].'</td>
                     </tr>
                     <tr>
                     <td>Placa</td>
                     <td class"text-left">'.$row_cabecera['placa_vehiculo'].'</td>
                     </tr>
-                    
-                    
+                    <tr>
+                    <td>Modelo</td>
+                    <td class"text-left">'.$row_cabecera['modelo_vehiculo'].'</td>
+                    </tr>
+                    <tr>
+                    <td>Año</td>
+                    <td class"text-left">'.$row_cabecera['anio_vehiculo'].'</td>
+                    </tr>
+
+                    <tr>
+                    <td>Carreta</td>
+                    <td class"text-left">'.$row_cabecera['carreta'].'</td>
+                    </tr>
                     
                     </table>
                        </th>
@@ -369,14 +385,41 @@ $output.='
               <table class="border1 border2 border3 border4">
                 <thead>
                   <tr>
-                    <th width="50%" class="text-left"  style="background:black;color:white">MOTIVO DE TRANSPORTE</th>
+                    <th width="50%" class="text-left"  style="background:black;color:white">OBSERVACIONES</th>
                     
                   </tr>
                   <tr>
-                    <th width="50%" class="text-left">'.$row_cabecera['motivo_traslado'].'</th>
+                    <th width="50%" class="text-left">'.$row_cabecera['obs'].'</th>
                     
                   </tr>
                   
+                </thead>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <table class="border1 border2 border3 border4">
+                <thead>
+                  <tr>
+                    <th width="100%" colspan="4" class="text-left"  style="background:black;color:white">DATOS DE EXPORTACIÓN</th>
+                    
+                   </tr>';
+                   
+                $output.='<tr>
+                        <th class="text-left">DAM:</th>
+                        <th >'.$row_cabecera['dam'].'</th>
+                        <th width="25%" class="text-left">Peso Bruto:</th>
+                        <th width="25%">'.number_format($row_cabecera['peso']).' Kg</th>
+                        </tr>
+                        <tr>
+                        <th width="50%" class="text-left">Precinto:</th>
+                        <th width="25%">'.$row_cabecera['prec'].'</th>
+                        <th width="50%" class="text-left">Contenedor:</th>
+                        <th width="25%">'.$row_cabecera['cont'].'</th>
+                        </tr>';
+                 
+                  $output.='  
                 </thead>
               </table>
             </td>

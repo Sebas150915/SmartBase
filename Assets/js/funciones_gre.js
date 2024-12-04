@@ -380,6 +380,10 @@ function enviadocgre(id,tipocomp,nomdoc,serie,correlativo,idcliente,num_doc,nomb
   document.gre_nueva.id_ruc.value = id;
   document.gre_nueva.ruc_persona.value = doc;
   document.gre_nueva.razon_social.value = nom;
+  //alert(id); 
+ 
+  //document.gre_nueva.contribuyente.value = id;
+  $('#contribuyente').val(id);
   //alert(dir);
   buscardestino(id);
   

@@ -104,8 +104,8 @@ $num_reg_pro=$resultado_pro->rowCount();
 if($num_reg_pro == 0)
 {
 
-$query = $connect->prepare("INSERT INTO tbl_contribuyente(nombre_persona,ap_paterno,ap_materno,nombres,direccion_persona,distrito,provincia,departamento,tipo_doc,num_doc,correo,empresa) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ");
-    $resultado = $query->execute([$nombre,$appaterno,$apmaterno,$nombres,$direccion,$distrito,$provincia,$departamento,$tipodoc,$numdoc,$correo,$empresa]);
+$query = $connect->prepare("INSERT INTO tbl_contribuyente(nombre_persona,ap_paterno,ap_materno,nombres,direccion_persona,distrito,provincia,departamento,tipo_doc,num_doc,correo,empresa,zona,division) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+    $resultado = $query->execute([$nombre,$appaterno,$apmaterno,$nombres,$direccion,$distrito,$provincia,$departamento,$tipodoc,$numdoc,$correo,$empresa,$_POST['zona'],$_POST['division']]);
 	$k++;
 }
 
@@ -149,7 +149,7 @@ if($_POST['action']=='busca_cli')
 
 if($_POST['action'] == 'addCliente')
 {
-	
+	var_dump($_POST);
 	$dni 	     = $_POST['dni'];
 	$tipo_doc    = $_POST['tipo_doc'];
 	$razon	     = $_POST['razon'];
@@ -159,6 +159,8 @@ if($_POST['action'] == 'addCliente')
 	$departamento   = $_POST['departamento']; 
 	$correo   = $_POST['correo'];
 	$empresa  = $_POST['empresa'];
+	$zona  = $_POST['zona'];
+	$division  = $_POST['division'];
 
     	$query_select = "SELECT * FROM tbl_contribuyente WHERE num_doc = '$dni' AND empresa = $empresa";
 		$resultado_select=$connect->prepare($query_select);
@@ -174,8 +176,8 @@ if($_POST['action'] == 'addCliente')
 
         else
         {
-        	$query=$connect->prepare("INSERT INTO tbl_contribuyente(nombre_persona,direccion_persona,distrito,provincia,departamento,tipo_doc,num_doc,correo,empresa) VALUES (?,?,?,?,?,?,?,?,?);");
-		    $resultado=$query->execute([$razon,$direccion,$distrito,$provincia,$departamento,$tipo_doc,$dni,$correo,$empresa]);
+        	$query=$connect->prepare("INSERT INTO tbl_contribuyente(nombre_persona,direccion_persona,distrito,provincia,departamento,tipo_doc,num_doc,correo,empresa,zona,division) VALUES (?,?,?,?,?,?,?,?,?,?,?);");
+		    $resultado=$query->execute([$razon,$direccion,$distrito,$provincia,$departamento,$tipo_doc,$dni,$correo,$empresa,$zona,$division]);
         }
  	
 

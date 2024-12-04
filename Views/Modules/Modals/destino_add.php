@@ -10,7 +10,7 @@ $num_reg_ubigeo=$resultado_ubigeo->rowCount();
 ?>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="ModalDestino" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <form name="form_destino" id="form_destino">
 

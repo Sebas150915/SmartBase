@@ -30,7 +30,7 @@ $(document).ready(function(){
 function buscarchofer()
        {
            var chofer = $('#chofer').val();
-           var action   = 'buscar_vehiculo';
+           var action   = 'buscar_chofer';
         
             $.ajax({
         

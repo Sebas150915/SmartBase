@@ -125,7 +125,7 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                               <a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/cdr/<?= 'R-'. $row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.$ventas['correlativo'].'.ZIP'?>" class="btn btn-secondary rounded-circle <?=$x?>"  ><i class="fe fe-book"></i></a>
                             </td>
 
-                            <td><a href="gre_pdf/<?= $ventas['id'] ?>" class="btn btn-danger rounded-circle"><i class="fe fe-book"></i></a></td>
+                            <td><a target="_blank" href="gre_pdf/<?= $ventas['id'] ?>" class="btn btn-danger rounded-circle"><i class="fe fe-book"></i></a></td>
                             <td><?=$ventas['fecodigoerror']?></td>
                             <td><?php $e = $ventas['fecodigoerror'];
                             if($e == 1)

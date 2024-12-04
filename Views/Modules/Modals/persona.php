@@ -1,3 +1,16 @@
+<?php 
+$query_zona = "SELECT * FROM tbl_zona WHERE empresa=$_SESSION[id_empresa]";
+$resultado_zona=$connect->prepare($query_zona);
+$resultado_zona->execute(); 
+$num_reg_zona=$resultado_zona->rowCount();
+
+$query_division = "SELECT * FROM tbl_division WHERE empresa=$_SESSION[id_empresa]";
+$resultado_division=$connect->prepare($query_division);
+$resultado_division->execute(); 
+$num_reg_division=$resultado_division->rowCount();
+
+
+?>
 
 <!-- Modal -->
 <div class="modal fade" id="ModalClientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -76,6 +89,41 @@
           </div>
 </div>
      
+<div class="row">
+      <div class="col-sm-12">
+
+      <label for="">Zona</label>
+               <select class="form-control select2" style="width: 100%;" name="zona" id="zona" required>
+                          
+            <option value="">Seleccionar Zona</option>
+            <?php 
+                    while($row_zona = $resultado_zona->fetch(PDO::FETCH_ASSOC) )
+               {?>
+                <option value="<?= $row_zona['id'] ?>"><?=$row_zona['nombre']?></option>;
+               <?php  } ?>
+          </select>
+
+      </div>
+      </div>
+
+      <div class="row">
+      <div class="col-sm-12">
+
+      <label for="">División</label>
+               <select class="form-control select2" style="width: 100%;" name="division" id="division" required>
+                          
+            <option value="">Seleccionar División</option>
+            <?php 
+                    while($row_division = $resultado_division->fetch(PDO::FETCH_ASSOC) )
+               {?>
+                <option value="<?= $row_division['id'] ?>"><?=$row_division['nombre']?></option>;
+               <?php  } ?>
+          </select>
+
+      </div>
+      </div>
+
+
 
        
 </div>
@@ -132,10 +180,12 @@
               <label for="">Correo</label>
             <input type="hidden" name="update_id" id="update_id" value="">
             <input type="hidden" name="action" value="ediCliente">
-            
             <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="update_correo" id="update_correo" class="form-control">
           </div>
       </div>
+
+
+
       
     <div class="modal-footer mt-3">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

@@ -86,8 +86,9 @@ $sql_empresas="SELECT * FROM tbl_empresas WHERE id_empresa = $_SESSION[id_empres
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/series"><span class="ml-1">Series</span></a>
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/usuarios"><span class="ml-1">Usuarios</span></a>
                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/vendedor"><span class="ml-1">Vendedor</span></a>
-                       <a class="nav-link pl-lg-2" href="<?=base_url()?>/contribuyente"><span class="ml-1">Contribuyentes</span></a>
-                      
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/contribuyente"><span class="ml-1">Contribuyentes</span></a>
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/zona"><span class="ml-1">Zona</span></a>
+                      <a class="nav-link pl-lg-2" href="<?=base_url()?>/division"><span class="ml-1">Division</span></a>
                     </ul>
                   </li>
                   <!--COMPRAS--->

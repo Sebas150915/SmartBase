@@ -278,7 +278,7 @@ $num_reg_data=$resultado_data->rowCount();
   </script>
 <script src="assets/js/sunat_reniec.js"></script>
 <script src="assets/js/persona.js"></script>
-<script src="assets/js/funciones_persona.js"></script>
+<script src="assets/js/funciones_persona.js?v=1"></script>
     
 
   </body>

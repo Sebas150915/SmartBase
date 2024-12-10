@@ -371,5 +371,21 @@ $num_reg_alm=$resultado_alm->rowCount();
               listarcliente(); 
            </script> 
 
+<script>
+
+function validaCompra()
+{
+   var ruc = $('#ruc_persona').val();
+   var serie = $('#serie').val();
+   var numero = $('#numero').val();
+   var fecha = $('#fecha').val();
+   var total = $('#total').val();
+
+   
+ 
+
+}
+
+</script>
   </body>
 </html>

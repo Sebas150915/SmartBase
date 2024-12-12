@@ -26,6 +26,7 @@ function ediproducto()
 	  	
 	  	success: function(response)
 	  	{
+	  		
 	  		console.log(response);
 	  		var data = $.parseJSON(response);
 	  		$('#update_id').val(data.id);

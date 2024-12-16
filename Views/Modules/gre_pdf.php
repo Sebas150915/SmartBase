@@ -298,7 +298,7 @@ $output.='
                      <tr>
                        <th class="text-right">'.$detalle->item.'</th>
                        <th class="text-left border3">'.$detalle->codigoproducto.'</th>
-                       <th class="text-left border3">'.$detalle->nombreproducto.'</th>
+                       <th class="text-left border3">'.$detalle->nomproducto.'</th>
                       
                        <th class="text-right border3">'.$detalle->cantidad.'</th>
                        <th  class="text-center border3">'.$detalle->unidadmedida.'</th>
@@ -402,7 +402,7 @@ $output.='
               <table class="border1 border2 border3 border4">
                 <thead>
                   <tr>
-                    <th width="100%" colspan="4" class="text-left"  style="background:black;color:white">DATOS DE EXPORTACIÓN</th>
+                    <th width="100%" colspan="6" class="text-left"  style="background:black;color:white">DATOS DE EXPORTACIÓN</th>
                     
                    </tr>';
                    
@@ -411,6 +411,8 @@ $output.='
                         <th >'.$row_cabecera['dam'].'</th>
                         <th width="25%" class="text-left">Peso Bruto:</th>
                         <th width="25%">'.number_format($row_cabecera['peso']).' Kg</th>
+                        <th width="50%" class="text-left">Booking:</th>
+                        <th width="25%">'.$row_cabecera['booking'].'</th>
                         </tr>
                         <tr>
                         <th width="50%" class="text-left">Precinto:</th>

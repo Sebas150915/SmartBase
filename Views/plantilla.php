@@ -50,6 +50,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "sire_ventas" ||
                      $rutas[0] == "nota_venta" ||
                      $rutas[0] == "nueva_venta" ||
+                     $rutas[0] == "nueva_venta_psgi" ||
                      $rutas[0] == "nueva_nota_venta" ||
                      $rutas[0] == "nueva_nota_pedido" ||
                      $rutas[0] == "pos" ||
@@ -71,6 +72,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "detalle_cobros" ||
                      $rutas[0] == "cuentas_por_pagar" ||
                      $rutas[0] == "ticket_factura" ||
+                     $rutas[0] == "ticket_factura_psgi" ||
                      $rutas[0] == "ticket_cotizacion" ||
                      $rutas[0] == "ticket_factura_pdf" ||
                      $rutas[0] == "ticket_factura_compra" ||

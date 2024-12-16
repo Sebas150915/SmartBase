@@ -539,7 +539,7 @@ else if (result.isDenied)
      }
      else
      {
-        window.open(base_url+'/factura_pdf/'+ticket, '_blank');
+        window.open(base_url+'/factura_pdf2/'+ticket, '_blank');
         
             if(empresad == '21' && perfil == '3')
             {
@@ -1444,8 +1444,9 @@ function modificarSubtotales()
 	var afec=document.getElementsByName("afectacion[]");
 	var sub=document.getElementsByName("subtotal");
 
-	for(var i=0; i< cant.length;i++)
-	{
+
+	for(var i=0; i< cant.length;i++)		
+	{		
 		var inpV=cant[i];
 		var inpU=cantu[i];
 		var inpF=fac[i];
@@ -1454,7 +1455,7 @@ function modificarSubtotales()
 		var inpP=prev[i];
 		var inpA=afec[i];
 		var inpS=sub[i];
-
+		//alert(inpV.value+'-'+inpU.value+'-'+inpF.value+'-'+inpVu.value+'-'+inpI.value+'-'+inpP.value+'-'+inpA.value);
 		inpS.value = (inpV.value*inpP.value + inpU.value*inpP.value/inpF.value);
 		document.getElementsByName("subtotal")[i].innerHTML=inpS.value.toFixed(2);
 

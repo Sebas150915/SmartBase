@@ -24,7 +24,7 @@ $resultado_moneda->execute();
 //$row_moneda = $resultado_moneda->fetchAll(PDO::FETCH_ASSOC);
 $num_reg_moneda=$resultado_moneda->rowCount();
 
-$query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('01','03')";
+$query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('01','03','10')";
 $resultado_documento=$connect->prepare($query_documento);
 $resultado_documento->execute(); 
 $num_reg_documento=$resultado_documento->rowCount();
@@ -268,19 +268,7 @@ $num_reg_producto=$resultado_producto->rowCount();
                           </select>
                         
                       </div>
-                      <div class="col-lg-2 col-sm-6 col-sm-2">
-                        <label for="">Guia Remision</label>
-                        <input type="text" class="form-control"  name="nguiar" id="nguiar" value="">
-                      </div>
-                      <?php if($_SESSION['usaexportacion'] == 'SI'){ ?>
-                      <div class="col-lg-2 col-sm-6 col-sm-2">
-                        <label for="">Exportacion</label>
-                        <select class="form-control select2" name="exportacion" id="exportacion" >
-                          <option value="NO">NO</option>
-                          <option value="SI">SI</option>
-                        </select>
-                      </div>
-                    <?php } ?>
+
                     </div>
 
 <!--div class="row justify-content-left">

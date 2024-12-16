@@ -272,6 +272,7 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                         </select>
                       </div>
 
+
                     </div>
 
 <!--div class="row justify-content-left">
@@ -432,21 +433,31 @@ else {?>
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <label for="">Monto a Pagar</label>
            <input type="text" name="montopago" id="montopago" value="" readonly class="form-control border-danger text-center text-bold" style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;">
           </div>
+
+          <div class="col-sm-6">
+              <label for="">Fecha Ope.</label>
+              <input type="date" class="form-control" value="<?=$hoy?>" name="fecha_pago" id="fecha_pago">
+          </div>
+
            </div>
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
               <label for="">Efectivo</label>
               <input type="text" name="efectivo" onkeyup="pagos()" id="efectivo" value="0.00" class="form-control text-right">
+            </div>
+            <div class="col-sm-6">
+              <label for="">Nro Ope.</label>
+              <input type="text" name="numero_operacion" id="numero_operacion" class="form-control text-right">
             </div>
             
           </div>
           <div class="row">
             <div class="col-sm-6">
-              <label for="">Otro Medio de Pago</label>
+              <label for="">Bancos</label>
               <select name="cvisa" id="cvisa" class="form-control">
                 
                
@@ -473,9 +484,24 @@ else {?>
               <label for="">Vuelto</label>
             <input type="text" value="0.00" name="vuelto" id="vuelto" readonly class="form-control border-danger text-center text-bold" style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;">
             </div>           
-            
+      
           </div>
-       
+
+          <div class="row">
+          <div class="col-sm-12">
+                        <label for="">Tipo de Operación</label>
+                        <select class="form-control select2" name="tipo_operacion" id="tipo_operacion" >
+                          <option value="pos">POS</option>
+                          <option value="dep_agente">Dep. en Agente</option>
+                          <option value="dep_ventanilla">Dep. Ventanilla</option>
+                          <option value="dep_cajero">Dep. Cajero Automático</option>
+                          <option value="transf_banco">Transf. Mismo Banco</option>
+                          <option value="transf_otro_banco">Transf. Otro Banco</option>
+                          <option value="dep_ventanilla">Dep. Ventanilla</option>
+                        </select>
+                      </div>
+        </div>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-save"></i> Guardar</button>
@@ -561,99 +587,6 @@ listarcliente();
    
 </script>
 
-<script>
-function buscarftgre()
-{
-  var refgre = $('#nguiar').val();
-  var action = 'buscagrefact';
-  if(refgre.length>=13)
-  {
-      $.ajax({
-      url: base_url+'/assets/ajax/ajax_venta.php',
-      type: "POST",
-      async: true,
-      data: {action:action,refgre:refgre},
 
-      success: function(response)
-      {
-        console.log(response);
-        var data = $.parseJSON(response);
-       $('#id_ruc').val(data.codcliente);
-        $('#ruc_persona').val(data.nro_doc_cliente);        
-        $('#razon_social').val(data.razon_social_cliente);
-       $('#razon_direccion').val(data.direccionpro);
-        $('#fecha_emision').val(data.fecha_emision);
-        $('#fecha_vencimiento').val(data.fecha_emision);
-        $('#obs').val(data.obs+'-'+data.booking);
-
-        /*  $('#condicion').val(data.condicion_venta).attr('selected', 'selected');
-        $('#moneda').val(data.codmoneda).attr('selected', 'selected');
-        $('#tip_cpe').val(data.tipocomp).attr('selected', 'selected');
-
-        $('#serie').val(data.serie);
-        $('#numero').val(data.correlativo);*/
-
-        $('#op_g').val(data.op_gravadas);
-        $('#op_e').val(data.op_exoneradas);
-        $('#op_i').val(data.op_inafectas);
-        $('#igv').val(data.igv);
-        $('#total').val(data.total);
-
-        var idgre=data.id;
-        buscarftgredet(idgre);
-
-
-        
-        
-      },
-      error: function(response)
-      {
-        console.log(response);
-      }
-       });
-
-  }
-  
-}
-function buscarftgredet(id)
-{
-//alert(id);
-var id_venta_ref = id;
-	var action       = 'listarGreDet';
-	 
-
-	  $.ajax({
-	  	url: base_url+'/assets/ajax/ajax_gre.php',
-	  	type: "POST",
-	  	async: true,
-	  	data: {action:action,id:id_venta_ref},
-
-
-
-	  	success: function(response)
-	  	{
-	  		console.log(response);
-	  		 var info = JSON.parse(response);
-	  		// console.log(info);
-	  		 $('#detalleventa').html(info.detalle);
-        detalles++;
-	  		 reordenar();
-	    modificarSubtotales();
-	    calcaulaDt();	
-	    //alert('detalle:'+detalles);
-	  		 //$("#btnListar").hide();
-	  		 //$("#btnGuardar").show();
-	  	},
-	  	error: function(response)
-	  	{
-	  		console.log(response);
-	  	}
-	  });
-
-
-
-}
-
-</script>
   </body>
 </html>

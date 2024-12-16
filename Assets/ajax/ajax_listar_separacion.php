@@ -30,7 +30,7 @@ if($_POST['action'] == 'listarseparacion')
 }
 
 
-if($_POST['action'] == 'listarCompraDet')
+if($_POST['action'] == 'listarSeparacionDet')
 {
        $idventa = $_POST['id'];
        //echo $idventa;

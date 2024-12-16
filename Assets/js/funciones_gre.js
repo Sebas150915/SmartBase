@@ -1,5 +1,70 @@
 $(document).ready(function()
 {
+    
+    $('#envia_gre').submit(function(e)
+	{
+		swal.fire({
+					title: "Procesando documento...",
+					text: "Por favor espere",
+					imageUrl: base_url+'/assets/js/ajax.gif',
+					showConfirmButton: false,
+					allowOutsideClick: false
+					});
+		e.preventDefault();
+		$.ajax({
+			url  :  base_url+'/assets/ajax/ajax_gre.php',
+			type : "POST",
+			async: true,
+			data : new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+
+			success: function(response)
+			{
+               console.log(response);
+                var data1 = $.parseJSON(response);
+                console.log(data1);
+                var respuesta_sunat = data1.msj_sunat;
+                var cod_sunat       = data1.cod_sunat;
+                
+                console.log(response);
+                    Swal.fire({
+                        title: respuesta_sunat,
+                        text: "Codigo - SUNAT: "+cod_sunat,
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: "Aceptar",
+                        denyButtonText: "Cancelar"
+                        }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                        location.reload();
+                        } else if (result.isDenied) {
+                        location.reload();
+                        }
+                    });
+                
+                //window.location = "ventas";
+                //location.reload();
+			},
+			error: function(response)
+			{
+                Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "error al procesar..!",
+               
+                });
+                console.log(response);
+	    	}
+
+		});
+	});
+    
+    
+    
+    
   //buscar proveedor / cliente
 
 		//$('#ruc_persona').keyup(function(e){
@@ -239,7 +304,7 @@ $(document).ready(function()
          
         
         window.open(base_url+'/gre_pdf/'+data1.idgre);
-        window.location = "gre";
+        //window.location = "gre";
          
       },
 			error: function(response)
@@ -457,8 +522,8 @@ function agregar(id,nombre,precio,afectacion,precio_compra,factor,mxmn)
 	var fila='<tr id="fila'+cont+'">'+
 	         '<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fe fe-trash-2"></i></button></td>'+
 	         '<td>'+cont+'</td>'+
-	          '<td><input type="hidden" name="itemarticulo[]" value="'+cont+'"><input type="hidden" name="idarticulo[]" value="'+id+'"><input type="hidden" name="nomarticulo[]" value="'+nombre+'"><input type="hidden" name="mxmn[]" value="'+mxmn+'"><input class="form-control" name="nomproducto" id="nomproducto" value="'+nombre+'" ></td>'+
-	          '<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'"><input type="hidden" name="factor[]" value="'+factor+'"><input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="'+cantidad+'" onkeyup="modificarSubtotales()" required ></td>'+
+	          '<td><input type="hidden" name="itemarticulo[]" value="'+cont+'"><input type="hidden" name="idarticulo[]" value="'+id+'"><input type="hidden" name="nomarticulo[]" value="'+nombre+'"><input type="hidden" name="mxmn[]" value="'+mxmn+'"><input class="form-control" name="nomproducto[]" id="nomproducto" value="'+nombre+'" ></td>'+
+	          '<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'"><input type="hidden" name="factor[]" value="'+factor+'"><input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="'+cantidad+'" onkeyup="modificarSubtotales()" required readonly></td>'+
 	          '<td><input type="text" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="'+cantidadu+'" required onkeyup="modificarSubtotales()"></td>'+
 	          '<td><input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="'+valor_unitario+'" readonly>'+
 	          '<input type="hidden" id="cantidada'+cont+'" name="cantidada[]" class="form-control input-sm" >'+
@@ -721,6 +786,25 @@ function openModalEnvia()
 					return this.innerHTML;
 				}).get();
 			$('#enviar_id').val(arr[0]);
+			$('#ruc_id').val(arr[4]);
+
+		});
+}
+
+function openModalEnviaGre()
+{
+    
+	$('#ModalGreEnviada').modal('show');
+
+	var arr = [];
+
+	$('#datatable-ventas > tbody > tr').click(function()
+		{
+			arr = $(this).find('td').map(function()
+				{
+					return this.innerHTML;
+				}).get();
+			$('#enviar_id').val(arr[1]);
 			$('#ruc_id').val(arr[4]);
 
 		});

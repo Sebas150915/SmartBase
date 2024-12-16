@@ -2,7 +2,12 @@
 
 $id_nv = $rutas[1];
 $empresa = $_SESSION["id_empresa"];
+$pormayor = $_SESSION["venta_por_mayor"];
+$usabarras = $_SESSION["usabarras"];
 $hoy = date('Y-m-d');
+
+
+
 
 $query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('NP')";
 $resultado_documento=$connect->prepare($query_documento);

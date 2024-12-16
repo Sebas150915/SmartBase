@@ -168,7 +168,7 @@ while($row_vehiculo = $resultado_vehiculo->fetch(PDO::FETCH_ASSOC) )
 </div>
 </div>
 
-<div class="col-lg-3 col-sm-6 col-sm-4">
+<div class="col-lg-2 col-sm-6 col-sm-3">
 <label for="">Chofer</label>
 <div class="input-group">
 <select class="form-control select2"  name="chofer" id="chofer">
@@ -184,7 +184,7 @@ while($row_chofer = $resultado_chofer->fetch(PDO::FETCH_ASSOC) )
 </div>
 </div>
 
-<div class="col-lg-3 col-sm-6 col-sm-4">
+<div class="col-lg-2 col-sm-6 col-sm-3">
 <label for="">Transportista</label>
 <div class="input-group">
 <select class="form-control select2"  name="transportista" id="transportista">
@@ -199,6 +199,11 @@ while($row_transporte = $resultado_transporte->fetch(PDO::FETCH_ASSOC) )
 <button class="btn btn-danger" type="button"><i class="fe fe-plus"></i></button>
 </div>
 </div>
+</div>
+
+<div class="col-lg-2 col-sm-6 col-sm-3">
+<label for="">Booking</label>
+<input type="text" class="form-control" name="booking" id="booking">
 </div>
 
 <div class="col-lg-2 col-sm-6 col-sm-3">
@@ -401,7 +406,6 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
                       <th>Unidad</th>
                       <th>Precio</th>
                       <th>Total</th>
-                      
                     </tr>
                   </thead>
                 <tbody id="detalleventa">

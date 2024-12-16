@@ -8,7 +8,7 @@ if(!empty($_POST))
 {
     $fecha_ini = $_POST['f_ini'];
     $fecha_fin = $_POST['f_fin'];
-    $query_venta = "SELECT * FROM vw_tbl_gre_cab  WHERE idlocal=$almacen AND fecha_emision BETWEEN '$fecha_ini' AND '$fecha_fin'";
+    $query_venta = "SELECT * FROM vw_tbl_gre_cab  WHERE fecha_emision BETWEEN '$fecha_ini' AND '$fecha_fin'";
     $resultado_venta=$connect->prepare($query_venta);
     $resultado_venta->execute();
     $num_reg_venta=$resultado_venta->rowCount();
@@ -19,7 +19,7 @@ else
     $hoy = date('Y-m-d');
     $fecha_ini = $hoy;
     $fecha_fin = $hoy;
-    $query_venta = "SELECT * FROM vw_tbl_gre_cab  WHERE idlocal=$almacen AND fecha_emision='$hoy'";
+    $query_venta = "SELECT * FROM vw_tbl_gre_cab  WHERE fecha_emision='$hoy'";
     $resultado_venta=$connect->prepare($query_venta);
     $resultado_venta->execute();
     $num_reg_venta=$resultado_venta->rowCount();
@@ -92,15 +92,16 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                                 <th>Acciones</th>
                                 <th>Id</th>
                                 <th>Fecha</th>
-                                <th>T. Cpe</th>
                                 <th>N. Cpe</th>
+                                <th>Id Cliente</th>
                                 <th>RUC/DNI</th>
                                 <th>Cliente</th>
-                                                              
-                              
+                                <th>Booking</th>
+                                <th>Contenedor</th>
                                 <th>XML</th>
                                 <th>CDR</th>
                                 <th>PDF</th>
+                                <th>Reenvia</th>
                                 <th>Codigo</th>
                                 <th>Estado</th>
                                 
@@ -112,12 +113,12 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                             <td><a class="btn btn-warning rounded-circle" href="<?=base_url()?>/editar_gre/<?= $ventas['id'] ?>"><i class="fe fe-edit"></i></a></td>
                             <td><?= $ventas['id'] ?></td>
                             <td><?= $ventas['fecha_emision'] ?></td>
-                            <td><?= $ventas['tipocomp'] ?></td>
-                            <td><?= $ventas['serie'].'-'.$ventas['correlativo'] ?></td>
+                            <td><?= $ventas['serie'].'-'.str_pad($ventas['correlativo'],8,'0',STR_PAD_LEFT) ?></td>
+                            <td><?= $ventas['idcliente'] ?></td>
                             <td><?= $ventas['codcliente'] ?></td>
                             <td><?= $ventas['razon_social_cliente'] ?></td>
-                           
-                        
+                            <td><?= $ventas['booking'] ?></td>
+                            <td><?= $ventas['cont'] ?></td>
 
                             <td><a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/xml/<?=$row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.$ventas['correlativo'].'.ZIP'?>" class="btn btn-primary rounded-circle"><i class="fe fe-book"></i></a></td>
 
@@ -126,6 +127,9 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                             </td>
 
                             <td><a target="_blank" href="gre_pdf/<?= $ventas['id'] ?>" class="btn btn-danger rounded-circle"><i class="fe fe-book"></i></a></td>
+                            
+                            <td><a href="#" class="btn btn-danger" onclick="openModalEnviaGre()"><i class="fe fe-send"></i></a></td>
+                            
                             <td><?=$ventas['fecodigoerror']?></td>
                             <td><?php $e = $ventas['fecodigoerror'];
                             if($e == 1)
@@ -162,8 +166,8 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
         
       </main> <!-- main -->
     </div> <!-- .wrapper -->
-   <?php include 'views/modules/modals/envia_venta.php' ?>
-    <?php include 'views/template/pie.php' ?>
+   <?php include 'views/modules/modals/envia_gre.php'?>
+    <?php include 'views/template/pie.php'?>
     <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://unpkg.com/imask"></script>
      <!-- <script type="text/javascript" src="Assets/vendors/inputMask/inputmask.js" charset="utf-8"></script>-->

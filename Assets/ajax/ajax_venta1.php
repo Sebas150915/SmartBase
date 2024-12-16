@@ -316,8 +316,8 @@ if($_POST['action'] == 'nueva_venta')
         $resultado_cli = $query_cli->execute([$_POST['correo_cliente'],$_POST['id_ruc']]);
 
         $hora = date('h:i:s');
-        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,orden_compra,codmoneda,local,redondeo, relacionado_id, relacionado_serie, estadopagoanticipo,exportacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['orden_compra'],$moneda,$localemp,$redondeo, $relacionado_id, $relacionado_serie, $estadopagoanticipo,$_POST['exportacion']]);
+        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,incoterms,orden_compra,codmoneda,local,redondeo, relacionado_id, relacionado_serie, estadopagoanticipo,exportacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['incoterms'],$_POST['orden_compra'],$moneda,$localemp,$redondeo, $relacionado_id, $relacionado_serie, $estadopagoanticipo,$_POST['exportacion']]);
 
         $lastInsertId = $connect->lastInsertId();
 
@@ -342,7 +342,7 @@ if($_POST['action'] == 'nueva_venta')
         $costo                 = $_POST['precio_compra'][$i];
         $factor                = $_POST['factor'][$i];
         $cantidadu             = $_POST['cantidadu'][$i];
-        $mxmn                  = $_POST['mxmn'][$i];
+        $mxmn                  = 'min';
         $cantidad_total        = $factor*$cantidad + $cantidadu;
 
         if($afectacion == '10')
@@ -468,8 +468,8 @@ if($_POST['action'] == 'nueva_venta')
         if($visa>0)
         {
         $fdp = '2';
-        $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,importe_pago) VALUES (?,?,?)");
-        $resultado_fdp = $query_fdp->execute([$lastInsertId,$cvisa,$visa]);
+        $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,numero_operacion,importe_pago,tipo_operacion,fecha_pago) VALUES (?,?,?,?,?,?)");
+        $resultado_fdp = $query_fdp->execute([$lastInsertId,$cvisa,$_POST['numero_operacion'],$visa,$_POST['tipo_operacion'],$_POST['fecha_pago']]);
 
         $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
         $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$visa,$_POST['fecha_emision'],$_POST['empresa']]);

@@ -1,1 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns0:getStatusResponse xmlns:ns0="http://service.sunat.gob.pe"><status><statusCode>0002</statusCode><statusMessage>El comprobante existe pero está rechazado.</statusMessage></status></ns0:getStatusResponse></S:Body></S:Envelope>

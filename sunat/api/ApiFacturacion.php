@@ -188,7 +188,8 @@ class ApiFacturacion
 				$mensaje['hash_cdr2'] ='';
 
 
-				}else{
+				}
+				else{
 
 				$curl = curl_init();
 				/************************consulta ticket*****************************/

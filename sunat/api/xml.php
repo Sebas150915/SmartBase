@@ -76,15 +76,16 @@ class GeneradorXML
             <cac:Shipment>
             <cbc:ID>SUNAT_Envio</cbc:ID>
             <cbc:HandlingCode>'.$cabecera["cod_motivo_traslado"].'</cbc:HandlingCode>
-            <cbc:GrossWeightMeasure unitCode="KGM">'.number_format($cabecera["peso"],2).'</cbc:GrossWeightMeasure>
+            <cbc:GrossWeightMeasure unitCode="KGM">'.number_format($cabecera["peso"],2,'.', '').'</cbc:GrossWeightMeasure>
             ';
             
             if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
             {
               $xmlCPE = $xmlCPE.'
+               <cbc:NetWeightMeasure unitCode="KGM">'.number_format($cabecera["peso"],2,'.', '').'</cbc:NetWeightMeasure>
                <cbc:Information>'.$cabecera["motivo_traslado"].'</cbc:Information>
              
-              <cbc:TotalTransportHandlingUnitQuantity>'.$cabecera["nro_paquetes"].'</cbc:TotalTransportHandlingUnitQuantity>';
+              <cbc:TotalTransportHandlingUnitQuantity>'.number_format($cabecera["nro_paquetes"],2,'.', '').'</cbc:TotalTransportHandlingUnitQuantity>';
             }
 
            
@@ -200,7 +201,18 @@ class GeneradorXML
 
             <cac:SellersItemIdentification>
             <cbc:ID>' . $detalle[$i]["codigoproducto"] . '</cbc:ID>
-            </cac:SellersItemIdentification>
+            </cac:SellersItemIdentification>';
+            
+            if($cabecera["cod_motivo_traslado"] =='09')
+            {
+            $xmlCPE.='<cac:AdditionalItemProperty>
+						<cbc:Name>Numeracion de la DAM o DS</cbc:Name>
+						<cbc:NameCode listAgencyName="PE:SUNAT" listName="Propiedad del Item" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo55">7021</cbc:NameCode>
+						<cbc:Value>'.$cabecera["dam"].'</cbc:Value>
+					</cac:AdditionalItemProperty>
+					';
+            }
+            $xmlCPE.='
             </cac:Item>
             </cac:DespatchLine>';
             }

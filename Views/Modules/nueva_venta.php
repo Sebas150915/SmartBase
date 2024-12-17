@@ -47,7 +47,7 @@ $resultado_forma=$connect->prepare($query_forma);
 $resultado_forma->execute(); 
 $num_reg_forma=$resultado_forma->rowCount();
 
-$query_tipo = "SELECT * FROM tbl_tipo_pago  WHERE empresa = $empresa AND id <> 1";
+$query_tipo = "SELECT * FROM tbl_tipo_pago  WHERE empresa = $empresa AND id <> 1 AND estado ='1'";
 $resultado_tipo=$connect->prepare($query_tipo);
 $resultado_tipo->execute(); 
 $num_reg_tipo=$resultado_tipo->rowCount();

@@ -2,265 +2,264 @@
 class GeneradorXML
 {
 
-      function CrearXMLGRE($nombrexml, $emisor, $cliente, $cabecera, $detalle)
-      {
-            $doc = new DOMDocument();
-            $doc->formatOutput = FALSE;
-            $doc->preserveWhiteSpace = TRUE;
-            /*
-            $doc->encoding = 'ISO-8859-1';
-            $xmlCPE = '<?xml version="1.0" encoding="iso-8859-1"?>
-            */
-            $doc->encoding = 'utf-8';
-            $xmlCPE = '<?xml version="1.0" encoding="utf-8"?>
-            <DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">
-            <ext:UBLExtensions>
-            <ext:UBLExtension>
-            <ext:ExtensionContent>
-            </ext:ExtensionContent>
-            </ext:UBLExtension>
-            </ext:UBLExtensions>
-            <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
-            <cbc:CustomizationID>2.0</cbc:CustomizationID>
-            <cbc:ID>'.$cabecera["serie"].'-'.$cabecera["correlativo"].'</cbc:ID>
-            <cbc:IssueDate>'.$cabecera["fecha_emision"].'</cbc:IssueDate>
-            <cbc:IssueTime>'.$cabecera["hora_emision"].'</cbc:IssueTime>
-            <cbc:DespatchAdviceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DespatchAdviceTypeCode>'; 
-
-            $xmlCPE .= '<cbc:Note>'.$cabecera["nota"].'</cbc:Note>';
-            
-            if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
-            {
-               $xmlCPE .='<cac:AdditionalDocumentReference>
-<cbc:ID>'.$cabecera["dam"].' </cbc:ID>
-<cbc:DocumentTypeCode listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo61" listName="Documento relacionado al transporte" listAgencyName="PE:SUNAT">50</cbc:DocumentTypeCode>
-<cbc:DocumentType>Declaración Aduanera de Mercancías</cbc:DocumentType>
-<cac:IssuerParty>
-<cac:PartyIdentification>
-<cbc:ID schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06" schemeAgencyName="PE:SUNAT" schemeName="Documento de Identidad" schemeID="6">'.$cabecera["nro_doc_cliente"].'</cbc:ID>
-</cac:PartyIdentification>
-</cac:IssuerParty>
-</cac:AdditionalDocumentReference>';
-            }            
+   function CrearXMLGRE($nombrexml, $emisor, $cliente, $cabecera, $detalle)
+   {
+         $doc = new DOMDocument();
+         $doc->formatOutput = FALSE;
+         $doc->preserveWhiteSpace = TRUE;
+         /*
+         $doc->encoding = 'ISO-8859-1';
+         $xmlCPE = '<?xml version="1.0" encoding="iso-8859-1"?>
+         */
+         $doc->encoding = 'utf-8';
+         $xmlCPE = '<?xml version="1.0" encoding="utf-8"?>';
+         if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
+         {
+            $xmlCPE.='   
+            <DespatchAdvice xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+              >';
 
 
+         }
+         else{
 
+         
+         $xmlCPE.='
+         <DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">';
+         }  
+         $xmlCPE.='  
 
-            $xmlCPE = $xmlCPE .
-             ' 
-            <cac:Signature>
-            <cbc:ID>'.$cabecera["ruc_empresa"].'</cbc:ID>
-            <cac:SignatoryParty>
-            <cac:PartyIdentification>
-            <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'. $cabecera["ruc_empresa"].'</cbc:ID>
-            </cac:PartyIdentification>
-            <cac:PartyName>
-            <cbc:Name><![CDATA['.$cabecera["razon_social"].']]></cbc:Name>
-            </cac:PartyName>
-            </cac:SignatoryParty>
-            <cac:DigitalSignatureAttachment>
-            <cac:ExternalReference>
-            <cbc:URI>'. $cabecera["ruc_empresa"].'</cbc:URI>
-            </cac:ExternalReference>
-            </cac:DigitalSignatureAttachment>
-            </cac:Signature>   
-            ';
+         <ext:UBLExtensions>
+         <ext:UBLExtension>
+         <ext:ExtensionContent>
+         </ext:ExtensionContent>
+         </ext:UBLExtension>
+         </ext:UBLExtensions>
+         <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+         <cbc:CustomizationID>2.0</cbc:CustomizationID>
+         <cbc:ID>'.$cabecera["serie"].'-'.$cabecera["correlativo"].'</cbc:ID>
+         <cbc:IssueDate>'.$cabecera["fecha_emision"].'</cbc:IssueDate>
+         <cbc:IssueTime>'.$cabecera["hora_emision"].'</cbc:IssueTime>
+         <cbc:DespatchAdviceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DespatchAdviceTypeCode>
+         <cbc:Note>'.$cabecera["nota"].'</cbc:Note>';
 
-            $xmlCPE = $xmlCPE .
-             '<cac:DespatchSupplierParty>
-            <cbc:CustomerAssignedAccountID schemeID="'.$cabecera["tipo_doc_empresa"].'">'.$cabecera["ruc_empresa"].'</cbc:CustomerAssignedAccountID>
-            <cac:Party>
-            <cac:PartyIdentification>
-            <cbc:ID schemeID="'.$cabecera["tipo_doc_empresa"].'" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cabecera["ruc_empresa"].'</cbc:ID>
-            </cac:PartyIdentification>
-            <cac:PartyLegalEntity>
-            <cbc:RegistrationName><![CDATA['.$cabecera["razon_social"].']]></cbc:RegistrationName>
-            </cac:PartyLegalEntity>
-            </cac:Party>
-            </cac:DespatchSupplierParty>
+         if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
+         {
+            $xmlCPE .='<cac:AdditionalDocumentReference>
+        <cbc:ID>'.$cabecera["dam"].'</cbc:ID>
+        <cbc:DocumentTypeCode>50</cbc:DocumentTypeCode>
+    </cac:AdditionalDocumentReference>';
+         }
 
-            <cac:DeliveryCustomerParty>
-            <cbc:CustomerAssignedAccountID schemeID="'.$cabecera["tipo_doc_cliente"] . '">' . $cabecera["nro_doc_cliente"] . '</cbc:CustomerAssignedAccountID>
-            <cac:Party>
-            <cac:PartyIdentification>
-            <cbc:ID schemeID="'.$cabecera["tipo_doc_cliente"].'" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cabecera["nro_doc_cliente"].'</cbc:ID>
-            </cac:PartyIdentification>
-            <cac:PartyLegalEntity>
-            <cbc:RegistrationName><![CDATA['.$cabecera["razon_social_cliente"].']]></cbc:RegistrationName>
-            </cac:PartyLegalEntity>
-            </cac:Party>
-            </cac:DeliveryCustomerParty>
+         $xmlCPE = $xmlCPE .
+          ' 
+         <cac:Signature>
+         <cbc:ID>'.$cabecera["ruc_empresa"].'</cbc:ID>
+         <cac:SignatoryParty>
+         <cac:PartyIdentification>
+         <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'. $cabecera["ruc_empresa"].'</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyName>
+         <cbc:Name><![CDATA['.$cabecera["razon_social"].']]></cbc:Name>
+         </cac:PartyName>
+         </cac:SignatoryParty>
+         <cac:DigitalSignatureAttachment>
+         <cac:ExternalReference>
+         <cbc:URI>'. $cabecera["ruc_empresa"].'</cbc:URI>
+         </cac:ExternalReference>
+         </cac:DigitalSignatureAttachment>
+         </cac:Signature>   
+         ';
 
-            <cac:Shipment>
-            <cbc:ID>SUNAT_Envio</cbc:ID>
-            <cbc:HandlingCode>'.$cabecera["cod_motivo_traslado"].'</cbc:HandlingCode>
-            <cbc:GrossWeightMeasure unitCode="KGM">'.number_format($cabecera["peso"],2,'.', '').'</cbc:GrossWeightMeasure>
-            ';
-            
-            if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
-            {
-              $xmlCPE = $xmlCPE.'
-               <cbc:NetWeightMeasure unitCode="KGM">'.number_format($cabecera["peso"],2,'.', '').'</cbc:NetWeightMeasure>
-               <cbc:Information>'.$cabecera["motivo_traslado"].'</cbc:Information>
-             
-              <cbc:TotalTransportHandlingUnitQuantity>'.number_format($cabecera["nro_paquetes"],2,'.', '').'</cbc:TotalTransportHandlingUnitQuantity>';
-            }
+         $xmlCPE .='<cac:DespatchSupplierParty>
+         <cbc:CustomerAssignedAccountID schemeID="'.$cabecera["tipo_doc_empresa"].'">'.$cabecera["ruc_empresa"].'</cbc:CustomerAssignedAccountID>
+         <cac:Party>
+         <cac:PartyIdentification>
+         <cbc:ID schemeID="'.$cabecera["tipo_doc_empresa"].'" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cabecera["ruc_empresa"].'</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyLegalEntity>
+         <cbc:RegistrationName><![CDATA['.$cabecera["razon_social"].']]></cbc:RegistrationName>
+         </cac:PartyLegalEntity>
+         </cac:Party>
+         </cac:DespatchSupplierParty>
 
-            
-            if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
-            {
+         <cac:DeliveryCustomerParty>
+         <cbc:CustomerAssignedAccountID schemeID="'.$cabecera["tipo_doc_cliente"] . '">' . $cabecera["nro_doc_cliente"] . '</cbc:CustomerAssignedAccountID>
+         <cac:Party>
+         <cac:PartyIdentification>
+         <cbc:ID schemeID="'.$cabecera["tipo_doc_cliente"].'" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cabecera["nro_doc_cliente"].'</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyLegalEntity>
+         <cbc:RegistrationName><![CDATA['.$cabecera["razon_social_cliente"].']]></cbc:RegistrationName>
+         </cac:PartyLegalEntity>
+         </cac:Party>
+         </cac:DeliveryCustomerParty>
 
-          $xmlCPE .='<cbc:SpecialInstructions>SUNAT_Envio_IndicadorTrasladoTotalDAMoDS</cbc:SpecialInstructions> 
-          
-          <cbc:SpecialInstructions>SUNAT_Envio_IndicadorVehiculoConductoresTransp</cbc:SpecialInstructions>     
-          
+         <cac:Shipment>
+         <cbc:ID>SUNAT_Envio</cbc:ID>
+         <cbc:HandlingCode>'.$cabecera["cod_motivo_traslado"].'</cbc:HandlingCode>
+         <cbc:GrossWeightMeasure unitCode="KGM">'.number_format($cabecera["peso"],2,'.','').'</cbc:GrossWeightMeasure>
+         ';
+         
+         if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
+         {
+           $xmlCPE = $xmlCPE.' <cbc:TotalTransportHandlingUnitQuantity>'.$cabecera["nro_paquetes"].'</cbc:TotalTransportHandlingUnitQuantity>
+
+            <cbc:Information>'.$cabecera["motivo_traslado"].'</cbc:Information>
+           <cbc:SpecialInstructions>SUNAT_Envio_IndicadorTrasladoTotalDAMoDS</cbc:SpecialInstructions>
           ';
-     
+         }
 
-            }
+        
 
-           
-
-            $xmlCPE = $xmlCPE.' <cac:ShipmentStage>
-            <cbc:TransportModeCode>'.$cabecera["tipo_transportista"].'</cbc:TransportModeCode>
-            <cac:TransitPeriod>
-            <cbc:StartDate>'.$cabecera["fecha_emision"].'</cbc:StartDate>
-            </cac:TransitPeriod>';
+         $xmlCPE = $xmlCPE.' <cac:ShipmentStage>
+         <cbc:TransportModeCode>'.$cabecera["tipo_transportista"].'</cbc:TransportModeCode>
+         <cac:TransitPeriod>
+         <cbc:StartDate>'.$cabecera["fecha_emision"].'</cbc:StartDate>
+         </cac:TransitPeriod>';
+         
+         if($cabecera["tipo_transportista"] =='01')
+         {
+            $xmlCPE = $xmlCPE.'<cac:CarrierParty>
+            <cac:PartyIdentification>
+            <cbc:ID schemeID="'.$cabecera["tipo_documento_transporte"].'">'.$cabecera["nro_documento_transporte"].'</cbc:ID>
+            </cac:PartyIdentification>
             
-            if($cabecera["tipo_transportista"] =='01')
-            {
-               $xmlCPE = $xmlCPE.'<cac:CarrierParty>
-               <cac:PartyIdentification>
-               <cbc:ID schemeID="'.$cabecera["tipo_documento_transporte"].'">'.$cabecera["nro_documento_transporte"].'</cbc:ID>
-               </cac:PartyIdentification>
-               <cac:PartyName>
-               <cbc:Name><![CDATA['.$cabecera["razon_social_transporte"].']]></cbc:Name>
-               </cac:PartyName>
-               </cac:CarrierParty>';
-            }
-                     
-               $xmlCPE = $xmlCPE.'
-               <cac:TransportMeans>
-               <cac:RoadTransport>
-               <cbc:LicensePlateID>'.$cabecera["placa_vehiculo"].'</cbc:LicensePlateID>
-               </cac:RoadTransport>
-               </cac:TransportMeans>
-
-               <cac:DriverPerson>
-               <cbc:ID schemeID="'.$cabecera["cod_tipo_doc_chofer"].'">' . $cabecera["nro_doc_chofer"].'</cbc:ID>
-               <cbc:FirstName>'.$cabecera["nombre_chofer"].'</cbc:FirstName>
-               <cbc:FamilyName>'.$cabecera["apellido_chofer"].'</cbc:FamilyName>
-               <cbc:JobTitle>Principal</cbc:JobTitle>
-               <cac:IdentityDocumentReference>
-               <cbc:ID>'.$cabecera["licencia"].'</cbc:ID>
-               </cac:IdentityDocumentReference>
-               </cac:DriverPerson>
-
-            </cac:ShipmentStage>
-
-             <cac:Delivery>
-            <cac:DeliveryAddress>
-             <!-- UBIGEO DE LLEGADA -->
-            <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">'.$cabecera["ubigeo_destino"].'</cbc:ID>';
-
-            if($cabecera["cod_motivo_traslado"] =='04')
-            {
-            $xmlCPE = $xmlCPE.'<!-- CODIGO DE ESTABLECIMIENTO ANEXO DE LLEGADA -->
-           <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos" listID="'.$cabecera["nro_doc_cliente"].'">0000</cbc:AddressTypeCode>';
-            }
-
-            $xmlCPE = $xmlCPE.'<cbc:StreetName><![CDATA['.$cabecera["direccion_destino"].']]></cbc:StreetName>
-            <cac:AddressLine>
-            <cbc:Line><![CDATA['.$cabecera["direccion_destino"].']]></cbc:Line>
-            </cac:AddressLine>
-            <!-- PUNTO DE GEOREFERENCIA DE LLEGADA -->
-            <!--  -->
-            </cac:DeliveryAddress>
-            <cac:Despatch>
-             <!-- UBIGEO DE PARTIDA -->
-               <cac:DespatchAddress>
-               <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos"><![CDATA['.$cabecera["ubigeo_partida"].']]></cbc:ID>';
-                if($cabecera["cod_motivo_traslado"] =='04')
-            {
-            $xmlCPE = $xmlCPE.'
-            <!-- CODIGO DE ESTABLECIMIENTO ANEXO DE PARTIDA -->
-           <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos" listID="'.$cabecera["ruc_empresa"].'">0000</cbc:AddressTypeCode>';
-            }
-
-
-
-               $xmlCPE = $xmlCPE.'
-               <cac:AddressLine>
-               <cbc:Line><![CDATA['.$cabecera["direccion_partida"].']]></cbc:Line>
-               </cac:AddressLine>
-               </cac:DespatchAddress>
-            </cac:Despatch>
-
-            </cac:Delivery>
-            <cac:TransportHandlingUnit>
-               <cac:TransportEquipment>
-               <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
-               <cac:AttachedTransportEquipment>
-               <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
-               </cac:AttachedTransportEquipment>
-               </cac:TransportEquipment>';
-
-               if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
-               {
-                 $xmlCPE.='
-                  <cac:Package>
-                  <cbc:ID>'.$cabecera["cont"] .'</cbc:ID>
-                  <cbc:TraceID>'.$cabecera["prec"] .'</cbc:TraceID>
-              </cac:Package> ';
-
-               }
-              $xmlCPE.='
-               </cac:TransportHandlingUnit>';
+            <cac:PartyLegalEntity>
+                 <cbc:RegistrationName>'.$cabecera["razon_social_transporte"].'</cbc:RegistrationName>
+             </cac:PartyLegalEntity>
              
+            </cac:CarrierParty>
             
-            $xmlCPE = $xmlCPE .'<cac:OriginAddress>
-            <cbc:ID>'.$cabecera["ubigeo_partida"] .'</cbc:ID>
-            <cbc:StreetName><![CDATA['.$cabecera["direccion_partida"].']]></cbc:StreetName>
-            </cac:OriginAddress>
-            </cac:Shipment>';
-
-            for ($i = 0; $i < count($detalle); $i++) {
-            $xmlCPE = $xmlCPE . '
-            <cac:DespatchLine>
-            <cbc:ID>' . $detalle[$i]["item"] . '</cbc:ID>';
+            ';
+         }
             
-            $xmlCPE = $xmlCPE .'<cbc:DeliveredQuantity unitCode="NIU">'.$detalle[$i]["cantidad"].'</cbc:DeliveredQuantity>';
-            
-            $xmlCPE = $xmlCPE .'<cac:OrderLineReference>
-            <cbc:LineID>' . $detalle[$i]["nro_orden"] . '</cbc:LineID>
-            </cac:OrderLineReference>
+         
+           if($cabecera["tipo_transportista"] =='02')
+           {
+            $xmlCPE = $xmlCPE.'
 
-            <cac:Item>
-            <cbc:Description>
-         <![CDATA['.$detalle[$i]["nombreproducto"].']]>
-         </cbc:Description>
-                     <cbc:Name><![CDATA['.$detalle[$i]["nombreproducto"].']]></cbc:Name>
+              
+            <cac:DriverPerson>
+            <cbc:ID schemeID="'.$cabecera["cod_tipo_doc_chofer"].'">' . $cabecera["nro_doc_chofer"].'</cbc:ID>
+            <cbc:FirstName>'.$cabecera["nombre_chofer"].'</cbc:FirstName>
+            <cbc:FamilyName>'.$cabecera["apellido_chofer"].'</cbc:FamilyName>
+            <cbc:JobTitle>Principal</cbc:JobTitle>
+            <cac:IdentityDocumentReference>
+            <cbc:ID>'.$cabecera["licencia"].'</cbc:ID>
+            </cac:IdentityDocumentReference>
+            </cac:DriverPerson>';
+           }
+             
+     $xmlCPE = $xmlCPE.'        
+         </cac:ShipmentStage>
+       
+          <cac:Delivery>
+         <cac:DeliveryAddress>
+          <!-- UBIGEO DE LLEGADA -->
+         <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">'.$cabecera["ubigeo_destino"].'</cbc:ID>';
 
-            <cac:SellersItemIdentification>
-            <cbc:ID>' . $detalle[$i]["codigoproducto"] . '</cbc:ID>
-            </cac:SellersItemIdentification>';
-            
+         if($cabecera["cod_motivo_traslado"] =='04')
+         {
+         $xmlCPE = $xmlCPE.'<!-- CODIGO DE ESTABLECIMIENTO ANEXO DE LLEGADA -->
+        <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos" listID="'.$cabecera["nro_doc_cliente"].'">0000</cbc:AddressTypeCode>';
+         }
 
-            $xmlCPE.='
-            </cac:Item>
-            </cac:DespatchLine>';
-            }
-            $xml = $xmlCPE.'
-            </DespatchAdvice>';
+         $xmlCPE = $xmlCPE.'<cbc:StreetName><![CDATA['.$cabecera["direccion_destino"].']]></cbc:StreetName>
+         <cac:AddressLine>
+         <cbc:Line><![CDATA['.$cabecera["direccion_destino"].']]></cbc:Line>
+         </cac:AddressLine>
+         <!-- PUNTO DE GEOREFERENCIA DE LLEGADA -->
+         <!--  -->
+         </cac:DeliveryAddress>
+         <cac:Despatch>
+          <!-- UBIGEO DE PARTIDA -->
+            <cac:DespatchAddress>
+            <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos"><![CDATA['.$cabecera["ubigeo_partida"].']]></cbc:ID>';
+             if($cabecera["cod_motivo_traslado"] =='04')
+         {
+         $xmlCPE = $xmlCPE.'
+         <!-- CODIGO DE ESTABLECIMIENTO ANEXO DE PARTIDA -->
+        <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos" listID="'.$cabecera["ruc_empresa"].'">0000</cbc:AddressTypeCode>';
+         }
+
+
+
+            $xmlCPE = $xmlCPE.'
+            <cac:AddressLine>
+            <cbc:Line><![CDATA['.$cabecera["direccion_partida"].']]></cbc:Line>
+            </cac:AddressLine>
+            </cac:DespatchAddress>
+         </cac:Despatch>
+
+         </cac:Delivery>';
+         
+         if($cabecera["tipo_transportista"] =='02')
+         {
+             $xmlCPE .='
+          
+         <cac:TransportHandlingUnit>
+            <cac:TransportEquipment>
+            <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
+            </cac:TransportEquipment>
+            </cac:TransportHandlingUnit>';
+             
+         }
+         
+         
+         if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
+         { 
+           $xmlCPE .=' <cac:FirstArrivalPortLocation>
+            <cbc:ID>'.$cabecera["ubigeo_destino"].'</cbc:ID>
+            <cbc:LocationTypeCode>1</cbc:LocationTypeCode>
+            <cbc:Name>'.$cabecera["direccion_destino"].'</cbc:Name>
+        </cac:FirstArrivalPortLocation>';
+         }
+         else{
+         $xmlCPE = $xmlCPE .'<cac:OriginAddress>
+         <cbc:ID>'.$cabecera["ubigeo_partida"] .'</cbc:ID>
+         <cbc:StreetName><![CDATA['.$cabecera["direccion_partida"].']]></cbc:StreetName>
+         </cac:OriginAddress>';
+         }
+
+
+
+         $xmlCPE = $xmlCPE .'</cac:Shipment>';
+
+         for ($i = 0; $i < count($detalle); $i++) {
+         $xmlCPE = $xmlCPE . '
+         <cac:DespatchLine>
+         <cbc:ID>' . $detalle[$i]["item"] . '</cbc:ID>';
+         
+         $xmlCPE = $xmlCPE .'<cbc:DeliveredQuantity unitCode="NIU">'.$detalle[$i]["cantidad"].'</cbc:DeliveredQuantity>';
+         
+         $xmlCPE = $xmlCPE .'<cac:OrderLineReference>
+         <cbc:LineID>' . $detalle[$i]["nro_orden"] . '</cbc:LineID>
+         </cac:OrderLineReference>
+
+         <cac:Item>
+         <cbc:Description>
+      <![CDATA['.$detalle[$i]["nombreproducto"].']]>
+      </cbc:Description>
+                  <cbc:Name><![CDATA['.$detalle[$i]["nombreproducto"].']]></cbc:Name>
+
+         <cac:SellersItemIdentification>
+         <cbc:ID>' . $detalle[$i]["codigoproducto"] . '</cbc:ID>
+         </cac:SellersItemIdentification>
+         </cac:Item>
+         </cac:DespatchLine>';
+         }
+         $xml = $xmlCPE.'
+         </DespatchAdvice>';
 
 
 
 
-            $doc->loadXML($xml);
-            $doc->save($nombrexml.'.XML');
+         $doc->loadXML($xml);
+         $doc->save($nombrexml.'.XML');
 
-            return 'XML DE GUIA CREADO';   
-      }
+         return 'XML DE GUIA CREADO';   
+   }
 
       function CrearXMLFactura($nombrexml, $emisor, $cliente, $comprobante, $detalle,$cuota)
       {

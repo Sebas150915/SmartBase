@@ -586,7 +586,7 @@ if($_POST['action'] == 'sunat_gre')
         $objApi = new ApiFacturacion();
 
 
-                $respuesta =  $objApi->EnviarComprobanteElectronicoGRE($emisor,$nombrexml,$connect,$lastInsertId);
+                $respuesta =  $objApi->EnviarComprobanteElectronicoGRE($emisor,$nombrexml,$connect,$id_venta);
 
                         require_once("phpqrcode/qrlib.php");
                         //CREAR QR INICIO
@@ -626,7 +626,7 @@ if($_POST['action'] == 'sunat_gre')
                         $mensaje['msj_sunat2']    = $respuesta['msj_sunat2'];
                         $mensaje['hash_cdr2']     = $respuesta['hash_cdr2'];
                         
-                        $mensaje['idgre']         = $lastInsertId;
+                        $mensaje['idgre']         = $id_venta;
                         $mensaje['cod_sunat']     = $respuesta['cod_sunat'];
                         $mensaje['numerror']      = $respuesta['numerror'];
                         $mensaje['msj_sunat']     = $respuesta['msj_sunat'];

@@ -25,8 +25,26 @@ class GeneradorXML
             <cbc:ID>'.$cabecera["serie"].'-'.$cabecera["correlativo"].'</cbc:ID>
             <cbc:IssueDate>'.$cabecera["fecha_emision"].'</cbc:IssueDate>
             <cbc:IssueTime>'.$cabecera["hora_emision"].'</cbc:IssueTime>
-            <cbc:DespatchAdviceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DespatchAdviceTypeCode>
-            <cbc:Note>'.$cabecera["nota"].'</cbc:Note>';
+            <cbc:DespatchAdviceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DespatchAdviceTypeCode>'; 
+
+            $xmlCPE .= '<cbc:Note>'.$cabecera["nota"].'</cbc:Note>';
+            
+            if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
+            {
+               $xmlCPE .='<cac:AdditionalDocumentReference>
+<cbc:ID>'.$cabecera["dam"].' </cbc:ID>
+<cbc:DocumentTypeCode listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo61" listName="Documento relacionado al transporte" listAgencyName="PE:SUNAT">50</cbc:DocumentTypeCode>
+<cbc:DocumentType>Declaración Aduanera de Mercancías</cbc:DocumentType>
+<cac:IssuerParty>
+<cac:PartyIdentification>
+<cbc:ID schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06" schemeAgencyName="PE:SUNAT" schemeName="Documento de Identidad" schemeID="6">'.$cabecera["nro_doc_cliente"].'</cbc:ID>
+</cac:PartyIdentification>
+</cac:IssuerParty>
+</cac:AdditionalDocumentReference>';
+            }            
+
+
+
 
             $xmlCPE = $xmlCPE .
              ' 
@@ -86,6 +104,19 @@ class GeneradorXML
                <cbc:Information>'.$cabecera["motivo_traslado"].'</cbc:Information>
              
               <cbc:TotalTransportHandlingUnitQuantity>'.number_format($cabecera["nro_paquetes"],2,'.', '').'</cbc:TotalTransportHandlingUnitQuantity>';
+            }
+
+            
+            if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
+            {
+
+          $xmlCPE .='<cbc:SpecialInstructions>SUNAT_Envio_IndicadorTrasladoTotalDAMoDS</cbc:SpecialInstructions> 
+          
+          <cbc:SpecialInstructions>SUNAT_Envio_IndicadorVehiculoConductoresTransp</cbc:SpecialInstructions>     
+          
+          ';
+     
+
             }
 
            
@@ -172,7 +203,18 @@ class GeneradorXML
                <cac:AttachedTransportEquipment>
                <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
                </cac:AttachedTransportEquipment>
-               </cac:TransportEquipment>
+               </cac:TransportEquipment>';
+
+               if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
+               {
+                 $xmlCPE.='
+                  <cac:Package>
+                  <cbc:ID>'.$cabecera["cont"] .'</cbc:ID>
+                  <cbc:TraceID>'.$cabecera["prec"] .'</cbc:TraceID>
+              </cac:Package> ';
+
+               }
+              $xmlCPE.='
                </cac:TransportHandlingUnit>';
              
             
@@ -203,15 +245,7 @@ class GeneradorXML
             <cbc:ID>' . $detalle[$i]["codigoproducto"] . '</cbc:ID>
             </cac:SellersItemIdentification>';
             
-            if($cabecera["cod_motivo_traslado"] =='09')
-            {
-            $xmlCPE.='<cac:AdditionalItemProperty>
-						<cbc:Name>Numeracion de la DAM o DS</cbc:Name>
-						<cbc:NameCode listAgencyName="PE:SUNAT" listName="Propiedad del Item" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo55">7021</cbc:NameCode>
-						<cbc:Value>'.$cabecera["dam"].'</cbc:Value>
-					</cac:AdditionalItemProperty>
-					';
-            }
+
             $xmlCPE.='
             </cac:Item>
             </cac:DespatchLine>';

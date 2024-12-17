@@ -168,7 +168,6 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
           <td align="left" style="font-size: 12px; font-family: 'Arialbold', sans-serif; font-weight:600">
             DIRECCION:<?php echo $row_empresa['direccion'] ; ?><br>
             SUCURSAL :<?php echo $_SESSION["sucursal"]   ; ?><br>
-            CELULAR  :<?php echo $row_empresa['celular'] ; ?><br>
           
            
          </td>
@@ -239,7 +238,6 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
             <tr>
          <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
             Fecha Emision : <?= $row_cabecera['fecha_emision'] ?> <br>
-            Hora          : <?= $row_cabecera['hora_emision'] ?> <br>
          </td>
       </tr>
  
@@ -258,8 +256,13 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
 </tr>
 
 <tr>
-   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">condicion: <?=$row_cabecera['det_condicion'] ?> <br></td>
+   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Zona: <?=$row_cabecera['zona'] ?> <br></td>
 </tr>
+
+<tr>
+   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">División: <?=$row_cabecera['division'] ?> <br></td>
+</tr>
+
 
 <?php if($row_cabecera['orden_compra'] != ''){ ?>
    <tr>
@@ -395,25 +398,7 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
  <table>
   <thead>
    
-   <tr>
-      <td colspan="4" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
-         SON : <?=$texto?>
-      </td>
-   </tr>
-    
-   <tr>
-      <td colspan="4" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
-         VENDEDOR : <?=$row_cabecera["nom_usuario"]?>
-      </td>
-   </tr>
    
-<tr>
-      <td colspan="4">==============================================</td>
-
-      </tr> 
-    
-    
-    
       <?php $fpago=0;
          foreach($resultado_pago as $row_pago){ ?>
       <tr>
@@ -424,18 +409,9 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
       <?php $fpago = $fpago + $row_pago->importe_pago;  } 
           
       ?>   
- <?php if($row_cabecera['tipocomp']<>'07') {?>
-   <tr> 
-      <td  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">VUELTO : </td>
-      <td align="right"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= number_format(($row_cabecera['total'] - $fpago)*(-1),2) ?>
-   </td> 
  
-  </tr>
-         <tr>
-      <td colspan="4">==============================================</td>
-
-      </tr> 
-      <?php } ?>
+ 
+      
     <tr>
       <td align="center">
          <img src="<?=base_url()?>/sunat/<?= $row_empresa['ruc']?>/qr/<?= $row_empresa['ruc'].'-'.$row_cabecera['tipocomp'].'-'.$row_cabecera['serie'].'-'.$row_cabecera['correlativo'].'.png' ?>" alt="" width="20%">

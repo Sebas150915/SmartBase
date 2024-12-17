@@ -1,0 +1,476 @@
+2024-12-16 23:07:56: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-16 23:16:23: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-16 23:19:11: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-16 23:23:10: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-16 23:24:47: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-16 23:26:31: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-16 23:34:10: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-16 23:50:27: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-17 00:05:31: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-17 00:06:37: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-17 00:37:53: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-17 00:49:38: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-17 00:55:21: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+2024-12-17 01:01:47: <br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\frame_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrspec.php</b> on line <b>568</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_0\mask_41_0.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_1\mask_41_1.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_2\mask_41_2.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_3\mask_41_3.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_4\mask_41_4.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_5\mask_41_5.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_6\mask_41_6.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />
+<br />
+<b>Warning</b>:  mkdir(): No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>154</b><br />
+<br />
+<b>Warning</b>:  file_put_contents(C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\cache\mask_7\mask_41_7.dat): failed to open stream: No such file or directory in <b>C:\xampp\htdocs\smartbase\Assets\ajax\phpqrcode\qrmask.php</b> on line <b>155</b><br />

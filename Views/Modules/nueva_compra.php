@@ -227,7 +227,7 @@ $num_reg_alm=$resultado_alm->rowCount();
                         <div class="col-lg-12 col-sm-12 col-md-12">
                           <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> Agregar Producto</button>
                           <button class="btn btn-success" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                          <button class="btn btn-success" onclick="validaCompra()" >Validar Cpe SUNAT</button>
+                          <button type="button" class="btn btn-success" onclick="validaCompra()" >Validar Cpe SUNAT</button>
                           
                           <a href="<?=base_url()?>/compras" class="btn btn-danger" type="button"><i class="fa fa-close"></i> Cancelar</a>
                         </div>
@@ -235,6 +235,7 @@ $num_reg_alm=$resultado_alm->rowCount();
                       </div>
                     </div>
           
+
                     <hr>
 
                     <div class="row">
@@ -371,5 +372,72 @@ $num_reg_alm=$resultado_alm->rowCount();
               listarcliente(); 
            </script> 
 
+<script>
+
+function validaCompra()
+{
+   var ruc    = $('#ruc_persona').val();
+   var tip    = $('#tip_cpe').val();
+   var serie  = $('#serie').val();
+   var numero = $('#numero').val();
+   var fecha  = $('#fecha_emision').val();
+   var total  = $('#total').val();
+   var action = 'valida_compra';
+   //alert(fecha);
+     // Validar que los campos no estén vacíos (opcional)
+    if (ruc === "" || serie === "" || numero === "" || fecha === "" || total === "") {
+        alert("Por favor, complete todos los campos.");
+        return;
+    }
+
+     $.ajax({
+        url: base_url+'/assets/ajax/valida_compras.php', // Archivo PHP que procesará los datos
+        method: 'GET', // Método de envío
+        data: {
+            ruc: ruc,
+            tip:tip,
+            action:action,
+            serie: serie,
+            numero: numero,
+            fecha: fecha,
+            total: total
+        },
+        success: function(response) 
+        {
+          console.log(response);
+          var data = $.parseJSON(response);
+          if(data.estadoCp == "ACEPTADO")
+          {
+            Swal.fire({
+            title: data.estadoCp,
+            text: "Estado RUC : "+data.estadoRuc+" Condicion Domicilio : "+data.condDomiRuc,
+            icon: "success"
+            });
+          }
+          else
+          {
+             Swal.fire({
+            title: data.estadoCp,
+            text: "Revisar datos ingrsados",
+            icon: "error"
+            });
+          }
+          
+
+        },
+        error: function(xhr, status, error) {
+            // Manejo de errores en la solicitud AJAX
+            console.error("Error en la solicitud AJAX: ", error);
+            alert("Ocurrió un error al validar la compra.");
+        }
+    });
+}
+
+   
+ 
+
+
+
+</script>
   </body>
 </html>

@@ -207,6 +207,7 @@ class GeneradorXML
          }
          
          
+         
          if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
          { 
            $xmlCPE .=' <cac:FirstArrivalPortLocation>

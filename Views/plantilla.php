@@ -75,6 +75,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "ticket_factura_psgi" ||
                      $rutas[0] == "ticket_cotizacion" ||
                      $rutas[0] == "ticket_factura_pdf" ||
+                     $rutas[0] == "ticket_factura_pdf_psgi" ||
                      $rutas[0] == "ticket_factura_compra" ||
                      $rutas[0] == "factura_pdf" ||
                      $rutas[0] == "factura_pdf2" ||

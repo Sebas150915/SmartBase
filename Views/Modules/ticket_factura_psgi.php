@@ -243,16 +243,10 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
  
 
 <tr>
-   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Contribuyente: <?=$row_cabecera['nombre_persona']  ?> <br></td>
-</tr>
-<tr>
-   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Obs: <?=$row_cabecera['obs']  ?> <br></td>
+   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Apellidos y Nombres: <?=$row_cabecera['nombre_persona']  ?> <br></td>
 </tr>
 <tr>
    <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Nro Documento: <?=$row_cabecera['num_doc'] ?> <br></td>
-</tr>
-<tr>
-   <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Direccion: <?=$row_cabecera['direccion_persona'] ?> <br></td>
 </tr>
 
 <tr>
@@ -262,6 +256,8 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
 <tr>
    <td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">División: <?=$row_cabecera['division'] ?> <br></td>
 </tr>
+
+
 
 
 <?php if($row_cabecera['orden_compra'] != ''){ ?>
@@ -279,20 +275,9 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
 
    <table width="100%">
       <thead>
-        <tr>           
-            <th class="descripcion" align="left" colspan="5"style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Descripcion</th>
-         </tr>
-         <tr>           
-            <th align="left"style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Cantidad</th>
-            <th align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">UNI</th>
-          
-            <th align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Precio</th>
-            <th align="right" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Total</th>
-         </tr>
-<tr>
-          <td colspan="4">==============================================</td>
-        
-</tr>
+    
+
+
       </thead>
       <?php if($row_empresa['venta_por_mayor']==='SI') {?>
       <tbody style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
@@ -300,13 +285,7 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
                { ?>
                  
                   <tr><td align="left" colspan="4"style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?=strtoupper($row_detalle->descripcion) ?></td></tr>
-                  <tr><td align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= number_format(strtoupper($row_detalle->cantidad_factor),2).'/'.strtoupper($row_detalle->cantidad_unitario) ?></td>
-                      <td align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= strtoupper($row_detalle->unidadf).'/'.strtoupper($row_detalle->unidadu) ?></td>
-               
-               <td align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= number_format($row_detalle->precio_unitario*$row_detalle->factor,2).'/'.number_format($row_detalle->precio_unitario,2)  ?></td>
-               <td align="right" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= number_format($row_detalle->valor_unitario*$row_detalle->cantidad,2) ?></td>
-              
-                  </tr>
+                  
                  
                 <?php } ?>
       </tbody>
@@ -352,145 +331,116 @@ box-shadow: 7px 6px 21px -2px rgba(0,0,0,0.58);
    </table>
     <table width="100%">
       <thead>
-      <tr>
-      <td colspan="4">==============================================</td>
 
-      </tr> 
       <tr>
-             <td colspan="2" class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Op. Gravada</td>
-             <td colspan="2" align="right"  class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= $row_cabecera['op_gravadas'] ?></td>
-          </tr>
-          <tr>
-             <td colspan="2"  class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Op. Exonerada</td>
-             <td colspan="2" align="right"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= $row_cabecera['op_exoneradas'] ?></td>
-          </tr>
-          <tr>
-             <td colspan="2"  class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Op. Inafecta</td>
-             <td colspan="2" align="right"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= $row_cabecera['op_inafectas'] ?></td>
-          </tr>
-          <tr>
-             <td colspan="2"  class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">SUB TOTAL</td>
-             <td colspan="2" align="right"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= number_format($row_cabecera['op_gravadas'] + $row_cabecera['op_exoneradas'] + $row_cabecera['op_inafectas'],2) ?></td>
-          </tr>
-          <tr>
-             <td colspan="2"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">I.G.V.</td>
-             <td colspan="2" align="right"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= $row_cabecera['igv'] ?></td>
-          </tr>
-          <?php if($row_cabecera['redondeo']>0){ ?>
+          
+      <td colspan="4">==============================================</td>
           
           <tr>
-       <td colspan="2"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Redondeo</td>
-       <td colspan="2" align="right" class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= $row_cabecera['redondeo'] ?></td>
+       <td colspan="2"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">La suma de:</td>
+       <td colspan="2" align="left" class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= $row_cabecera['total'] ?> <?=$row_cabecera['codmoneda'] ?>  </td>
     </tr>
-          
-          <?php } ?>
-          
-          <tr>
-       <td colspan="2"   class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">TOTAL</td>
-       <td colspan="2" align="right" class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?= $row_cabecera['total'] ?></td>
+    <tr>
+      <td colspan="2" align="right" class="descripcion1" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?=$texto?>  <?=$row_cabecera['codmoneda'] ?></td>
     </tr>
       <tr>
       <td colspan="4">==============================================</td>
 
-      </tr>           
+      </tr>
+      
+      
+      <tr>
+      <td  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
+      Mod. de Contribución:</td>
+      <td align="right" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"> <?=$row_cabecera['division'] ?> </td>
+      </tr>
+
+
+      <tr>
+      <td colspan="4">==============================================</td>
+
+      </tr>
+
  </thead>
     </table>
  <table>
   <thead>
+   <tr>
+  <td align="right" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
+    Datos de Transacción(Voucher):
+  </td>
+   </tr>
    
-   
+   <tr>
+
+   <tr>
+      <td  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
+      Fecha Oper:</td>    
+      <td align="right"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"> <?=$row_cabecera['fecha_operacion'] ?></td>
+      </tr>
+
+      <td  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
+      Núm Ope:</td>    
+      <td align="right"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"> <?=$row_cabecera['numero_operacion'] ?></td>
+      </tr>
+
+      <tr>
+      <td  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
+      Tipo Ope:</td>    
+      <td align="right"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"> <?=$row_cabecera['tipo_operacion'] ?></td>
+      </tr>
+
+      
+
+
       <?php $fpago=0;
          foreach($resultado_pago as $row_pago){ ?>
       <tr>
          <td  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
-         <?=$row_pago->nombre;?></td>
-         <td align="right"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"> <?= $row_pago->importe_pago;?></td>
-        </tr>
+         Banco:</td>
+         <td align="right"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"> <?=$row_pago->nombre;?> </td>
+      </tr>
       <?php $fpago = $fpago + $row_pago->importe_pago;  } 
           
       ?>   
- 
+
  
       
-    <tr>
-      <td align="center">
-         <img src="<?=base_url()?>/sunat/<?= $row_empresa['ruc']?>/qr/<?= $row_empresa['ruc'].'-'.$row_cabecera['tipocomp'].'-'.$row_cabecera['serie'].'-'.$row_cabecera['correlativo'].'.png' ?>" alt="" width="20%">
-      </td>
-   </tr>
+  
 
  
 </thead>
 
  </table>
+
+<table>
+      <tr>
+          <td colspan="4">==============================================</td>
+      </tr>
+
+      <tr>
+      <td  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
+         Obs:</td>
+         <td align="right"  style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"> <?=$row_cabecera["obs"]?> </td>
+
+      </tr>
+        
+</tr>
+
+</table>
+
  <table>
-    <tr>
-       <td colspan="4" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
-            <?php 
-
-            if($row_cabecera['tipocomp']=='03')
-            {
-                    if($row_empresa['envio_resumen']=='SI')
-                  {
-                     $mensaje ='REPRESENTACION IMPRESA DE '. $doc;
-                     $mensaje1 ='';
-                  } 
-                  else if($row_empresa['envio_resumen']=='NO')
-                  {
-                     $mensaje =  $row_cabecera['femensajesunat'];
-                     $mensaje1 ='REPRESENTACION IMPRESA DE '. $doc;
-                  }
-
-            }
-            else if($row_cabecera['tipocomp']=='99' )
-            {
-                $mensaje = 'REPRESENTACION IMPRESA DE '.' '. $doc;
-                $mensaje1='';
-                $mensaje2='';
-
-            }
-            else if($row_cabecera['tipocomp']=='01' || $row_cabecera['tipocomp']=='07' || $row_cabecera['tipocomp']=='08')
-            {
-               if($row_empresa['envio_automatico']=='SI')
-               {
-                  $mensaje = $row_cabecera['femensajesunat'];
-                    $mensaje2 = 'REPRESENTACION IMPRESA DE '.' '. $doc;
-                  $mensaje1 ='';
-               }
-               else
-               {
-                  $mensaje ='REPRESENTACION IMPRESA DE '.' '. $doc;
-                  $mensaje1 ='';
-                  $mensaje2='';
-               }
-            }
-
-            ?>
-                 <?=$mensaje?>
-                 
-                  <?=$mensaje2?>
-       </td>
-       
-    </tr>
-    <tr>
-        <td colspan="4" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">
-           <?=$mensaje1?>
-       </td>
-    </tr>
-    <tr>
-   <td style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Hash: <?=$row_cabecera['hash']?> </td>
-    </tr>
-    <tr>
-      <td colspan="4" align="left" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600"><?=nl2br($row_empresa['comentario']) ?></td>
+ 
+ <td colspan="4">==============================================</td>
+   
+   <tr>
+   <td colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Resolución de Intendencia-Sunat</td>
    </tr>
    <tr>
-   <td colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Gracias por su compra</td>
-
+        <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">N° 0490050041941</td>
    </tr>
    <tr>
-        <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Vuelva Pronto</td>
-   </tr>
-   <tr>
-        <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Powered by SmartBase - Perú</td>
+        <td  colspan="4" align="center" style="font-size: 13px; font-family: 'Arialbold', sans-serif; font-weight:600">Vigencia del 11/12/2024</td>
    </tr>
  </table>
 

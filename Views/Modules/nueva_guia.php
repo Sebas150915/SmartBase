@@ -282,7 +282,7 @@ while($row_transporte = $resultado_transporte->fetch(PDO::FETCH_ASSOC) )
 <label for="">Razon Social:</label>
 <input type="text" class="form-control" name="razon_e" id="razon_e" readonly value="<?=$row_empresa['razon_social']?>">
 </div>
-<div class="col-lg-12 col-sm-6 col-sm-12">
+<div class="col-lg-12 col-sm-4 col-sm-10">
 <label for="">Direccion</label>
 <div class="input-group">
 
@@ -325,19 +325,32 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
 <input type="text" class="form-control" name="razon_social" id="razon_social" readonly>
 </div>
 
-<div class="col-lg-12 col-sm-6 col-sm-12">
+<div class="col-lg-12 col-sm-4 col-sm-10">
 <label for="">Direccion</label>
 <div class="input-group">
 
 <select class="form-control select2"  name="pllegada" id="pllegada" required>
 <option value="">-SELECCIONAR-</option>
-
 </select>
 
 <div class="input-group-append">
 <button class="btn btn-danger"  data-toggle="modal" data-target="#ModalDestino" type="button"><i class="fe fe-plus"></i></button>
 </div>
+
+
 </div>
+
+
+<div class="col-lg-12 col-sm-4 col-sm-10">
+<label for="">Puerto</label>
+<select name="puerto " id="puerto" class="form-control select2" required>
+<option value="PUB-BAYOBAR">BAYOBAR</option>
+<option value="CLL-CALLAO">CALLAO</option>
+</select>
+
+
+</div>
+
 </div>
 
 

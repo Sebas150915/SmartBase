@@ -234,9 +234,9 @@ class GeneradorXML
          if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
          { 
            $xmlCPE .=' <cac:FirstArrivalPortLocation>
-            <cbc:ID>PIO</cbc:ID>
+            <cbc:ID>'.$cabecera["codigo_puerto"] .'</cbc:ID>
             <cbc:LocationTypeCode>1</cbc:LocationTypeCode>
-            <cbc:Name>Pisco</cbc:Name>
+            <cbc:Name>'.$cabecera["nombre_puerto"] .'</cbc:Name>
         </cac:FirstArrivalPortLocation>';
          }
          else{

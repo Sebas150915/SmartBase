@@ -339,17 +339,14 @@ while($row_almacen = $resultado_almacen->fetch(PDO::FETCH_ASSOC) )
 
 
 </div>
-
+</div>
 
 <div class="col-lg-12 col-sm-4 col-sm-10">
 <label for="">Puerto</label>
-<select name="puerto " id="puerto" class="form-control select2" required>
-<option value="PUB-BAYOBAR">BAYOBAR</option>
-<option value="CLL-CALLAO">CALLAO</option>
+<select name="puerto" id="puerto" class="form-control select2" required>
+<option value="PIO-Pisco">PISCO</option>
+<option value="CLL-Callao">CALLAO</option>
 </select>
-
-
-</div>
 
 </div>
 

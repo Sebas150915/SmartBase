@@ -106,6 +106,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "baja_facturas" ||
 
                      $rutas[0] == "retenciones" ||
+                     $rutas[0] == "nueva_retencion" ||
 
 
                      $rutas[0] == "ws_siscont" ||

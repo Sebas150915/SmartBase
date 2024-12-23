@@ -204,19 +204,19 @@ $num_reg_tipo=$resultado_tipo->rowCount();
         </div>
         <!-- /page content -->
       </form>
-        <?php include 'Views/Templates/pie.php' ?>
+        <?php include 'views/templates/pie.php' ?>
       </div>
     </div>
     
-     <?php include 'Views/Modules/Modals/persona.php' ?>
-      <?php include 'Views/Templates/footer.php' ?>
-    <?php include 'Views/Modules/Modals/buscar_contribuyente_nv.php' ?>
+       <?php include 'views/modules/modals/persona.php' ?>
+      <?php include 'views/templates/footer.php' ?>
+    <?php include 'views/modules/Modals/buscar_contribuyente_nv.php' ?>
 
-    <?php include 'Views/Modules/Modals/articulo_venta.php' ?>
-      <script src="Assets/js/funciones_ventas.js"></script>
+    <?php include 'views/modules/modals/articulo_venta.php' ?>
+      <script src="assets/js/funciones_ventas.js"></script>
     <script src="<?=media()?>/js/tablas.js"></script>
 
-      <script src="Assets/js/sunat_reniec.js"></script>
+      <script src="assets/js/sunat_reniec.js"></script>
     
   
 

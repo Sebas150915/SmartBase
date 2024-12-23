@@ -16,15 +16,13 @@ class GeneradorXML
          if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
          {
             $xmlCPE.='   
-            <DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:tci="http://tempuri.org/" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">';
-
-
+          <DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:tci="http://tempuri.org/" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">  ';
          }
          else{
 
          
          $xmlCPE.='
-          <DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:tci="http://tempuri.org/" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">';
+<DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">';
          }  
          $xmlCPE.='  
 
@@ -36,18 +34,19 @@ class GeneradorXML
          </ext:UBLExtensions>
          <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
          <cbc:CustomizationID>2.0</cbc:CustomizationID>
-         <cbc:ID>'.$cabecera["serie"].'-'.$cabecera["correlativo"].'</cbc:ID>
+         <cbc:ID>'.$cabecera["serie"].'-'.str_pad($cabecera["correlativo"], 8, "0", STR_PAD_LEFT).'</cbc:ID>
          <cbc:IssueDate>'.$cabecera["fecha_emision"].'</cbc:IssueDate>
          <cbc:IssueTime>'.$cabecera["hora_emision"].'</cbc:IssueTime>
          <cbc:DespatchAdviceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DespatchAdviceTypeCode>
-         <cbc:Note>'.$cabecera["nota"].'</cbc:Note>';
+         ';
 
          if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
          {
-            $xmlCPE .='<cac:AdditionalDocumentReference>
-        <cbc:ID>'.$cabecera["dam"].'</cbc:ID>
-        <cbc:DocumentTypeCode>50</cbc:DocumentTypeCode>
-    </cac:AdditionalDocumentReference>';
+            $xmlCPE .='
+            <cac:AdditionalDocumentReference>
+             <cbc:ID>'.$cabecera["dam"].'</cbc:ID>
+            <cbc:DocumentTypeCode>50</cbc:DocumentTypeCode>
+             </cac:AdditionalDocumentReference>';
          }
 
          $xmlCPE = $xmlCPE .
@@ -104,7 +103,6 @@ class GeneradorXML
          {
            $xmlCPE = $xmlCPE.' <cbc:TotalTransportHandlingUnitQuantity>'.$cabecera["nro_paquetes"].'</cbc:TotalTransportHandlingUnitQuantity>
 
-            <cbc:Information>'.$cabecera["motivo_traslado"].'</cbc:Information>
            <cbc:SpecialInstructions>SUNAT_Envio_IndicadorTrasladoTotalDAMoDS</cbc:SpecialInstructions>
            <cbc:SpecialInstructions>SUNAT_Envio_IndicadorVehiculoConductoresTransp</cbc:SpecialInstructions>
           ';
@@ -135,7 +133,10 @@ class GeneradorXML
          }
             
          
-           if($cabecera["tipo_transportista"] =='02')
+
+           
+           
+            if($cabecera["tipo_transportista"] =='01' && $cabecera["cod_motivo_traslado"] =='09')
            {
             $xmlCPE = $xmlCPE.'
 
@@ -150,6 +151,7 @@ class GeneradorXML
             </cac:IdentityDocumentReference>
             </cac:DriverPerson>';
            }
+           
              
      $xmlCPE = $xmlCPE.'        
          </cac:ShipmentStage>
@@ -175,7 +177,7 @@ class GeneradorXML
          <cac:Despatch>
           <!-- UBIGEO DE PARTIDA -->
             <cac:DespatchAddress>
-            <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos"><![CDATA['.$cabecera["ubigeo_partida"].']]></cbc:ID>';
+            <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos">070101</cbc:ID>';
              if($cabecera["cod_motivo_traslado"] =='04')
          {
          $xmlCPE = $xmlCPE.'
@@ -194,16 +196,37 @@ class GeneradorXML
 
          </cac:Delivery>';
          
-         if($cabecera["tipo_transportista"] =='02')
+         if($cabecera["tipo_transportista"] =='01')
          {
              $xmlCPE .='
           
-         <cac:TransportHandlingUnit>
-            <cac:TransportEquipment>
-            <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
-            </cac:TransportEquipment>
-            </cac:TransportHandlingUnit>';
+          <cac:TransportHandlingUnit>
+               <cac:TransportEquipment>
+               <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
+               <cac:AttachedTransportEquipment>
+               <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
+               </cac:AttachedTransportEquipment>
+               </cac:TransportEquipment>
+               </cac:TransportHandlingUnit>';
              
+         }
+         
+         if($cabecera["tipo_transportista"] =='01' && $cabecera["cod_motivo_traslado"] =='09')
+         {
+         
+         $xmlCPE .='
+          
+          <cac:TransportHandlingUnit>
+               <cac:TransportEquipment>
+               <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
+               <cac:AttachedTransportEquipment>
+               <cbc:ID>'.$cabecera["placa_vehiculo"] .'</cbc:ID>
+               </cac:AttachedTransportEquipment>
+               </cac:TransportEquipment>
+               </cac:TransportHandlingUnit>';
+         
+         
+         
          }
          
          
@@ -211,13 +234,13 @@ class GeneradorXML
          if($cabecera["cod_motivo_traslado"] =='08' || $cabecera["cod_motivo_traslado"] =='09' )
          { 
            $xmlCPE .=' <cac:FirstArrivalPortLocation>
-            <cbc:ID>'.$cabecera["ubigeo_destino"].'</cbc:ID>
+            <cbc:ID>'.$cabecera["codigo_puerto"] .'</cbc:ID>
             <cbc:LocationTypeCode>1</cbc:LocationTypeCode>
-            <cbc:Name>'.$cabecera["direccion_destino"].'</cbc:Name>
+            <cbc:Name>'.$cabecera["nombre_puerto"] .'</cbc:Name>
         </cac:FirstArrivalPortLocation>';
          }
          else{
-         $xmlCPE = $xmlCPE .'<cac:OriginAddress>
+         $xmlCPE .= '<cac:OriginAddress>
          <cbc:ID>'.$cabecera["ubigeo_partida"] .'</cbc:ID>
          <cbc:StreetName><![CDATA['.$cabecera["direccion_partida"].']]></cbc:StreetName>
          </cac:OriginAddress>';

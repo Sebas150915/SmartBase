@@ -203,6 +203,9 @@ if($_POST['action'] == 'nueva_gre')
         $cod = $t[0];
         $tdoc = $t[1];
 
+        $p = explode("-",$_POST['puerto']);
+        $codigo_puerto = $p[0];
+        $nombre_puerto = $p[1];
 
         if($_POST['transportista']== "")
         {
@@ -210,8 +213,8 @@ if($_POST['action'] == 'nueva_gre')
         }
         $doc_ref_gre = $_POST['serie_ref'].'-'.$_POST['num_ref'];
         $hora = date('h:i:s');
-        $query=$connect->prepare("INSERT INTO tbl_gre_cab(idempresa,fecha_emision,fecha_traslado,hora_emision,tipo_doc,serie_doc,correlativo,tipo_transportista,motivo,vehiculo,chofer,transportista,peso,nro_cajas,nro_carga,tip_doc_ref,num_doc_ref,op_gravadas,op_exoneradas,op_inafectas,igv,total,idpartida,idcliente,idllegada,dam,carreta,contenedor,precinto,booking,obs) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$_POST['empresa'],$_POST['fecha_emision'],$_POST['fecha_traslado'],$hora,$tdoc,$_POST['serie'],$_POST['numero'],$_POST['ttransporte'],$_POST['motivo'],$_POST['vehiculo'],$_POST['chofer'],$_POST['transportista'],$_POST['peso'],$_POST['ncajas'],$_POST['ncarga'],$_POST['tip_ref'],$doc_ref_gre,$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ppartida'],$_POST['id_ruc'],$_POST['pllegada'],$_POST['dam'],$_POST['carreta'],$_POST['contenedor'],$_POST['precinto'],$_POST['booking'],$_POST['obs']]);
+        $query=$connect->prepare("INSERT INTO tbl_gre_cab(idempresa,fecha_emision,fecha_traslado,hora_emision,tipo_doc,serie_doc,correlativo,tipo_transportista,motivo,vehiculo,chofer,transportista,peso,nro_cajas,nro_carga,tip_doc_ref,num_doc_ref,op_gravadas,op_exoneradas,op_inafectas,igv,total,idpartida,idcliente,idllegada,dam,carreta,contenedor,precinto,booking,codigo_puerto,nombre_puerto,obs) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $resultado=$query->execute([$_POST['empresa'],$_POST['fecha_emision'],$_POST['fecha_traslado'],$hora,$tdoc,$_POST['serie'],$_POST['numero'],$_POST['ttransporte'],$_POST['motivo'],$_POST['vehiculo'],$_POST['chofer'],$_POST['transportista'],$_POST['peso'],$_POST['ncajas'],$_POST['ncarga'],$_POST['tip_ref'],$doc_ref_gre,$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ppartida'],$_POST['id_ruc'],$_POST['pllegada'],$_POST['dam'],$_POST['carreta'],$_POST['contenedor'],$_POST['precinto'],$_POST['booking'],$codigo_puerto,$nombre_puerto,$_POST['obs']]);
 
         $lastInsertId = $connect->lastInsertId();
 
@@ -309,7 +312,10 @@ if($_POST['action'] == 'nueva_gre')
 
         //RUC DEL EMISOR - TIPO DE COMPROBANTE - SERIE DEL DOCUMENTO - CORRELATIVO
         //01-> FACTURA, 03-> BOLETA, 07-> NOTA DE CREDITO, 08-> NOTA DE DEBITO, 09->GUIA DE REMISION
-        $nombrexml = $row_empresa['ruc'].'-'.$tdoc.'-'.$_POST['serie'].'-'.$_POST['numero'];
+        
+        $numero_gre=str_pad($_POST['numero'], 8, "0", STR_PAD_LEFT);
+        
+        $nombrexml = $row_empresa['ruc'].'-'.$tdoc.'-'.$_POST['serie'].'-'.$numero_gre;
 
         $ruta = "../../sunat/".$row_empresa['ruc']."/xml/".$nombrexml;
         $emisor =   array(
@@ -426,8 +432,8 @@ if($_POST['action'] == 'nueva_gre')
 
                         QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
                         
-                        $mensaje['hash_cpe']      = $respuesta['hash_cpe'];
-                        //$mensaje['ndoc']          = $respuesta['ndoc'];
+                        //$mensaje['hash_cpe']      = $respuesta['hash_cpe'];
+                        $mensaje['ndoc']          = $respuesta['ndoc'];
                         $mensaje['ruc']           = $respuesta['ruc'];
                         $mensaje['numerror1']     = $respuesta['numerror1'];
                         $mensaje['msj_sunat1']    = $respuesta['msj_sunat1'];
@@ -448,6 +454,7 @@ if($_POST['action'] == 'nueva_gre')
                         $mensaje['hash_cdr']      = $respuesta['hash_cdr'];
                        /* $mensaje['arcCdr']        = $respuesta['arcCdr'];*/
                        $mensaje['msj_link']       = $respuesta['msj_link'];
+                       $mensaje['respuesta3']    = $respuesta['respuesta3'];
                         
                         //$mensaje['response2'] = $respuesta['response2'];
                         $query=$connect->prepare("UPDATE tbl_gre_cab SET hash=?,ticket=? ,mensaje=?,numerror=?,link=? WHERE id=?;");
@@ -499,9 +506,12 @@ if($_POST['action'] == 'sunat_gre')
         $texto=convertir($numero);
         $texto = ltrim($texto);*/
         
+          $numero_gre=str_pad($cabecera['correlativo'], 8, "0", STR_PAD_LEFT);
+        
+        $nombrexml = $row_empresa['ruc'].'-'.$tdoc.'-'.$cabecera['serie'].'-'.$numero_gre;
+        
         //RUC DEL EMISOR - TIPO DE COMPROBANTE - SERIE DEL DOCUMENTO - CORRELATIVO
         //01-> FACTURA, 03-> BOLETA, 07-> NOTA DE CREDITO, 08-> NOTA DE DEBITO, 09->GUIA DE REMISION
-        $nombrexml = $row_empresa['ruc'].'-'.$tdoc.'-'.$cabecera['serie'].'-'.$cabecera['correlativo'];
         
 
 
@@ -586,7 +596,7 @@ if($_POST['action'] == 'sunat_gre')
         $objApi = new ApiFacturacion();
 
 
-                $respuesta =  $objApi->EnviarComprobanteElectronicoGRE($emisor,$nombrexml,$connect,$id_venta);
+                $respuesta =  $objApi->EnviarComprobanteElectronicoGRE($emisor,$nombrexml,$connect,$lastInsertId);
 
                         require_once("phpqrcode/qrlib.php");
                         //CREAR QR INICIO
@@ -611,29 +621,30 @@ if($_POST['action'] == 'sunat_gre')
 
                         QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
                         
-                        $mensaje['hash_cpe']      = $respuesta['hash_cpe'];
+                       // $mensaje['hash_cpe']      = $respuesta['hash_cpe'];
                         //$mensaje['ndoc']          = $respuesta['ndoc'];
                         $mensaje['ruc']           = $respuesta['ruc'];
                         $mensaje['numerror1']     = $respuesta['numerror1'];
                         $mensaje['msj_sunat1']    = $respuesta['msj_sunat1'];
                         $mensaje['hash_cdr1']     = $respuesta['hash_cdr1'];
-                        $mensaje['token1']        = $respuesta['token1'];
+                        //$mensaje['token1']        = $respuesta['token1'];
                         
-                        $mensaje['ticket2']       = $respuesta['ticket2'];
+                        //$mensaje['ticket2']       = $respuesta['ticket2'];
                         $mensaje['fecRecepcion2'] = $respuesta['fecRecepcion2'];
                         $mensaje['cod_sunat2']    = $respuesta['cod_sunat2'];
                         $mensaje['numerror2']     = $respuesta['numerror2'];
                         $mensaje['msj_sunat2']    = $respuesta['msj_sunat2'];
                         $mensaje['hash_cdr2']     = $respuesta['hash_cdr2'];
                         
-                        $mensaje['idgre']         = $id_venta;
+                        $mensaje['idgre']         = $lastInsertId;
                         $mensaje['cod_sunat']     = $respuesta['cod_sunat'];
                         $mensaje['numerror']      = $respuesta['numerror'];
                         $mensaje['msj_sunat']     = $respuesta['msj_sunat'];
                         $mensaje['hash_cdr']      = $respuesta['hash_cdr'];
-                       /* $mensaje['arcCdr']        = $respuesta['arcCdr'];*/
-                       $mensaje['msj_link']       = $respuesta['msj_link'];
-                        
+                        $mensaje['arcCdr']        = $respuesta['arcCdr'];
+                        $mensaje['msj_link']       = $respuesta['msj_link'];
+                       //$mensaje['respuesta3']    = $respuesta['respuesta3'];
+                        $mensaje['rutaws'] = $respuesta['rutaws'];
                         //$mensaje['response2'] = $respuesta['response2'];
                         $query=$connect->prepare("UPDATE tbl_gre_cab SET hash=?,ticket=? ,mensaje=?,numerror=?,link=? WHERE id=?;");
                         $resultado=$query->execute([$mensaje['hash_cpe'],$mensaje['ticket2'],$mensaje['msj_sunat'],$mensaje['numerror'],$mensaje['msj_link'],$mensaje['idgre']]);

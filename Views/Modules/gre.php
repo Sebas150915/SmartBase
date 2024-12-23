@@ -8,7 +8,7 @@ if(!empty($_POST))
 {
     $fecha_ini = $_POST['f_ini'];
     $fecha_fin = $_POST['f_fin'];
-    $query_venta = "SELECT * FROM vw_tbl_gre_cab  WHERE fecha_emision BETWEEN '$fecha_ini' AND '$fecha_fin'";
+    $query_venta = "SELECT * FROM vw_tbl_gre_cab  WHERE fecha_emision BETWEEN '$fecha_ini' AND '$fecha_fin' AND idempresa=$empresa";
     $resultado_venta=$connect->prepare($query_venta);
     $resultado_venta->execute();
     $num_reg_venta=$resultado_venta->rowCount();

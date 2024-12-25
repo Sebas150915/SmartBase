@@ -7,7 +7,7 @@ if(!empty($_POST))
 {
     $fecha_ini = $_POST['f_ini'];
     $fecha_fin = $_POST['f_fin'];
-    $query_venta = "SELECT * FROM vw_tbl_compra_cab WHERE fecha_emision BETWEEN  '$fecha_ini' AND '$fecha_fin' AND idempresa = $empresa";
+    $query_venta = "SELECT * FROM vw_tbl_ret_cab WHERE fecha_emision BETWEEN  '$fecha_ini' AND '$fecha_fin' AND idempresa = $empresa";
 //echo $query_venta;
 $resultado_venta=$connect->prepare($query_venta);
 $resultado_venta->execute();
@@ -19,7 +19,7 @@ else
     $hoy = date('Y-m-d');
     $fecha_ini = $hoy;
     $fecha_fin = $hoy;
-    $query_venta = "SELECT * FROM vw_tbl_compra_cab  WHERE fecha_emision='$hoy' AND idempresa = $empresa";
+    $query_venta = "SELECT * FROM vw_tbl_ret_cab  WHERE fecha_emision='$hoy' AND idempresa = $empresa";
 $resultado_venta=$connect->prepare($query_venta);
 $resultado_venta->execute();
 $num_reg_venta=$resultado_venta->rowCount();
@@ -95,13 +95,9 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                           <th>T. Cpe</th>
                           <th>N. Cpe</th>
                           <th>Cliente</th>
-                          <th>Op. Gravada</th>
-                          <th>Op. Exonerada</th>
-                          <th>Op. Inafecta</th>
-                          <th>IGV</th>
-                          <th>Total</th>
-                          <th>Re-imp.</th>
-                          <th>Detraccion</th>
+                          <th>Retenido</th>
+                          <th>TOTAL</th>
+                          
                           <th>PDF</th>
                           <th>Estado</th>
                                 
@@ -110,21 +106,19 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                       <tbody>
                         <?php foreach($resultado_venta as $ventas ){ ?>
                           <tr>
-                            <td><a href="<?=base_url()?>/editar_compra/<?= $ventas['id'] ?>" class="btn btn-warning rounded-circle"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="#" class="btn btn-danger rounded-circle"><i class="fas fa-trash"></i></a></td>
                             <td><?= $ventas['id'] ?></td>
                             <td><?= $ventas['fecha_emision'] ?></td>
                             <td><?= $ventas['tipocomp'] ?></td>
                             <td><?= $ventas['serie'].'-'.$ventas['correlativo'] ?></td>
                             <td><?= $ventas['nombre_persona'] ?></td>
-                            <td align="right"><?= number_format($ventas['op_gravadas'],2,'.',',') ?></td>
-                            <td align="right"><?= number_format($ventas['op_exoneradas'],2,'.',',') ?></td>
-                            <td align="right"><?= number_format($ventas['op_inafectas'],2,'.',',') ?></td>
-                            <td align="right"><?= number_format($ventas['igv'],2,'.',',') ?></td>
-                            <td align="right"><?= number_format($ventas['total'],2,'.',',') ?></td>
-                            <td align="center"><a target="_blank" href="<?=base_url()?>/ticket_factura_compra/<?=$ventas['id']?>" class="btn btn-secondary rounded-circle"><i class="fe fe-printer"></i></a></td>  
-                            <td align="center"><button onclick="modalDt()" class="btn btn-primary rounded-circle" type="button">DT</button></td>
-                            <td><a href="factura_pdf_compra/<?= $ventas['id'] ?>" class="btn btn-danger rounded-circle"><i class="fas fa-file-pdf"></i></a></td>
-                            <td><?php $e = $ventas['feestado'];
+                            <td align="right"><?= number_format($ventas['PERCIBIDO'],2,'.',',') ?></td>
+                            <td align="right"><?= number_format($ventas['TOTAL'],2,'.',',') ?></td>
+                            
+                            <td align="center"><a target="_blank" href="<?=base_url()?>/retencion_pdf1/<?=$ventas['id']?>" class="btn btn-secondary rounded-circle"><i class="fe fe-printer"></i></a></td>  
+                            
+                            
+                            <td><?php $e = $ventas['estado'];
                             if($e == 1)
                             {
                               $e ='ACEPTADO';

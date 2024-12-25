@@ -144,6 +144,8 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "zona" ||
                      $rutas[0] == "division" ||
 
+                     $rutas[0] == "retencion_pdf1" ||
+
                      $rutas[0] == "ticket1" ||
                      $rutas[0] == "usuarios")
                   {

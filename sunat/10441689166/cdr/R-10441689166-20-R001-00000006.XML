@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><ar:ApplicationResponse xmlns:ar="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <ext:UBLExtensions><ext:UBLExtension><ext:ExtensionContent><Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="SignNUBEFACT"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>5iXzQUdaz9OZ37jNqh5qu0nSuOZr5jJjkBQ+bpR/ZLk=</DigestValue></Reference></SignedInfo><SignatureValue>LnpUKtmsyd/X7jSC7Ii80bBOAoBk/bioVy3C+mOul8APE8dopMjdsUorUxpychho/+E1JNq8kXcnM+7cyOnBQq0vdqxPzESysTLniyG2W+/t9Qh5x3Kucc6UczYPI+O7x9MV/qRa4yk0w73pBPJPGcMRwkq5WGFqJOUteSAf5OVR8ACYQ9NabS6YfAYTk1hnz+HsvS0W7Du3Sx6UvreBC+dAUeRKMtPymIOowMvzQ625awKvfTtZNqFBKfNKrERvg1FEBp2Vf10+sHAKAA0MdJL55vjnINCHWFwVUtFgd4L8mtBNmjQzzmm86tlHyb+dr6iGSQs+oUKE20RuiO0VSA==</SignatureValue><KeyInfo><X509Data><X509Certificate>MIIDVjCCAj6gAwIBAgIEX1Fj1DANBgkqhkiG9w0BAQsFADBtMQswCQYDVQQGEwJQRTENMAsGA1UECAwETElNQTETMBEGA1UEBwwKTUlSQUZMT1JFUzERMA8GA1UECgwITlVCRUZBQ1QxCzAJBgNVBAsMAlRJMRowGAYDVQQDDBFOT01CUkVTIEFQRUxMSURPUzAeFw0yMDA5MDMyMTQ0NTJaFw0yNTA5MDMyMTQ0NTJaMG0xCzAJBgNVBAYTAlBFMQ0wCwYDVQQIDARMSU1BMRMwEQYDVQQHDApNSVJBRkxPUkVTMREwDwYDVQQKDAhOVUJFRkFDVDELMAkGA1UECwwCVEkxGjAYBgNVBAMMEU5PTUJSRVMgQVBFTExJRE9TMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlXp8JnUgzHp3V6Sz704qsfB6NFKlE4swhoG2BHDfEcNjmhKkuGts2S2UZJtKJ3hjdijxEqbkWGK9jIpPNKujcdNlPWy0G6UZz/6IL4M51CBAzQmITgWThayGRZ6xNW5v3VclIteOTeapqRs5Rh9pFkK1e9mfk8ve3YHdyJJLalNKHxq6T3RSkCt//LZAPHBAZf1gSg46kzeOSIurxCJ9Ht1aKg/1RqbQQ9wA0f7l7chDY3I9uyrZrM1jagFJ3aSAIxnE2In8JNC65Q+aSCTeWYyTU6WCFfI91wsBxiCaaup50TNRRvyVSXGf0O6YDTSGp4O9yfExy5qBCSB4JY/hQwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBKJOduSO0lbHGMtV4ewoWz3khJkTVdSNCEzR8Ci6Gf6FMUffM1YjIqE2R6TtqmtmzjXCvrcfzmlvSb3B3Q2xbztjKpQpBPEMHSifG7lyafG6jt/2knz6WO2jYfWQZDi7pj4Nvz1kUhoeTKT8qS1CM6ddkWrbO5MhMPGPmMoCN5TRQuBZALiVfX0Y4GJwufg5guiPC4Qj8hoYQwccossW93LAF27ZfPZoHeVDX/8fXvZcU6wEXuUlGeXwnKYg/6pP4IUfnbf5TgBH1J25s8+2B296ktDsGsmLLoI+qgkouBH5jC6UXp4FFvdnjaT0gV2oDcaZ43pPVnjjFmj4q1WZvY</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent></ext:UBLExtension></ext:UBLExtensions>
+    <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+    <cbc:CustomizationID>1.0</cbc:CustomizationID>
+    <cbc:ID>19dc754f-cff0-47c2-9512-5e2d967e1348</cbc:ID>
+    <cbc:IssueDate>2024-12-25</cbc:IssueDate>
+    <cbc:IssueTime>15:40:33.00000</cbc:IssueTime>
+    <cbc:ResponseDate>2024-12-25</cbc:ResponseDate>
+    <cbc:ResponseTime>15:40:33.00000</cbc:ResponseTime>
+    <cbc:Note>Nubefact DEMO</cbc:Note>
+    <cbc:Note>ESTE DOCUMENTO NO TIENE VALIDEZ LEGAL</cbc:Note>
+    <cac:Signature>
+        <cbc:ID>SignNUBEFACT</cbc:ID>
+        <cbc:Note>WWW.NUBEFACT.COM</cbc:Note>
+        <cac:SignatoryParty>
+            <cac:PartyIdentification>
+                <cbc:ID>20600695771</cbc:ID>
+            </cac:PartyIdentification>
+            <cac:PartyName>
+                <cbc:Name>NUBEFACT</cbc:Name>
+            </cac:PartyName>
+        </cac:SignatoryParty>
+        <cac:DigitalSignatureAttachment>
+            <cac:ExternalReference>
+                <cbc:URI>#SignNUBEFACT</cbc:URI>
+            </cac:ExternalReference>
+        </cac:DigitalSignatureAttachment>
+    </cac:Signature>
+    <cac:SenderParty>
+        <cac:PartyLegalEntity>
+            <cbc:CompanyID schemeAgencyName="PE:SUNAT" schemeID="6" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo6">10441689166</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <cac:ReceiverParty>
+        <cac:PartyLegalEntity>
+            <cbc:CompanyID schemeAgencyName="PE:SUNAT" schemeID="6" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo6">20600695771</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <cac:DocumentResponse>
+        <cac:Response>
+            <cbc:ReferenceID>R001-00000006</cbc:ReferenceID>
+            <cbc:ResponseCode listAgencyName="PE:SUNAT">0</cbc:ResponseCode>
+            <cbc:Description>El Comprobante de Retención R001-00000006 ha sido ACEPTADA</cbc:Description>
+            <cac:Status>
+                <cbc:StatusReasonCode listURI="urn:pe:gob:sunat:cpe:see:gem:codigos:codigoretorno">0000</cbc:StatusReasonCode>
+                <cbc:StatusReason>Nubefact DEMO</cbc:StatusReason>
+            </cac:Status>
+            <cac:Status>
+                <cbc:StatusReasonCode listURI="urn:pe:gob:sunat:cpe:see:gem:codigos:codigoretorno">0001</cbc:StatusReasonCode>
+                <cbc:StatusReason>ESTE DOCUMENTO NO TIENE VALIDEZ LEGAL</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <cac:DocumentReference>
+            <cbc:ID>R001-00000006</cbc:ID>
+            <cbc:IssueDate>2024-12-25</cbc:IssueDate>
+            <cbc:IssueTime>00:00:00</cbc:IssueTime>
+            <cbc:DocumentTypeCode>20</cbc:DocumentTypeCode>
+            <cac:Attachment>
+                <cac:ExternalReference>
+                    <cbc:DocumentHash>4K9NEh8+eAgR4GYjvX+34eTP99s=</cbc:DocumentHash>
+                </cac:ExternalReference>
+            </cac:Attachment>
+        </cac:DocumentReference>
+        <cac:IssuerParty>
+            <cac:PartyLegalEntity>
+                <cbc:CompanyID schemeID="6">10441689166</cbc:CompanyID>
+            </cac:PartyLegalEntity>
+        </cac:IssuerParty>
+        <cac:RecipientParty>
+            <cac:PartyLegalEntity>
+                <cbc:CompanyID schemeID="6">10108664008</cbc:CompanyID>
+            </cac:PartyLegalEntity>
+        </cac:RecipientParty>
+    </cac:DocumentResponse>
+</ar:ApplicationResponse>

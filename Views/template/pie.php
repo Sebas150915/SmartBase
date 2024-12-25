@@ -122,7 +122,7 @@
       {
         placeholder: "____-___"
       });
-      $('.input-money').mask("#.##0,00",
+      $('.input-money').mask("###0.00",
       {
         reverse: true
       });

@@ -1,11 +1,10 @@
 <?php 
 
-
 //echo $usabarras;
 $empresa = $_SESSION["id_empresa"];
 $hoy = date('Y-m-d');
 
-$query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id='40'";
+$query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id='20'";
 $resultado_documento=$connect->prepare($query_documento);
 $resultado_documento->execute(); 
 $num_reg_documento=$resultado_documento->rowCount();
@@ -58,14 +57,14 @@ $num_reg_tipo=$resultado_tipo->rowCount();
        } ?>
       
       <main role="main" class="main-content">
-      <form id="nota_nueva" name="nota_nueva">
+      <form id="nueva_retencion" name="nueva_retencion">
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col">
                   <h2 class="h5 page-title">Nueva Retencion </h2>
                 </div>
-  <div class="col-12">
-     <div class="row">
+          <div class="col-12">
+             <div class="row">
                 
                       <div class="col-lg-2 col-sm-6 col-sm-4">
                         <label for="">Tipo Doc:</label>
@@ -87,6 +86,9 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                         <label for="">Numero:</label>
                         <input type="text" class="form-control" readonly name="numero" id="numero">
                         <input type="hidden" id="vendedor" name="vendedor" value="<?= $_SESSION['id'] ?>">
+                        <input type="hidden" id="tipodocumento" name="tipodocumento" value="20" />
+                        <input type='hidden' id='regular' name='regular' value='00' />
+                        <input type='hidden' id='pago' name='pago' value='CONTADO' />
                         <input type="hidden" id="empresa" name="empresa" value="<?= $_SESSION['id_empresa']?>">
                       </div>
 
@@ -95,12 +97,12 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                         <input type="date" class="form-control" value="<?=$hoy?>" name="fecha_emision" id="fecha_emision" >
                       </div>
                    <div class="col-lg-2 col-sm-6 col-sm-2">
-                        <label for="">Cliente</label>
+                        <label for="">Proveedor</label>
                         <div class="input-group">
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-danger go-class" data-toggle="modal" data-target="#ModalClientes"><i class="fe fe-search"></i></button>
                         </span>
-                        <input type="hidden" id="id_ruc" name="id_ruc" value="">
+                        <input type="hidden" id="id_ruc" name="id_ruc" value="0">
                         <input type="hidden" name="action" value="nota_venta">
                         <input type="text" class="form-control" name="ruc_persona" id="ruc_persona" maxlength="11" required>
                         <span class="input-group-btn">
@@ -131,18 +133,20 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                 </div>
                 <div class="col-sm-2">
                   <label for="">Fecha Rel.</label>
-                  <input type="date" class="form-control">
+                  <input type="date" class="form-control" name="fecharel" id="fecharel">
                 </div>
                 <div class="col-sm-2">
                   <label for="">Serie Rel.</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" minlength="4" maxlength="4" name="serielrel" id="serielrel">
                 </div>
                 <div class="col-sm-2">
                   <label for="">Correltivo Rel.</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" maxlength="8" name="numerorel" id="numerorel">
                 </div>
                 <div class="col-sm-2">
-                  <label for="">Importe Rel</label><input type="text" class="form-control"></div>
+                  <label for="">Importe Rel</label>
+                  <input type="text" class="form-control input-money text-right" name="totalrel" id="totalrel" value="0.00">
+                </div>
                 <div class="col-sm-2">
                   <label for="">Moneda</label>
                   <select name="moneda" id="moneda" class="form-control">
@@ -163,7 +167,7 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                 </div>
                      
                          <div class="col-lg-3 col-sm-6 col-sm-4">
-                          <button class="btn btn-success btn-block" type="button" id="btnGuardarRE"><i class="fa fa-save"></i> Guardar</button>
+                          <button class="btn btn-success btn-block" onclick="gnota()" type="button" id="btnGuardarRE"><i class="fa fa-save"></i> Guardar</button>
                          </div>
                         <div class="col-lg-3 col-sm-6 col-sm-4">                                                
                           <a href="<?=base_url()?>/retenciones" class="btn btn-danger btn-block" type="button"><i class="fa fa-close"></i> Cancelar</a>
@@ -189,8 +193,8 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                             <th width="10%">T.Doc</th>
                             <th width="10%">T.Pag</th>           
                           <td width="8%">T(3%)</th>
-  <td width="10%">Ret</th>
-  <td width="10%">Neto</th>
+                          <td width="10%">Ret</th>
+                          <td width="10%">Neto</th>
                   </thead>
                 
                    <tfoot>
@@ -238,7 +242,7 @@ $num_reg_tipo=$resultado_tipo->rowCount();
     <?php include 'views/modules/modals/buscar_contribuyente_nv.php' ?>
 
  
-      <script src="assets/js/funciones_ventas.js"></script>
+      <script src="assets/js/funciones_retencion.js?v=8"></script>
     <script src="<?=media()?>/js/tablas.js"></script>
 
       <script src="assets/js/sunat_reniec.js"></script>

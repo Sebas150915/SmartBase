@@ -2,6 +2,117 @@
 class GeneradorXML
 {
 
+   function CrearXMLRetenciones($nombrexml, $emisor, $cliente, $cabecera, $detalle)
+   {
+
+      $doc = new DOMDocument();
+      $doc->formatOutput = FALSE;
+      $doc->preserveWhiteSpace = TRUE;
+      $doc->encoding = 'ISO-8859-1';
+      //$doc->encoding = 'ISO-8859-1';
+      //$doc->encoding = 'utf-8';
+      $xmlCPE = '<?xml version="1.0" encoding="UTF-8"?>
+      <Retention xmlns="urn:sunat:names:specification:ubl:peru:schema:xsd:Retention-1" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1">
+      <ext:UBLExtensions>
+      <ext:UBLExtension>
+      <ext:ExtensionContent>
+      </ext:ExtensionContent>
+      </ext:UBLExtension>
+      </ext:UBLExtensions>
+      <cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+      <cbc:CustomizationID>1.0</cbc:CustomizationID>
+
+      <cac:Signature>
+      <cbc:ID>' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
+      <cac:SignatoryParty>
+      <cac:PartyIdentification>
+      <cbc:ID>' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName><cbc:Name><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:Name></cac:PartyName>
+      </cac:SignatoryParty>
+      <cac:DigitalSignatureAttachment>
+      <cac:ExternalReference><cbc:URI>#IDSignKG</cbc:URI></cac:ExternalReference>
+      </cac:DigitalSignatureAttachment>
+      </cac:Signature>
+      <cbc:ID>' . $cabecera["NRO_COMPROBANTE"] . '</cbc:ID>
+      <cbc:IssueDate>' . $cabecera["FECHA_DOCUMENTO"] . '</cbc:IssueDate>
+      <cbc:IssueTime>00:00:00</cbc:IssueTime>';
+
+      $xmlCPE = $xmlCPE . '
+      <cac:AgentParty>
+      <cac:PartyIdentification>
+      <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_EMPRESA"] . '">' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName><cbc:Name><![CDATA[' . $cabecera["NOMBRE_COMERCIAL_EMPRESA"] . ']]></cbc:Name></cac:PartyName>
+      <cac:PostalAddress>
+      <cbc:ID>' . $cabecera["CODIGO_UBIGEO_EMPRESA"] . '</cbc:ID>
+      <cbc:StreetName><![CDATA[' . $cabecera["DIRECCION_EMPRESA"] . ']]></cbc:StreetName>
+      <cbc:CityName>' . $cabecera["DEPARTAMENTO_EMPRESA"] . '</cbc:CityName>
+      <cbc:CountrySubentity>' . $cabecera["PROVINCIA_EMPRESA"] . '</cbc:CountrySubentity>
+      <cbc:District>' . $cabecera["DISTRITO_EMPRESA"] . '</cbc:District>
+      <cac:Country><cbc:IdentificationCode>' . $cabecera["CODIGO_PAIS_EMPRESA"] . '</cbc:IdentificationCode></cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyLegalEntity>
+      <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+      </cac:AgentParty>
+
+      <cac:ReceiverParty>
+      <cac:PartyIdentification><cbc:ID schemeID="'.$cabecera["tipo_doc"].'">'.$cabecera["num_doc"].'</cbc:ID></cac:PartyIdentification>
+      <cac:PartyLegalEntity>
+      <cbc:RegistrationName>'.$cabecera["nombre_persona"].'</cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+      </cac:ReceiverParty>
+      <sac:SUNATRetentionSystemCode>01</sac:SUNATRetentionSystemCode>
+      <sac:SUNATRetentionPercent>3.000</sac:SUNATRetentionPercent>
+
+      
+      <cbc:TotalInvoiceAmount currencyID="' .$cabecera["moneda"]  . '">' .$cabecera["PERCIBIDO"] . '</cbc:TotalInvoiceAmount>
+      <sac:SUNATTotalPaid currencyID="' .$cabecera["moneda"] . '">' .$cabecera["TOTAL"]  . '</sac:SUNATTotalPaid>';
+
+      for ($i = 0; $i < count($detalle); $i++) 
+      {
+      $xmlCPE = $xmlCPE . '
+
+      
+
+      <sac:SUNATRetentionDocumentReference>
+      <cbc:ID schemeID="' .$detalle[$i]["TIPODOC"] . '">' .$detalle[$i]["SERIE"] . '</cbc:ID>
+      <cbc:IssueDate>' .$detalle[$i]["FECHA"] . '</cbc:IssueDate>
+      <cbc:TotalInvoiceAmount currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["TOTAL"] . '</cbc:TotalInvoiceAmount>
+
+      <cac:Payment>
+      <cbc:ID>' .($i + 1). '</cbc:ID>
+      <cbc:PaidAmount currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["TOTAL"] . '</cbc:PaidAmount>
+      <cbc:PaidDate>' .$detalle[$i]["FECHA"] . '</cbc:PaidDate>
+      </cac:Payment>
+      <sac:SUNATRetentionInformation>
+      <sac:SUNATRetentionAmount currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["PERCEPCION"] . '</sac:SUNATRetentionAmount>
+      <sac:SUNATRetentionDate>' .$detalle[$i]["FECHA"] . '</sac:SUNATRetentionDate>
+      <sac:SUNATNetTotalPaid currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["SUBTOTAL"] . '</sac:SUNATNetTotalPaid>
+      <cac:ExchangeRate>
+      <cbc:SourceCurrencyCode>' .$detalle[$i]["MONEDA"] . '</cbc:SourceCurrencyCode>
+      <cbc:TargetCurrencyCode>' .$detalle[$i]["MONEDA"] . '</cbc:TargetCurrencyCode>
+      <cbc:CalculationRate>' .($i + 1). '</cbc:CalculationRate>
+      <cbc:Date>' .$detalle[$i]["FECHA"] . '</cbc:Date>
+      </cac:ExchangeRate>
+      </sac:SUNATRetentionInformation>
+      </sac:SUNATRetentionDocumentReference>
+
+      ';
+      }
+
+      $xmlCPE = $xmlCPE . '</Retention>';
+      
+
+      $doc->loadXML($xmlCPE);
+      $doc->save($nombrexml.'.XML');
+
+         return 'XML DE RETENCION CREADO';   
+
+      
+  }
+   
    function CrearXMLGRE($nombrexml, $emisor, $cliente, $cabecera, $detalle)
    {
          $doc = new DOMDocument();
@@ -22,7 +133,7 @@ class GeneradorXML
 
          
          $xmlCPE.='
-<DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">';
+      <DespatchAdvice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">';
          }  
          $xmlCPE.='  
 

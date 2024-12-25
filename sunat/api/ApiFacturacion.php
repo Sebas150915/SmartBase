@@ -498,7 +498,7 @@ class ApiFacturacion
 						$mensaje['cod_sunat'] = $doc->getElementsByTagName('faultcode')->item(0)->nodeValue;
 						$mensaje['cod_sunat1'] = $doc->getElementsByTagName("faultcode")->item(0)->nodeValue;
 
-if(isset($doc->getElementsByTagName('message')->item(0)->nodeValue)){
+		if(isset($doc->getElementsByTagName('message')->item(0)->nodeValue)){
                         $mensaje['msj_sunat'] = $doc->getElementsByTagName('message')->item(0)->nodeValue;
 					}else{
 						$mensaje['msj_sunat'] =$doc->getElementsByTagName('faultstring')->item(0)->nodeValue;
@@ -1207,6 +1207,235 @@ if(isset($doc->getElementsByTagName('message')->item(0)->nodeValue)){
 
 
 	}
+
+
+	public function EnviarRetencionPercepcion($emisor, $nombre,$connect,$lastInsertId, $rutacertificado="../../sunat/api/", $ruta_archivo_xml = "../../sunat/", $ruta_archivo_cdr = "../../sunat/")
+	{
+		$ruta_archivo_xml = $ruta_archivo_xml.$emisor['ruc'].'/xml/';
+	    $ruta_archivo_cdr = $ruta_archivo_cdr.$emisor['ruc'].'/cdr/';
+
+		//firma del documento
+		$objSignature = new Signature();
+
+		$flg_firma = "0";
+		$ruta = $ruta_archivo_xml.$nombre.'.XML';
+
+		$ruta_firma = $rutacertificado.$emisor['certificado'];
+		$pass_firma = $emisor['clave_certificado'];
+		
+        $mensaje['rutacert'] = $lastInsertId;
+        
+		$resp = $objSignature->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
+
+		//var_dump($resp);
+	   $hash = $resp['hash_cpe'];
+       $mensaje['respuestahash'] = $hash;
+		//Generar el .zip
+
+		$zip = new ZipArchive();
+
+		$nombrezip = $nombre.".ZIP";
+		$rutazip = $ruta_archivo_xml.$nombre.".ZIP";
+
+		if($zip->open($rutazip,ZIPARCHIVE::CREATE)===true){
+			$zip->addFile($ruta, $nombre.'.XML');
+			$zip->close();
+		}
+
+		//Enviamos el archivo a sunat
+        /*$link = $emisor['servidor_link'];
+        $mensaje['link'] = $link;
+		$ws   = $link;*/
+		if($emisor['servidor_cpe']=='1')
+		{
+         $ws = 'https://demo-ose.nubefact.com/ol-ti-itcpe/billService?wsdl';
+		}
+		else
+		{
+		$ws = 'https://e-factura.sunat.gob.pe/ol-ti-itemision-otroscpe-gem/billService?wsdl';
+	    }
+	    $link = $ws;
+		//echo $ws;
+        //$ws = "https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?wsdl";
+        //$ws = "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService";
+		$ruta_archivo = $rutazip;
+		$nombre_archivo = $nombrezip;
+
+		//echo $ruta_archivo.','.$nombre_archivo;
+
+		$contenido_del_zip = base64_encode(file_get_contents($ruta_archivo));
+
+         //echo $contenido_del_zip;
+		$xml_envio ='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.sunat.gob.pe" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+				 <soapenv:Header>
+				 	<wsse:Security>
+				 		<wsse:UsernameToken>
+				 			<wsse:Username>'.$emisor['ruc'].$emisor['usuario_sol'].'</wsse:Username>
+				 			<wsse:Password>'.$emisor['clave_sol'].'</wsse:Password>
+				 		</wsse:UsernameToken>
+				 	</wsse:Security>
+				 </soapenv:Header>
+				 <soapenv:Body>
+				 	<ser:sendBill>
+				 		<fileName>'.$nombre_archivo.'</fileName>
+				 		<contentFile>'.$contenido_del_zip.'</contentFile>
+				 	</ser:sendBill>
+				 </soapenv:Body>
+				</soapenv:Envelope>';
+
+             //echo $xml_envio;
+			$header = array(
+						 "Content-type: text/xml;charset=\"utf-8\"",
+						"Accept: text/xml",
+						 "Accept-Header: application/xml+",
+						"Cache-Control: no-cache",
+						"Pragma: no-cache",
+						"SOAPAction: urn:sendBill",
+						"Content-lenght: ".strlen($xml_envio)
+					);
+
+
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,0);
+			curl_setopt($ch,CURLOPT_URL,$ws);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($ch,CURLOPT_HTTPAUTH,CURLAUTH_ANY);
+			curl_setopt($ch,CURLOPT_TIMEOUT,33000);
+			curl_setopt($ch,CURLOPT_POST,true);
+			curl_setopt($ch,CURLOPT_POSTFIELDS,$xml_envio);
+			curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			//para ejecutar los procesos de forma local en windows
+			//enlace de descarga del cacert.pem https://curl.haxx.se/docs/caextract.html
+		//	curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__)."/cacert.pem");
+			//curl_setopt($ch, CURLOPT_CAINFO, base_url()."/sunat/api/cacert.pem");
+
+            //echo  dirname(__FILE__)."/cacert.pem";
+			$response = curl_exec($ch);
+           //print_r($response);
+           $mensaje['respcurl'] = $response;
+			$httpcode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+			curl_close($ch);
+			//echo $httpcode;
+			$mensaje['httpcode'] = $httpcode;
+			$mensaje['estado'] = "0";
+			if($httpcode == 200 || $httpcode == 500)
+			{ //200->La comunicación fue satisfactoria
+				$doc = new DOMDocument();
+				$doc->loadXML($response);
+                
+				        //$codigo = '.';
+						//$mensaje = ' ha sido Aceptada por SUNAT';	
+                      //===================VERIFICAMOS SI HA ENVIADO CORRECTAMENTE EL COMPROBANTE=====================//
+					if(isset($doc->getElementsByTagName('applicationResponse')->item(0)->nodeValue))
+					{
+						$cdr = $doc->getElementsByTagName('applicationResponse')->item(0)->nodeValue;
+						 file_put_contents($ruta_archivo_cdr . 'R-' . $nombre . '.ZIP', base64_decode($cdr));
+						$cdr = base64_decode($cdr);
+                       //var_dump($cdr);
+						//extraemos archivo zip a xml
+						$zip = new ZipArchive;
+						//echo 'ruta '.$ruta_archivo_cdr."R-".$nombrezip;
+						if($zip->open($ruta_archivo_cdr."R-".$nombrezip)===true)
+						{
+						    if($link =='https://demo-ose.nubefact.com/ol-ti-itcpe/billService?wsdl')
+						    {
+						        $zip->extractTo($ruta_archivo_cdr,'R-'.$nombre.'.xml');
+                                $zip->close();
+                                /*cambiamos el nombre del archivo*/
+                                
+                                rename($ruta_archivo_cdr.'/R-'.$nombre.'.xml',$ruta_archivo_cdr.'/R-'.$nombre.'.XML');
+						     
+						    }
+						    else
+						    {
+                                $zip->extractTo($ruta_archivo_cdr,'R-'.$nombre.'.XML');
+                                $zip->close();
+						    }
+						
+							
+						}
+						
+						
+						//eliminamos los archivos Zipeados
+                       //unlink($ruta_archivo_xml.$nombre . '.ZIP');
+                       //unlink($ruta_archivo_cdr . 'R-' . $nombre . '.ZIP');
+						$doc_cdr = new DOMDocument();
+						
+
+						if (file_exists($ruta_archivo_cdr.'R-'.$nombre.'.XML')) 
+						{
+						$doc_cdr->load($ruta_archivo_cdr.'R-'.$nombre.'.XML');
+						}
+						else 
+						{
+						   
+						$doc_cdr->load($ruta_archivo_cdr.'R-'.$nombre.'.XML');
+						
+						}
+
+						$mensaje['estado']    = "";
+						$mensaje['cod_sunat'] = $doc_cdr->getElementsByTagName('ResponseCode')->item(0)->nodeValue;
+						if(isset($doc->getElementsByTagName("faultstring")->item(0)->nodeValue)){
+							$mensaje['cod_sunat1'] = $doc->getElementsByTagName("faultstring")->item(0)->nodeValue;
+						}else{
+							$mensaje['cod_sunat1'] ='';
+						}
+						
+                        $mensaje['msj_sunat'] = $doc_cdr->getElementsByTagName('Description')->item(0)->nodeValue;
+                        $mensaje['hash_cdr'] = $doc_cdr->getElementsByTagName('DigestValue')->item(0)->nodeValue;
+                        
+						
+					}
+					else{		
+						/*$estadofe = "2";
+						$codigo  = $doc->getElementsByTagName("faultcode")->item(0)->nodeValue;
+						$mensaje = $doc->getElementsByTagName("faultstring")->item(0)->nodeValue;
+						
+						//echo "error ".$codigo.": ".$mensaje; */
+						$mensaje['estado']    = "";
+						$mensaje['cod_sunat'] = $doc->getElementsByTagName('faultcode')->item(0)->nodeValue;
+						$mensaje['cod_sunat1'] = $doc->getElementsByTagName("faultcode")->item(0)->nodeValue;
+
+		if(isset($doc->getElementsByTagName('message')->item(0)->nodeValue)){
+                        $mensaje['msj_sunat'] = $doc->getElementsByTagName('message')->item(0)->nodeValue;
+					}else{
+						$mensaje['msj_sunat'] =$doc->getElementsByTagName('faultstring')->item(0)->nodeValue;
+					}
+
+                        //$mensaje['cod_sunat'] = $doc->getElementsByTagName('statusCode')->item(0)->nodeValue;
+                        //$mensaje['msj_sunat'] = "EL COMPROBANTE ESTA SIENDO PROCESADO";
+                        $mensaje['hash_cdr'] = "";
+					}		
+
+			}
+			else{ 
+			    
+			       
+					$mensaje['estado']    = '0';
+					$mensaje['cod_sunat'] = '019999999';
+					$mensaje['cod_sunat1'] = "";
+					$mensaje['msj_sunat'] = 'SUNAT NO RESPONDE, VUELVA A INTENTAR EN UNOS MINUTOS.';
+					$mensaje['hash_cdr']  ='';
+					
+
+			}/*
+			//echo $codigo;
+			if($estadofe<>'1')
+			{
+			$cod = explode('.',$codigo);
+			$codigo = $cod[1];
+		    }
+
+		$query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
+		$resultado=$query->execute([$resp['hash_cpe'],$estadofe,$codigo,$mensaje,$lastInsertId]);*/
+
+		return $mensaje;
+	}
+
+
+	
 
 }
 ?>

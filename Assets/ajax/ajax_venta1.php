@@ -300,7 +300,8 @@ if($_POST['action'] == 'nueva_venta')
                 $vendedor = $_POST['ven'];
         }
         
-                if(isset($_POST['redondeo']))        {
+                if(isset($_POST['redondeo']))       
+                 {
                         if($_POST['redondeo']>0)
                         {
                             $redondeo = $_POST['redondeo'];
@@ -321,6 +322,7 @@ if($_POST['action'] == 'nueva_venta')
 
         $lastInsertId = $connect->lastInsertId();
 
+
         $visa = $_POST['visa'];
         $cvisa = $_POST['cvisa'];    
         $efectivo = $_POST['efectivo'];
@@ -329,11 +331,11 @@ if($_POST['action'] == 'nueva_venta')
 
         //registro detalle venta
 
-        for($i = 0; $i< count($_POST['idarticulo']); $i++)
-        {
+for($i = 0; $i< count($_POST['idarticulo']); $i++)
+ {
         $item                  = $_POST['itemarticulo'][$i];
         $idarticulo            = $_POST['idarticulo'][$i];
-   $nomarticulo=(isset($_POST['nomarticulo'][$i])) ? $_POST['nomarticulo'][$i] : "";
+         $nomarticulo=(isset($_POST['nomarticulo'][$i])) ? $_POST['nomarticulo'][$i] : "";
         $cantidad              = $_POST['cantidad'][$i];
 
         $afectacion            = $_POST['afectacion'][$i];
@@ -402,9 +404,9 @@ if($_POST['action'] == 'nueva_venta')
                 $insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn,nombre_producto,descripcion_producto) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn,$nomarticulo,$des]);
 
-                        // actualizar serie + correlativo
-                        $update_query_serie = $connect->prepare("UPDATE tbl_series SET correlativo = correlativo + ? WHERE serie = ? and correlativo = ? and id_empresa = ?");
-                        $resultado_serie   = $update_query_serie->execute([1,$_POST['serie'],$_POST['numero'],$_POST['empresa']]);
+        // actualizar serie + correlativo
+        $update_query_serie = $connect->prepare("UPDATE tbl_series SET correlativo = correlativo + ? WHERE serie = ? and correlativo = ? and id_empresa = ?");
+        $resultado_serie   = $update_query_serie->execute([1,$_POST['serie'],$_POST['numero'],$_POST['empresa']]);
 
 
 

@@ -59,14 +59,7 @@ $resultado_detalle = $query_detalle->fetchAll(PDO::FETCH_OBJ);
       {
          $doc = 'NOTA DE VENTA ELECTRONICA';
       }
-  if($row_cabecera['condicion_venta']=='1')
-  {
-    $condicion = 'CONTADO';
-  }
-  else
-  {
-    $condicion = 'CREDITO';
-  }
+
 
  if($row_cabecera['codmoneda']=='PEN')
   {
@@ -78,20 +71,12 @@ else
 } 
 
 
- if($row_cabecera['tipocomp_ref']=='01')
-      {
-         $docref = 'FACTURA ELECTRONICA';
-      }
-      else if($row_cabecera['tipocomp_ref']=='03')
-      {
-         $docref = 'BOLETA DE VENTA ELECTRONICA';
-      }
-      
+
 /*$query_pago = $connect->prepare("SELECT * FROM tbl_venta_pag as p LEFT JOIN tbl_forma_pago AS f
 ON p.fdp = f.id_fdp WHERE id_venta='$factura'");
 $query_pago->execute();
 $resultado_pago = $query_pago->fetchAll(PDO::FETCH_OBJ);*/
-$numero = $row_cabecera['total'];
+$numero = $row_cabecera['PERCIBIDO'];
 include 'assets/ajax/numeros.php';
 $texto=convertir($numero);
 //file_put_contents($rutaGuardado.$fileName, $fileData);
@@ -272,16 +257,23 @@ height: 2cm;
             <td colspan="3">
               <table class="border">
                 <thead>
+                <tr>
+                <th colspan="5" class="border1">
+                      Comprobante de pago que dan origen a la retencion
+                </th>
+                </tr>
                   <tr>
-                     <th width="8%" class="border1 text-center ">TIPO DOCUMENTO</th>
-                    <th width="8%" class="border1 text-left border3">SERIE</th>
-                    <th width="5%" class="border1 text-center border3">NUMERO</th>
+                     <th width="4%" class="border1 text-center ">Tipo</th>
+                    <th width="8%" class="border1 text-left border3">Comprobante</th>
+                    <th width="8%"  class="border1 text-center border3">Fecha Emision</th>
+                    <th width="5%" class="border1 text-center border3">Moneda</th>
                    
-                    <th width="8%"  class="border1 text-center border3">FECHA EMISION</th>
-                    <th width="8%"  class="border1 text-center border3">TOTAL COMPROBANTE</th>
+                    
+                    <th width="8%"  class="border1 text-center border3">Importe Total</th>
+                    <th width="8%"  class="border1 text-center border3">Fecha de Pago</th>
                     <th width="8%"  class="border1 text-center border3">N° PAGO</th>
                   <th width="8%"  class="border1 text-center border3">IMPORTE PAGO</th>
-                  <th width="8%"  class="border1 text-center border3">TASA</th>
+                  <th width="8%"  class="border1 text-center border3">Tipo de Cambio</th>
                   <th width="8%"  class="border1 text-center border3">RETENCION</th>
                     <th width="8%"  class="border1 text-center border3">IMPORTE NETO PAGADO</th>
                   </tr>
@@ -292,16 +284,18 @@ height: 2cm;
                   
                   $output.='
                      <tr>
-                       <th class="text-left">'.$detalle->nombre_cpe.'</th>
-                       <th class="text-left border3">'.$detalle->seriedoc.'</th>
-                       <th class="text-center border3">'.$detalle->numdoc.'</th>
+                       <th class="text-left">'.$detalle->TIPODOC.'</th>
+                       <th class="text-left border3">'.$detalle->seriedoc.'-'.$detalle->numdoc.'</th>
+                          <th class="text-center border3">'.$detalle->FECHA.'</th>
+                       <th class="text-center border3">'.$detalle->MONEDA.'</th>
                       
-                       <th class="text-center border3">'.$detalle->FECHA.'</th>
+                    
                      
                        <th  class="text-center border3">'.number_format($detalle->TOTAL,2).'</th>
+                       <th class="text-center border3">'.$row_cabecera["FECHA_DOCUMENTO"].'</th>
                        <th class="text-center border3">'.$z.'</th>
                        <th class="text-center border3">'.number_format($detalle->TOTAL,2).'</th>
-                       <th class="text-center border3">'.$detalle->TASA.'</th>
+                       <th class="text-center border3"></th>
                       
                        <th class="text-center border3">'.$detalle->PERCEPCION.'</th>
                      
@@ -322,11 +316,11 @@ height: 2cm;
                     <table width="100%">
                       <thead>
                         <tr>
-                          <td>SON: '.$texto.'</td>
+                          <td>SON: '.$texto. ' '.$mon.'</td>
                         </tr>
                         <tr>
                           <td>
-                            La '.$doc .'  '.$row_cabecera["femensajesunat"].'
+                          '.$row_cabecera["femensajesunat"].'
                           </td>
                         </tr>
                         <tr>
@@ -356,9 +350,7 @@ height: 2cm;
                     </table>
                   </th>
                 </tr>
-                <tr>
-                          <td>Observacion: '.$row_cabecera["obs"].' </td>
-                        </tr>
+             
                 
               </table>
             </td>

@@ -97,8 +97,8 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                           <th>Cliente</th>
                           <th>Retenido</th>
                           <th>TOTAL</th>
-                          
-                          <th>PDF</th>
+                          <th>Opciones</th>
+
                           <th>Estado</th>
                                 
                               </tr>
@@ -115,7 +115,28 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                             <td align="right"><?= number_format($ventas['PERCIBIDO'],2,'.',',') ?></td>
                             <td align="right"><?= number_format($ventas['TOTAL'],2,'.',',') ?></td>
                             
-                            <td align="center"><a target="_blank" href="<?=base_url()?>/retencion_pdf1/<?=$ventas['id']?>" class="btn btn-secondary rounded-circle"><i class="fe fe-printer"></i></a></td>  
+                            <td align="center">
+                           
+                                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a target="_blank" href="<?=base_url()?>/retencion_pdf1/<?=$ventas['id']?>" class="btn btn-danger"><i class="fe fe-printer"></i></a>
+                                <a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/xml/<?=$row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.str_pad($ventas['correlativo'],8,"0",STR_PAD_LEFT).'.ZIP'?>" class="btn btn-success"><i class="far fa-file-excel"></i></a>
+                                <?php if($ventas['estado']==1){$x = ''; } else{$x='not-active';}?>
+                              <a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/cdr/<?= 'R-'. $row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.str_pad($ventas['correlativo'],8,"0",STR_PAD_LEFT).'.ZIP'?>" class="btn btn-primary  <?=$x?>"  ><i class="far fa-file-code"></i></a>                        
+                                                          
+                            
+                                </div>
+                                
+                                </div>
+                      
+
+
+
+
+
+
+
+                             </td>  
                             
                             
                             <td><?php $e = $ventas['estado'];

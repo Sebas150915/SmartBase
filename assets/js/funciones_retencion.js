@@ -168,7 +168,8 @@ data: JSON.stringify({
 "idcliente": $("#id_ruc").val(),	
 "pago": $("#pago").val(),
 "moneda" : $('#moneda').val(),
-"regular": $("#regular").val(),						
+"regular": $("#regular").val(),	
+"tcambio": $("#tcambio").val(), 					
 "detalle": DATA
   }),
 						
@@ -195,11 +196,11 @@ window.open(base_url+'/retencion_pdf1/'+ticket, '_blank');
 
     if(empresad == '21' && perfil == '3')
     {
-    window.location = "retencion";
+    window.location = "retenciones";
     }
     else
     {
-       window.location = "retencion"; 
+       window.location = "retenciones"; 
     }
 }
 else if (result.isDenied) 
@@ -207,7 +208,7 @@ else if (result.isDenied)
      if(empresa == '20565728645')/*HTP LOGISTICA*/
      {
         window.open(base_url+'/retencion_pdf1/'+ticket, '_blank');
-        window.location = "retencion";   
+        window.location = "retenciones";   
      }
      else
      {
@@ -215,11 +216,11 @@ else if (result.isDenied)
         
             if(empresad == '21' && perfil == '3')
             {
-            window.location = "retencion";
+            window.location = "retenciones";
             }
             else
             {
-            window.location = "retencion"; 
+            window.location = "retenciones"; 
             }
         
         

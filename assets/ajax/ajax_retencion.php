@@ -39,6 +39,8 @@ $pago=(isset($cab['pago'])) ? $cab['pago'] : "CONTADO";
 $regular=(isset($cab['regular'])) ? $cab['regular'] : "00";
 $moneda=(isset($cab['moneda'])) ? $cab['moneda'] : "PEN";
 
+$tcambio=(isset($cab['tcambio'])) ? $cab['moneda'] : 1;
+
 
 $idlocal=$_SESSION['almacen'];
 $idusuario=$_SESSION['id'];
@@ -67,8 +69,8 @@ for ($i = 0; $i < count($detalle); $i++)
 	$neto=(isset($detalle[$i]["neto"]))?$detalle[$i]["neto"]: "0";
 	$porcentaje=(isset($detalle[$i]["porcentaje"]))?$detalle[$i]["porcentaje"]: "0";
 
-	$insert_query_detalle =$connect->prepare("INSERT INTO tbl_ret_det(idretencion,idventa,tipdoc,seriedoc,numdoc,fechadoc,moneda,importe,retencion,neto,porcentaje) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-	$resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$lastInsertId,$tipodoc,$seriedet,$numerodet,$fechadet,$monedadet,$importe,$percepcion,$neto,$porcentaje]);
+	$insert_query_detalle =$connect->prepare("INSERT INTO tbl_ret_det(idretencion,idventa,tipdoc,seriedoc,numdoc,fechadoc,moneda,importe,retencion,neto,porcentaje,tc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+	$resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$lastInsertId,$tipodoc,$seriedet,$numerodet,$fechadet,$monedadet,$importe,$percepcion,$neto,$porcentaje,$tcambio]);
 
 }	
 

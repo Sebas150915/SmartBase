@@ -67,8 +67,8 @@ class GeneradorXML
       <sac:SUNATRetentionPercent>3.000</sac:SUNATRetentionPercent>
 
       
-      <cbc:TotalInvoiceAmount currencyID="' .$cabecera["moneda"]  . '">' .$cabecera["PERCIBIDO"] . '</cbc:TotalInvoiceAmount>
-      <sac:SUNATTotalPaid currencyID="' .$cabecera["moneda"] . '">' .$cabecera["TOTAL"]  . '</sac:SUNATTotalPaid>';
+      <cbc:TotalInvoiceAmount currencyID="PEN">' .$cabecera["PERCIBIDO"] . '</cbc:TotalInvoiceAmount>
+      <sac:SUNATTotalPaid currencyID="PEN">' .$cabecera["TOTAL"]  . '</sac:SUNATTotalPaid>';
 
       for ($i = 0; $i < count($detalle); $i++) 
       {
@@ -82,17 +82,17 @@ class GeneradorXML
       <cbc:TotalInvoiceAmount currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["TOTAL"] . '</cbc:TotalInvoiceAmount>
 
       <cac:Payment>
-      <cbc:ID>' .($i + 1). '</cbc:ID>
+      <cbc:ID>1</cbc:ID>
       <cbc:PaidAmount currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["TOTAL"] . '</cbc:PaidAmount>
       <cbc:PaidDate>' .$detalle[$i]["FECHA"] . '</cbc:PaidDate>
       </cac:Payment>
       <sac:SUNATRetentionInformation>
-      <sac:SUNATRetentionAmount currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["PERCEPCION"] . '</sac:SUNATRetentionAmount>
+      <sac:SUNATRetentionAmount currencyID="PEN">' .$detalle[$i]["PERCEPCION"] . '</sac:SUNATRetentionAmount>
       <sac:SUNATRetentionDate>' .$detalle[$i]["FECHA"] . '</sac:SUNATRetentionDate>
-      <sac:SUNATNetTotalPaid currencyID="' .$detalle[$i]["MONEDA"] . '">' .$detalle[$i]["SUBTOTAL"] . '</sac:SUNATNetTotalPaid>
+      <sac:SUNATNetTotalPaid currencyID="PEN">' .$detalle[$i]["SUBTOTAL"] . '</sac:SUNATNetTotalPaid>
       <cac:ExchangeRate>
       <cbc:SourceCurrencyCode>' .$detalle[$i]["MONEDA"] . '</cbc:SourceCurrencyCode>
-      <cbc:TargetCurrencyCode>' .$detalle[$i]["MONEDA"] . '</cbc:TargetCurrencyCode>
+      <cbc:TargetCurrencyCode>PEN</cbc:TargetCurrencyCode>
       <cbc:CalculationRate>' .($i + 1). '</cbc:CalculationRate>
       <cbc:Date>' .$detalle[$i]["FECHA"] . '</cbc:Date>
       </cac:ExchangeRate>

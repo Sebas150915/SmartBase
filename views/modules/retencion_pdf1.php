@@ -98,7 +98,7 @@ $output.='
        body
         {
           background: white;
-          font-size: 12px;
+          font-size: 14px;
          
             font-family: "Montserrat", sans-serif;
 
@@ -138,6 +138,12 @@ $output.='
          .border3
         {
           border-left: 1px solid #000;
+           padding: 0.3em;
+          border-spacing: 0;
+        }
+           .border4
+        {
+          border-right: 1px solid #000;
            padding: 0.3em;
           border-spacing: 0;
         }
@@ -214,7 +220,7 @@ height: 2cm;
               <table class="border">
                 <thead>
                   <tr>
-                    <th width="15%" class="border1">Proveedor</th>
+                    <th width="15%" class="border1">Señor(es)</th>
                     <th class="text-left border1 border3">'.$row_cabecera["nombre_persona"].'</th>
                   </tr>
                   <tr>
@@ -258,7 +264,7 @@ height: 2cm;
               <table class="border">
                 <thead>
                 <tr>
-                <th colspan="5" class="border1">
+                <th colspan="5" class="border1 border4 text-center">
                       Comprobante de pago que dan origen a la retencion
                 </th>
                 </tr>
@@ -270,12 +276,12 @@ height: 2cm;
                    
                     
                     <th width="8%"  class="border1 text-center border3">Importe Total</th>
-                    <th width="8%"  class="border1 text-center border3">Fecha de Pago</th>
-                    <th width="8%"  class="border1 text-center border3">N° PAGO</th>
-                  <th width="8%"  class="border1 text-center border3">IMPORTE PAGO</th>
-                  <th width="8%"  class="border1 text-center border3">Tipo de Cambio</th>
-                  <th width="8%"  class="border1 text-center border3">RETENCION</th>
-                    <th width="8%"  class="border1 text-center border3">IMPORTE NETO PAGADO</th>
+                    <th width="8%"  class="border1 text-center border3 border2">Fecha de Pago</th>
+                    <th width="8%"  class="border1 text-center border3 border2">N° PAGO</th>
+                  <th width="8%"  class="border1 text-center border3 border2">IMPORTE PAGO</th>
+                  <th width="8%"  class="border1 text-center border3 border2">Tipo de Cambio</th>
+                  <th width="8%"  class="border1 text-center border3 border2">RETENCION</th>
+                    <th width="8%"  class="border1 text-center border3 border2">IMPORTE NETO PAGADO</th>
                   </tr>
                 </thead>
                 <tbody>';
@@ -301,7 +307,7 @@ height: 2cm;
                      
                        <th  class="text-right border3">'.number_format($detalle->SUBTOTAL,2).'</th>
                      </tr>';
-               $z++;   } 
+               } 
 
           $output.='
                 </tbody>
@@ -364,7 +370,14 @@ height: 2cm;
     
     
 <footer>
-Powered by SmartBase 
+<strong>Powered by SmartBase </strong>
+<br />
+<table width="100%">
+
+</table>
+
+<br />
+
 </footer>
   </body>
 

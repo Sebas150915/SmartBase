@@ -257,8 +257,12 @@ $num_reg_tipo=$resultado_tipo->rowCount();
      
     <?php include 'views/modules/modals/buscar_contribuyente_nv.php' ?>
 
+
+
+
  
       <script src="assets/js/funciones_retencion.js?v=8"></script>
+       <script src="assets/js/cambiar_tc.js?v=3"></script>
     <script src="<?=media()?>/js/tablas.js"></script>
 
       <script src="assets/js/sunat_reniec.js"></script>

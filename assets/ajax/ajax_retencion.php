@@ -39,7 +39,7 @@ $pago=(isset($cab['pago'])) ? $cab['pago'] : "CONTADO";
 $regular=(isset($cab['regular'])) ? $cab['regular'] : "00";
 $moneda=(isset($cab['moneda'])) ? $cab['moneda'] : "PEN";
 
-$tcambio=(isset($cab['tcambio'])) ? $cab['moneda'] : 1;
+$tcambio=(isset($cab['tcambio'])) ? $cab['tcambio'] : 1;
 
 
 $idlocal=$_SESSION['almacen'];

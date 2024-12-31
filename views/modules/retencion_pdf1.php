@@ -61,7 +61,7 @@ $resultado_detalle = $query_detalle->fetchAll(PDO::FETCH_OBJ);
       }
 
 
- if($row_cabecera['codmoneda']=='PEN')
+ if($row_cabecera['moneda']=='PEN')
   {
     $mon = 'SOLES';
 }
@@ -287,7 +287,8 @@ height: 2cm;
                 <tbody>';
                  $z=1;
                   foreach ($resultado_detalle as $detalle) {
-                  
+                  if($row_cabecera['moneda']=='PEN'){$tc='';}else{$tc=$detalle->tc;}
+                  if($row_cabecera['moneda']=='PEN'){$retenido = $detalle->PERCEPCION;}else{$retenido = $detalle->PERCEPCION*$detalle->tc;}
                   $output.='
                      <tr>
                        <th class="text-left">'.$detalle->TIPODOC.'</th>
@@ -301,9 +302,9 @@ height: 2cm;
                        <th class="text-center border3">'.$row_cabecera["FECHA_DOCUMENTO"].'</th>
                        <th class="text-center border3">'.$z.'</th>
                        <th class="text-center border3">'.number_format($detalle->TOTAL,2).'</th>
-                       <th class="text-center border3"></th>
+                       <th class="text-center border3">'.$tc .'</th>
                       
-                       <th class="text-center border3">'.$detalle->PERCEPCION.'</th>
+                       <th class="text-center border3">'. $retenido.'</th>
                      
                        <th  class="text-right border3">'.number_format($detalle->SUBTOTAL,2).'</th>
                      </tr>';

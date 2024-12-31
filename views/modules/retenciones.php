@@ -122,7 +122,11 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                                 <a target="_blank" href="<?=base_url()?>/retencion_pdf1/<?=$ventas['id']?>" class="btn btn-danger"><i class="fe fe-printer"></i></a>
                                 <a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/xml/<?=$row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.str_pad($ventas['correlativo'],8,"0",STR_PAD_LEFT).'.ZIP'?>" class="btn btn-success"><i class="far fa-file-excel"></i></a>
                                 <?php if($ventas['estado']==1){$x = ''; } else{$x='not-active';}?>
-                              <a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/cdr/<?= 'R-'. $row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.str_pad($ventas['correlativo'],8,"0",STR_PAD_LEFT).'.ZIP'?>" class="btn btn-primary  <?=$x?>"  ><i class="far fa-file-code"></i></a>                        
+                              <a href="<?=base_url()?>/sunat/<?=$row_empresa['ruc']?>/cdr/<?= 'R-'. $row_empresa['ruc'].'-'.$ventas['tipocomp'].'-'.$ventas['serie'].'-'.str_pad($ventas['correlativo'],8,"0",STR_PAD_LEFT).'.ZIP'?>" class="btn btn-primary  <?=$x?>"  ><i class="far fa-file-code"></i>
+                              </a>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#bajaModal">
+                                Revertir
+                                </button>                        
                                                           
                             
                                 </div>
@@ -180,6 +184,9 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
 
 
    <?php include 'views/modules/modals/envia_venta.php' ?>
+
+
+
     <?php include 'views/template/pie.php' ?>
     <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://unpkg.com/imask"></script>
@@ -191,6 +198,25 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
 <script src="assets/js/funciones_ventas.js"></script>
 <script src="assets/js/funciones_compras.js"></script>
 <script src="assets/js/compras.js"></script>
+
+   <!-- Modal BAJA DE RETEMCIONES-->
+<div class="modal fade" id="bajaModal" tabindex="-1" aria-labelledby="bajaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="bajaModalLabel">Confirmar Baja</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea dar de baja este comprobante de retención?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmarBaja">Dar de Baja</button>
+            </div>
+        </div>
+    </div>
+</div>
 
   </body>
 </html>

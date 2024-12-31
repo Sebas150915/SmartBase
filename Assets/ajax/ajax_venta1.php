@@ -6,6 +6,140 @@ require_once("../../libraries/conexion.php");
 require_once("../../sunat/api/xml.php");
 require_once("../../sunat/api/ApiFacturacion.php");
 session_start();
+
+
+if($_POST['action'] == 'revertir_retencion')
+{
+        $fecha    = $_POST['f_ini'];
+        $id       = $_POST['id'];
+        $f        = explode('-',$fecha);
+        //print_r($f);exit;
+
+        $f        = $f[0].''.$f[1].''.$f[2];  /*fecha formateada YYYYMMDD*/
+        $fecha_envio = $f[0].'-'.$f[1].'-'.$f[2];
+        $empresa  = $_POST['empresa'];
+
+        //buscar ruc emisor
+
+        $query_empresa = "SELECT * FROM vw_tbl_empresas WHERE id_empresa = $empresa";
+        $resultado_empresa = $connect->prepare($query_empresa);
+        $resultado_empresa->execute();
+        $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
+
+        $emisor =   array(
+        'tipodoc'       => '6',
+        'ruc'           => $row_empresa['ruc'], 
+        'razon_social'  => $row_empresa['razon_social'], 
+        'nombre_comercial'  => $row_empresa['nombre_comercial'], 
+        'direccion'     => $row_empresa['direccion'], 
+        'pais'          => 'PE', 
+        'departamento'  => $row_empresa['departamento'],//LAMBAYEQUE 
+        'provincia'     => $row_empresa['provincia'],//CHICLAYO 
+        'distrito'      => $row_empresa['distrito'], //CHICLAYO
+        'ubigeo'        => $row_empresa['ubigeo'], //CHICLAYO
+        'usuario_sol'   => $row_empresa['usuario_sol'], //USUARIO SECUNDARIO EMISOR ELECTRONICO
+        'clave_sol'     => $row_empresa['clave_sol'], //CLAVE DE USUARIO SECUNDARIO EMISOR ELECTRONICO
+        'certificado'  => $row_empresa['certificado'],
+        'clave_certificado'  =>$row_empresa['clave_certificado'],
+        'cta_detraccion'  => $row_empresa['cta_detracciones'],
+        'servidor_sunat'     =>$row_empresa['servidor_cpe'],
+        'servidor_nombre'     =>$row_empresa['nombre_server'],
+        'servidor_link'     =>$row_empresa['link']
+        );
+
+
+        $serie=date('Ymd');
+        $query_articuloss = "SELECT * FROM tbl_series WHERE id_td='RR' AND serie =$serie and id_empresa = $empresa";
+        $resultado_articuloss = $connect->prepare($query_articuloss);
+        $resultado_articuloss->execute();
+        $num_reg_articuloss=$resultado_articuloss->rowCount();
+
+
+
+        if($num_reg_articuloss == 0)
+        {
+        $correlativo_rc =1;
+
+        $insert_ctemov =$connect->prepare("INSERT INTO tbl_series(id_td,id_doc,serie,correlativo,id_empresa,estado,flat) VALUES(?,?,?,?,?,?,?)");
+        $resultado_detalle = $insert_ctemov->execute(['RR',67, $serie ,$correlativo_rc,$empresa,'1','1']);
+
+
+        }
+        else
+        {
+        $query_empresaa = "SELECT * FROM tbl_series WHERE id_td='RR' AND serie =$serie and id_empresa = $empresa";
+        $resultado_empresaa = $connect->prepare($query_empresaa);
+        $resultado_empresaa->execute();
+        $row_empresaa = $resultado_empresaa->fetch(PDO::FETCH_ASSOC);
+
+        $correlativo_rc = $row_empresaa['correlativo'] + 1;
+
+        $query_ctr = $connect->prepare("UPDATE tbl_series SET correlativo = ? WHERE id_td=? AND serie =? and id_empresa = ?");
+        $resultado_ctr = $query_ctr->execute([$correlativo_rc,'RR',$serie,$empresa]);
+
+        }
+
+
+
+        $cabecera = array(
+        "tipodocr"       =>"RR",
+        "serier"         =>date('Ymd'),
+        "correlativor"   =>$correlativo_rc,
+        "fecha_emision" =>$fecha,            
+        "fecha_envio"   =>date('Y-m-d') 
+        );
+
+
+
+
+        //nombre de resumen = RUC - RC -YYYYMMDD-NUM.XML
+        $nombrexml = $row_empresa['ruc'].'-'.$cabecera['tipodocr'].'-'.$cabecera['serier'].'-'.$cabecera['correlativor'];
+        $rutaxml = "../../sunat/".$row_empresa['ruc']."/xml/";
+
+       /*DETALLE DEL CPE RETENCION*/
+       /*FIN*/
+
+       require_once("../../sunat/api/xml.php");
+
+                $xml = new GeneradorXML();
+
+                $serier = $cabecera['serier'];
+                $numeror =$cabecera['correlativor'];
+
+                $xml->CrearXMLResumenDocumentos($emisor, $cabecera, $items, $rutaxml.$nombrexml);
+
+                require_once("../../sunat/api/ApiFacturacion.php");
+
+                $objApi = new ApiFacturacion();
+
+                $ticket = $objApi->EnviarResumenComprobantes($emisor,$nombrexml,$connect,$serier,$numeror);
+                
+                //var_dump($ticket);
+
+                $respuesta = $objApi->ConsultarTicket($emisor, $nombrexml, $ticket);
+                
+                //var_dump($respuesta);
+                //$me = json_decode($respuesta, true);
+                $cod_sunat = $respuesta['cod_sunat'];
+                $msj_sunat = $respuesta['msj_sunat'];
+                $hash_cdr = $respuesta['hash_cdr'];
+                
+                /*$me = json_decode($resultado, true);
+                $jsondata['mensaje'] = $me['msj_sunat'];*/
+                
+                 if($cod_sunat == '0')
+                {
+                    $query_ctr = $connect->prepare("UPDATE tbl_venta_cab SET feestado = ? WHERE id=? ");
+                $resultado_ctr = $query_ctr->execute(['8',$id_baja]);
+                }
+                
+                echo 'ticket : '.$ticket.'- codigo : '.$cod_sunat.' mensaje : '.$msj_sunat;
+                exit;
+        
+
+}
+
+
 if($_POST['action'] == 'nota_venta_editar')
 {
 
@@ -331,649 +465,649 @@ if($_POST['action'] == 'nueva_venta')
 
         //registro detalle venta
 
-for($i = 0; $i< count($_POST['idarticulo']); $i++)
- {
-        $item                  = $_POST['itemarticulo'][$i];
-        $idarticulo            = $_POST['idarticulo'][$i];
-         $nomarticulo=(isset($_POST['nomarticulo'][$i])) ? $_POST['nomarticulo'][$i] : "";
-        $cantidad              = $_POST['cantidad'][$i];
+        for($i = 0; $i< count($_POST['idarticulo']); $i++)
+         {
+                $item                  = $_POST['itemarticulo'][$i];
+                $idarticulo            = $_POST['idarticulo'][$i];
+                 $nomarticulo=(isset($_POST['nomarticulo'][$i])) ? $_POST['nomarticulo'][$i] : "";
+                $cantidad              = $_POST['cantidad'][$i];
 
-        $afectacion            = $_POST['afectacion'][$i];
-        $tipo_precio           = '01';
-        $unidad                = 'NIU';
-        $costo                 = $_POST['precio_compra'][$i];
-        $factor                = $_POST['factor'][$i];
-        $cantidadu             = $_POST['cantidadu'][$i];
-        $mxmn                  = 'min';
-        $cantidad_total        = $factor*$cantidad + $cantidadu;
+                $afectacion            = $_POST['afectacion'][$i];
+                $tipo_precio           = '01';
+                $unidad                = 'NIU';
+                $costo                 = $_POST['precio_compra'][$i];
+                $factor                = $_POST['factor'][$i];
+                $cantidadu             = $_POST['cantidadu'][$i];
+                $mxmn                  = 'min';
+                $cantidad_total        = $factor*$cantidad + $cantidadu;
 
-        if($afectacion == '10')
-        {
-        $igv_unitario          = 18;
-        }
-        else
-        {
-        $igv_unitario          = 0;
-        }
+                if($afectacion == '10')
+                {
+                $igv_unitario          = 18;
+                }
+                else
+                {
+                $igv_unitario          = 0;
+                }
 
 
 
-        $precio_venta          = $_POST['precio_venta'][$i]/$factor;
-        $precio_unitario       = ($precio_venta - ($igv_unitario/$cantidad_total));
-        $precio_venta_total    = $precio_venta*$cantidad_total;
+                $precio_venta          = $_POST['precio_venta'][$i]/$factor;
+                $precio_unitario       = ($precio_venta - ($igv_unitario/$cantidad_total));
+                $precio_venta_total    = $precio_venta*$cantidad_total;
 
 
 
-        if($afectacion == 10)
-        {
-        $precio_venta_unitario = $precio_venta/1.18;
-        $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor)/1.18;
+                if($afectacion == 10)
+                {
+                $precio_venta_unitario = $precio_venta/1.18;
+                $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor)/1.18;
 
-        $importe_total = ($cantidad_total*$precio_venta);
+                $importe_total = ($cantidad_total*$precio_venta);
 
-        $valor_total = $cantidad_total*$precio_venta_unitario;
+                $valor_total = $cantidad_total*$precio_venta_unitario;
 
 
 
 
-        }
-        else
-        {
-        $precio_venta_unitario = $precio_venta;
-        $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor);
+                }
+                else
+                {
+                $precio_venta_unitario = $precio_venta;
+                $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor);
 
-        $importe_total = ($cantidad_total*$precio_venta);
+                $importe_total = ($cantidad_total*$precio_venta);
 
-        $valor_total = $cantidad_total*$precio_venta_unitario;
+                $valor_total = $cantidad_total*$precio_venta_unitario;
 
-        }
+                }
 
-        $igv_total                = $importe_total - $valor_total;
-        $precio_compra            = $_POST['precio_compra'][$i];
+                $igv_total                = $importe_total - $valor_total;
+                $precio_compra            = $_POST['precio_compra'][$i];
 
-                /**************buscando el detalle del producto***************/
-                $query_pro = "SELECT * FROM tbl_productos WHERE id = $idarticulo ";
-                $resultado_pro=$connect->prepare($query_pro);
-                $resultado_pro->execute(); 
-                $row_pro = $resultado_pro->fetch(PDO::FETCH_ASSOC);
-                $num_reg_pro=$resultado_pro->rowCount();
-                $des = $row_pro['descripcion'];
-                /**************fin del detalle******************************/
+                        /**************buscando el detalle del producto***************/
+                        $query_pro = "SELECT * FROM tbl_productos WHERE id = $idarticulo ";
+                        $resultado_pro=$connect->prepare($query_pro);
+                        $resultado_pro->execute(); 
+                        $row_pro = $resultado_pro->fetch(PDO::FETCH_ASSOC);
+                        $num_reg_pro=$resultado_pro->rowCount();
+                        $des = $row_pro['descripcion'];
+                        /**************fin del detalle******************************/
 
 
-                $insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn,nombre_producto,descripcion_producto) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn,$nomarticulo,$des]);
+                        $insert_query_detalle =$connect->prepare("INSERT INTO tbl_venta_det(idventa,item,idproducto,cantidad,valor_unitario,precio_unitario,igv,porcentaje_igv,valor_total,importe_total,costo,cantidad_factor,factor,cantidad_unitario,mxmn,nombre_producto,descripcion_producto) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        $resultado_detalle = $insert_query_detalle->execute([$lastInsertId,$item,$idarticulo,$cantidad_total,$precio_venta_unitario,$precio_venta,$igv_total,18,$valor_total,$importe_total,$costo,$cantidad,$factor,$cantidadu,$mxmn,$nomarticulo,$des]);
 
-        // actualizar serie + correlativo
-        $update_query_serie = $connect->prepare("UPDATE tbl_series SET correlativo = correlativo + ? WHERE serie = ? and correlativo = ? and id_empresa = ?");
-        $resultado_serie   = $update_query_serie->execute([1,$_POST['serie'],$_POST['numero'],$_POST['empresa']]);
+                // actualizar serie + correlativo
+                $update_query_serie = $connect->prepare("UPDATE tbl_series SET correlativo = correlativo + ? WHERE serie = ? and correlativo = ? and id_empresa = ?");
+                $resultado_serie   = $update_query_serie->execute([1,$_POST['serie'],$_POST['numero'],$_POST['empresa']]);
 
 
 
 
 
-        if($tdoc=='01' || $tdoc=='03')
-        {
-        //ACTUALIZA STOCK
-        //buscar insumos de tabla recetas
+                if($tdoc=='01' || $tdoc=='03')
+                {
+                //ACTUALIZA STOCK
+                //buscar insumos de tabla recetas
 
-        $query_articulos = "SELECT * FROM tbl_recetas WHERE id_producto = '$idarticulo'";
-        $resultado_articulos = $connect->prepare($query_articulos);
-        $resultado_articulos->execute();
-        $num_reg_articulos=$resultado_articulos->rowCount();
+                $query_articulos = "SELECT * FROM tbl_recetas WHERE id_producto = '$idarticulo'";
+                $resultado_articulos = $connect->prepare($query_articulos);
+                $resultado_articulos->execute();
+                $num_reg_articulos=$resultado_articulos->rowCount();
 
 
 
-        if($num_reg_articulos>=1)
-        {
-        foreach($resultado_articulos as $receta_insumo)
-        {
-        $idarticulo = $receta_insumo['id_insumo'];
+                if($num_reg_articulos>=1)
+                {
+                foreach($resultado_articulos as $receta_insumo)
+                {
+                $idarticulo = $receta_insumo['id_insumo'];
 
-        $query_insumo = $connect->prepare("UPDATE tbl_productos SET stock = stock - ?  WHERE id = ?");
-        $resultado_insumo = $query_insumo->execute([$cantidad_total*$receta_insumo['cantidad'],$idarticulo]);                                                       
+                $query_insumo = $connect->prepare("UPDATE tbl_productos SET stock = stock - ?  WHERE id = ?");
+                $resultado_insumo = $query_insumo->execute([$cantidad_total*$receta_insumo['cantidad'],$idarticulo]);                                                       
 
 
-        }
+                }
 
-        }
-        else
-        {
-        $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock - ? WHERE id=?");
-        $resultado_stock = $query_stock->execute([$cantidad_total,$idarticulo]);
+                }
+                else
+                {
+                $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock - ? WHERE id=?");
+                $resultado_stock = $query_stock->execute([$cantidad_total,$idarticulo]);
 
-        }
+                }
 
 
 
-        }
-        else if($tdoc=='07')
-        {
-        //ACTUALIZA STOCK
+                }
+                else if($tdoc=='07')
+                {
+                //ACTUALIZA STOCK
 
-        $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock + ? WHERE id=?");
-        $resultado_stock = $query_stock->execute([$cantidad,$idarticulo]);
-        }
+                $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock + ? WHERE id=?");
+                $resultado_stock = $query_stock->execute([$cantidad,$idarticulo]);
+                }
 
 
-        }
+                }
 
-        //insert deuda por cobrar
+                //insert deuda por cobrar
 
-        $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
-        $resultado_detalle = $insert_ctemov->execute(['1',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['total'],$_POST['fecha_emision'],$_POST['empresa']]);
+                $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
+                $resultado_detalle = $insert_ctemov->execute(['1',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['total'],$_POST['fecha_emision'],$_POST['empresa']]);
 
 
 
-        if($_POST['condicion'] == '1')
-        {
-        if($visa>0)
-        {
-        $fdp = '2';
-        $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,numero_operacion,importe_pago,tipo_operacion,fecha_pago) VALUES (?,?,?,?,?,?)");
-        $resultado_fdp = $query_fdp->execute([$lastInsertId,$cvisa,$_POST['numero_operacion'],$visa,$_POST['tipo_operacion'],$_POST['fecha_pago']]);
+                if($_POST['condicion'] == '1')
+                {
+                if($visa>0)
+                {
+                $fdp = '2';
+                $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,numero_operacion,importe_pago,tipo_operacion,fecha_pago) VALUES (?,?,?,?,?,?)");
+                $resultado_fdp = $query_fdp->execute([$lastInsertId,$cvisa,$_POST['numero_operacion'],$visa,$_POST['tipo_operacion'],$_POST['fecha_pago']]);
 
-        $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
-        $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$visa,$_POST['fecha_emision'],$_POST['empresa']]);
+                $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
+                $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$visa,$_POST['fecha_emision'],$_POST['empresa']]);
 
 
-        }
-        if($efectivo>0)
-        {
-        $fdp = '1';
-        $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,importe_pago,fecha_pago) VALUES (?,?,?,?)");
-        $resultado_fdp = $query_fdp->execute([$lastInsertId,$fdp,$efectivo,$_POST['fecha_emision']]);
+                }
+                if($efectivo>0)
+                {
+                $fdp = '1';
+                $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,importe_pago,fecha_pago) VALUES (?,?,?,?)");
+                $resultado_fdp = $query_fdp->execute([$lastInsertId,$fdp,$efectivo,$_POST['fecha_emision']]);
 
-        $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
-        $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$efectivo+$_POST['vuelto'],$_POST['fecha_emision'],$_POST['empresa']]);
-        }
+                $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
+                $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$efectivo+$_POST['vuelto'],$_POST['fecha_emision'],$_POST['empresa']]);
+                }
 
-        }
-        else
-        {
-        $cuotas = $_POST['cuotas'];
-        $importe_pago  = $_POST['importe_pago_cuota'];
-        $num_cuota = 1;
+                }
+                else
+                {
+                $cuotas = $_POST['cuotas'];
+                $importe_pago  = $_POST['importe_pago_cuota'];
+                $num_cuota = 1;
 
-        for($i = 0; $i< count($_POST['datepago']); $i++)
-        {
-        $fecha_cuota            = $_POST['datepago'][$i];
-        $importe_cuota          = $_POST['montocuota'][$i];
+                for($i = 0; $i< count($_POST['datepago']); $i++)
+                {
+                $fecha_cuota            = $_POST['datepago'][$i];
+                $importe_cuota          = $_POST['montocuota'][$i];
 
-        $query_fdp = $connect->prepare("INSERT INTO tbl_venta_cuota(id_venta,num_cuota,importe_cuota,fecha_cuota,moneda) VALUES (?,?,?,?,?)");
-        $resultado_fdp = $query_fdp->execute([$lastInsertId,$num_cuota,$importe_cuota,$fecha_cuota,$moneda]);
+                $query_fdp = $connect->prepare("INSERT INTO tbl_venta_cuota(id_venta,num_cuota,importe_cuota,fecha_cuota,moneda) VALUES (?,?,?,?,?)");
+                $resultado_fdp = $query_fdp->execute([$lastInsertId,$num_cuota,$importe_cuota,$fecha_cuota,$moneda]);
 
 
-        $num_cuota = $num_cuota+1;
+                $num_cuota = $num_cuota+1;
 
 
 
-        }
+                }
 
-        }       
+                }       
 
-        //envio cpe a SUNAT///////////////////////////////////////////////
-        require_once("../../sunat/api/xml.php");
+                //envio cpe a SUNAT///////////////////////////////////////////////
+                require_once("../../sunat/api/xml.php");
 
 
 
-        $xml = new GeneradorXML();
-        //buscar ruc emisor
+                $xml = new GeneradorXML();
+                //buscar ruc emisor
 
-        $query_empresa = "SELECT * FROM vw_tbl_empresas WHERE id_empresa = $_POST[empresa]";
-        $resultado_empresa = $connect->prepare($query_empresa);
-        $resultado_empresa->execute();
-        $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
+                $query_empresa = "SELECT * FROM vw_tbl_empresas WHERE id_empresa = $_POST[empresa]";
+                $resultado_empresa = $connect->prepare($query_empresa);
+                $resultado_empresa->execute();
+                $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
 
 
-        //RUC DEL EMISOR - TIPO DE COMPROBANTE - SERIE DEL DOCUMENTO - CORRELATIVO
-        //01-> FACTURA, 03-> BOLETA, 07-> NOTA DE CREDITO, 08-> NOTA DE DEBITO, 09->GUIA DE REMISION
-        $nombrexml = $row_empresa['ruc'].'-'.$tdoc.'-'.$_POST['serie'].'-'.$_POST['numero'];
+                //RUC DEL EMISOR - TIPO DE COMPROBANTE - SERIE DEL DOCUMENTO - CORRELATIVO
+                //01-> FACTURA, 03-> BOLETA, 07-> NOTA DE CREDITO, 08-> NOTA DE DEBITO, 09->GUIA DE REMISION
+                $nombrexml = $row_empresa['ruc'].'-'.$tdoc.'-'.$_POST['serie'].'-'.$_POST['numero'];
 
-        $ruta = "../../sunat/".$row_empresa['ruc']."/xml/".$nombrexml;
-        $emisor =   array(
-        'tipodoc'       => '6',
-        'ruc'           => $row_empresa['ruc'], 
-        'razon_social'  => $row_empresa['razon_social'], 
-        'nombre_comercial'  => $row_empresa['nombre_comercial'], 
-        'direccion'     => $row_empresa['direccion'], 
-        'pais'          => 'PE', 
-        'departamento'  => $row_empresa['departamento'],//LAMBAYEQUE 
-        'provincia'     => $row_empresa['provincia'],//CHICLAYO 
-        'distrito'      => $row_empresa['distrito'], //CHICLAYO
-        'ubigeo'        => $row_empresa['ubigeo'], //CHICLAYO
-        'usuario_sol'   => $row_empresa['usuario_sol'], //USUARIO SECUNDARIO EMISOR ELECTRONICO
-        'clave_sol'     => $row_empresa['clave_sol'], //CLAVE DE USUARIO SECUNDARIO EMISOR ELECTRONICO
-        'certificado'  => $row_empresa['certificado'],
-        'clave_certificado'  =>$row_empresa['clave_certificado'],
-        'cta_detraccion'  => $row_empresa['cta_detracciones'],
-        'servidor_sunat'     =>$row_empresa['servidor_cpe'],
-        'servidor_nombre'     =>$row_empresa['nombre_server'],
-        'servidor_link'     =>$row_empresa['link']
-        );
-        //buscar datos cliente
-        
-        $rucpersona = $_POST['ruc_persona'];
-        $query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc = '$rucpersona'  AND empresa = $_POST[empresa]";
-        $resultado_cliente = $connect->prepare($query_cliente);
-        $resultado_cliente->execute();
-        $row_cliente = $resultado_cliente->fetch(PDO::FETCH_ASSOC);
-        //********************CREAR CLAVE CLIENTE SI EN CASO NO TIENE*********************//
-
-
-        $clave = $row_cliente['clave'];
-        $ruc_persona1 = $row_cliente['num_doc'];
-
-
-        if(empty($clave))
-        {
-        $query_ctr = $connect->prepare("UPDATE tbl_contribuyente SET clave = md5(?) WHERE num_doc = ?");
-        $resultado_ctr = $query_ctr->execute([$ruc_persona1,$ruc_persona1]);
-
-        }
-
-        $cliente = array(
-        'tipodoc'       => $row_cliente['tipo_doc'],//6->ruc, 1-> dni 
-        'ruc'           => $row_cliente['num_doc'], 
-        'razon_social'  => $row_cliente['nombre_persona'], 
-        'direccion'     => $row_cliente['direccion_persona'],
-        'pais'          => 'PE',
-        'correo'        => $row_cliente['correo']
-        );  
-        $numero = $_POST['total'];
-        include 'numeros.php';
-        $texto=convertir($numero);
-        $texto = ltrim($texto);
-
-        $lista_cpe_cab = "SELECT * FROM vw_tbl_venta_cab WHERE id=$lastInsertId";
-        $resultado_cpe_cab = $connect->prepare($lista_cpe_cab);
-        $resultado_cpe_cab->execute();
-        $row_cpe_cab = $resultado_cpe_cab->fetch(PDO::FETCH_ASSOC);
-
-
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-
-        $totanticipo='0.00';
-        $subanticipo='0.00';
-        $pagadoanticipo='0.00';
-
-        $lista_cpe_cab = "SELECT * FROM tbl_venta_cab WHERE id=$lastInsertId";
-        $resultadoventa = $connect->prepare($lista_cpe_cab);
-        $resultadoventa->execute();
-        $rowventa= $resultadoventa->fetch(PDO::FETCH_ASSOC);
-
-        if($rowventa['estadopagoanticipo']=='2'){
-
-        $lista_cpe_cab = " SELECT *FROM tbl_coti_cab WHERE id='$rowventa[relacionado_id]' ";
-        $sqlm = $connect->prepare($lista_cpe_cab);
-        $sqlm->execute();
-        $most= $sqlm->fetch(PDO::FETCH_ASSOC);
-
-        $totanticipo=$most['total'];
-        $subanticipo=$most['total']-$most['igv'];
-        $subanticipo=round($subanticipo, 2);
-
-        $totalventaanticipo=$rowventa['total']-$rowventa['igv'];
-        $totalventaorden=$most['total']-$most['igv'];
-
-        $pagadoanticipo=$totalventaorden-$totalventaanticipo;
-        $pagadoanticipo=round($pagadoanticipo, 2);
-
-        $totalventa=round($totanticipo-$pagadoanticipo, 2);
-
-        $n=0;   
-        $sqla=" SELECT *FROM tbl_venta_cab WHERE relacionado_id='$rowventa[relacionado_id]' AND estadopagoanticipo='1' ";
-        $stmt = $connect->prepare($sqla);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $dataArr = is_array($result) ? $result : array($result);
-        foreach ( $dataArr ?? [] as $reg ) {
-        $n=$n+1;
-        if($reg->op_gravadas>0){
-        $subtotaldetalle=round($reg->op_gravadas, 2);
-        }else{
-        $subtotaldetalle=round($reg->total, 2);
-        }
-
-        $tipocomprobante='03';
-        if($reg->tipocomp=='01'){ $tipocomprobante='02'; }
-
-        $jsonant["orden"]=$n;   
-        $jsonant["monto"]=$subtotaldetalle;
-        $jsonant["tipodoc"]=$tipocomprobante;
-        $jsonant["serienumero"]=$reg->serie.'-'.$reg->correlativo;
-        $cuerpoant[]=$jsonant;  
-        }
-
-        }else{
-        $cuerpoant='';
-        $totalventa=round(($row_cpe_cab['total']-$row_cpe_cab['redondeo']), 2);
-
-        }
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-
-
-
-
-        $comprobante =  array(
-        'tipodoc'            => $row_cpe_cab['tipocomp'], //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
-        'serie'              => $row_cpe_cab['serie'],
-        'correlativo'        => $row_cpe_cab['correlativo'],
-        'fecha_emision'      => $row_cpe_cab['fecha_emision'],
-        'fecha_vencimiento'  => $row_cpe_cab['fecha_vencimiento'],
-        'condicion_venta'    => $row_cpe_cab['condicion_venta'],
-        'cuotas_credito'     => $row_cpe_cab['cuotas_credito'],
-        'moneda'             => $row_cpe_cab['codmoneda'], //PEN->SOLES; USD->DOLARES
-        'total_opgravadas'   => $row_cpe_cab['op_gravadas'], //OP. GRAVADAS
-        'total_opexoneradas' => $row_cpe_cab['op_exoneradas'],
-        'total_opinafectas'  => $row_cpe_cab['op_inafectas'],
-        'igv'                => $row_cpe_cab['igv'],
-        'total'              => $totalventa,
-        'cod_det'            => $row_cpe_cab['cod_det'],
-        'por_det'            => $row_cpe_cab['por_det'],
-        'imp_det'            => $row_cpe_cab['imp_det'],
-        'tc'                 => $row_cpe_cab['tc'],
-        'total_texto'        => $texto,
-        'redondeo'           => $row_cpe_cab['redondeo'],
-        'exportacion'           => $row_cpe_cab['exportacion'],
-        /*CUERPO DE ANTICIPOS*/
-        "totalanticipo"=> $totanticipo,
-        "subanticipo"=> $subanticipo,
-        "pagadoanticipo"=> $pagadoanticipo,
-        "NROACTICIPO"=>$cuerpoant,
-
+                $ruta = "../../sunat/".$row_empresa['ruc']."/xml/".$nombrexml;
+                $emisor =   array(
+                'tipodoc'       => '6',
+                'ruc'           => $row_empresa['ruc'], 
+                'razon_social'  => $row_empresa['razon_social'], 
+                'nombre_comercial'  => $row_empresa['nombre_comercial'], 
+                'direccion'     => $row_empresa['direccion'], 
+                'pais'          => 'PE', 
+                'departamento'  => $row_empresa['departamento'],//LAMBAYEQUE 
+                'provincia'     => $row_empresa['provincia'],//CHICLAYO 
+                'distrito'      => $row_empresa['distrito'], //CHICLAYO
+                'ubigeo'        => $row_empresa['ubigeo'], //CHICLAYO
+                'usuario_sol'   => $row_empresa['usuario_sol'], //USUARIO SECUNDARIO EMISOR ELECTRONICO
+                'clave_sol'     => $row_empresa['clave_sol'], //CLAVE DE USUARIO SECUNDARIO EMISOR ELECTRONICO
+                'certificado'  => $row_empresa['certificado'],
+                'clave_certificado'  =>$row_empresa['clave_certificado'],
+                'cta_detraccion'  => $row_empresa['cta_detracciones'],
+                'servidor_sunat'     =>$row_empresa['servidor_cpe'],
+                'servidor_nombre'     =>$row_empresa['nombre_server'],
+                'servidor_link'     =>$row_empresa['link']
                 );
+                //buscar datos cliente
+                
+                $rucpersona = $_POST['ruc_persona'];
+                $query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc = '$rucpersona'  AND empresa = $_POST[empresa]";
+                $resultado_cliente = $connect->prepare($query_cliente);
+                $resultado_cliente->execute();
+                $row_cliente = $resultado_cliente->fetch(PDO::FETCH_ASSOC);
+                //********************CREAR CLAVE CLIENTE SI EN CASO NO TIENE*********************//
 
-        //var_dump($comprobante);
 
-                //********************DATOS DE COMPROBANTE - DETALLE*********************//
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        if($rowventa['estadopagoanticipo']=='2'){
+                $clave = $row_cliente['clave'];
+                $ruc_persona1 = $row_cliente['num_doc'];
 
-            $lista_cpe_cab = "SELECT * FROM tbl_venta_cab WHERE id=$lastInsertId";
-            $resultadoventa = $connect->prepare($lista_cpe_cab);
-            $resultadoventa->execute();
-            $rowventa= $resultadoventa->fetch(PDO::FETCH_ASSOC);
 
-        //echo 'el id ultimo es '.$lastInsertId;
-        $lista_cpe_det = $connect->prepare("SELECT * FROM vw_tbl_coti_det WHERE idventa='$rowventa[relacionado_id]' ");
+                if(empty($clave))
+                {
+                $query_ctr = $connect->prepare("UPDATE tbl_contribuyente SET clave = md5(?) WHERE num_doc = ?");
+                $resultado_ctr = $query_ctr->execute([$ruc_persona1,$ruc_persona1]);
 
-        $lista_cpe_det->execute();
-        $row_cpe_det=$lista_cpe_det->fetchAll(PDO::FETCH_ASSOC);
-        //print_r($row_cpe_det);
+                }
 
-                $detalle = $row_cpe_det;
-        //var_dump($detalle);
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        /*REVISAMOS A VER SI HAY ANTICIPOS*/
-        }else{
+                $cliente = array(
+                'tipodoc'       => $row_cliente['tipo_doc'],//6->ruc, 1-> dni 
+                'ruc'           => $row_cliente['num_doc'], 
+                'razon_social'  => $row_cliente['nombre_persona'], 
+                'direccion'     => $row_cliente['direccion_persona'],
+                'pais'          => 'PE',
+                'correo'        => $row_cliente['correo']
+                );  
+                $numero = $_POST['total'];
+                include 'numeros.php';
+                $texto=convertir($numero);
+                $texto = ltrim($texto);
+
+                $lista_cpe_cab = "SELECT * FROM vw_tbl_venta_cab WHERE id=$lastInsertId";
+                $resultado_cpe_cab = $connect->prepare($lista_cpe_cab);
+                $resultado_cpe_cab->execute();
+                $row_cpe_cab = $resultado_cpe_cab->fetch(PDO::FETCH_ASSOC);
+
+
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+
+                $totanticipo='0.00';
+                $subanticipo='0.00';
+                $pagadoanticipo='0.00';
+
+                $lista_cpe_cab = "SELECT * FROM tbl_venta_cab WHERE id=$lastInsertId";
+                $resultadoventa = $connect->prepare($lista_cpe_cab);
+                $resultadoventa->execute();
+                $rowventa= $resultadoventa->fetch(PDO::FETCH_ASSOC);
+
+                if($rowventa['estadopagoanticipo']=='2'){
+
+                $lista_cpe_cab = " SELECT *FROM tbl_coti_cab WHERE id='$rowventa[relacionado_id]' ";
+                $sqlm = $connect->prepare($lista_cpe_cab);
+                $sqlm->execute();
+                $most= $sqlm->fetch(PDO::FETCH_ASSOC);
+
+                $totanticipo=$most['total'];
+                $subanticipo=$most['total']-$most['igv'];
+                $subanticipo=round($subanticipo, 2);
+
+                $totalventaanticipo=$rowventa['total']-$rowventa['igv'];
+                $totalventaorden=$most['total']-$most['igv'];
+
+                $pagadoanticipo=$totalventaorden-$totalventaanticipo;
+                $pagadoanticipo=round($pagadoanticipo, 2);
+
+                $totalventa=round($totanticipo-$pagadoanticipo, 2);
+
+                $n=0;   
+                $sqla=" SELECT *FROM tbl_venta_cab WHERE relacionado_id='$rowventa[relacionado_id]' AND estadopagoanticipo='1' ";
+                $stmt = $connect->prepare($sqla);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+                $dataArr = is_array($result) ? $result : array($result);
+                foreach ( $dataArr ?? [] as $reg ) {
+                $n=$n+1;
+                if($reg->op_gravadas>0){
+                $subtotaldetalle=round($reg->op_gravadas, 2);
+                }else{
+                $subtotaldetalle=round($reg->total, 2);
+                }
+
+                $tipocomprobante='03';
+                if($reg->tipocomp=='01'){ $tipocomprobante='02'; }
+
+                $jsonant["orden"]=$n;   
+                $jsonant["monto"]=$subtotaldetalle;
+                $jsonant["tipodoc"]=$tipocomprobante;
+                $jsonant["serienumero"]=$reg->serie.'-'.$reg->correlativo;
+                $cuerpoant[]=$jsonant;  
+                }
+
+                }else{
+                $cuerpoant='';
+                $totalventa=round(($row_cpe_cab['total']-$row_cpe_cab['redondeo']), 2);
+
+                }
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+
+
+
+
+                $comprobante =  array(
+                'tipodoc'            => $row_cpe_cab['tipocomp'], //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
+                'serie'              => $row_cpe_cab['serie'],
+                'correlativo'        => $row_cpe_cab['correlativo'],
+                'fecha_emision'      => $row_cpe_cab['fecha_emision'],
+                'fecha_vencimiento'  => $row_cpe_cab['fecha_vencimiento'],
+                'condicion_venta'    => $row_cpe_cab['condicion_venta'],
+                'cuotas_credito'     => $row_cpe_cab['cuotas_credito'],
+                'moneda'             => $row_cpe_cab['codmoneda'], //PEN->SOLES; USD->DOLARES
+                'total_opgravadas'   => $row_cpe_cab['op_gravadas'], //OP. GRAVADAS
+                'total_opexoneradas' => $row_cpe_cab['op_exoneradas'],
+                'total_opinafectas'  => $row_cpe_cab['op_inafectas'],
+                'igv'                => $row_cpe_cab['igv'],
+                'total'              => $totalventa,
+                'cod_det'            => $row_cpe_cab['cod_det'],
+                'por_det'            => $row_cpe_cab['por_det'],
+                'imp_det'            => $row_cpe_cab['imp_det'],
+                'tc'                 => $row_cpe_cab['tc'],
+                'total_texto'        => $texto,
+                'redondeo'           => $row_cpe_cab['redondeo'],
+                'exportacion'           => $row_cpe_cab['exportacion'],
+                /*CUERPO DE ANTICIPOS*/
+                "totalanticipo"=> $totanticipo,
+                "subanticipo"=> $subanticipo,
+                "pagadoanticipo"=> $pagadoanticipo,
+                "NROACTICIPO"=>$cuerpoant,
+
+                        );
+
+                //var_dump($comprobante);
+
+                        //********************DATOS DE COMPROBANTE - DETALLE*********************//
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                if($rowventa['estadopagoanticipo']=='2'){
+
+                    $lista_cpe_cab = "SELECT * FROM tbl_venta_cab WHERE id=$lastInsertId";
+                    $resultadoventa = $connect->prepare($lista_cpe_cab);
+                    $resultadoventa->execute();
+                    $rowventa= $resultadoventa->fetch(PDO::FETCH_ASSOC);
+
                 //echo 'el id ultimo es '.$lastInsertId;
-                $lista_cpe_det = $connect->prepare("SELECT * FROM vw_tbl_venta_det WHERE idventa=$lastInsertId");
+                $lista_cpe_det = $connect->prepare("SELECT * FROM vw_tbl_coti_det WHERE idventa='$rowventa[relacionado_id]' ");
 
                 $lista_cpe_det->execute();
                 $row_cpe_det=$lista_cpe_det->fetchAll(PDO::FETCH_ASSOC);
                 //print_r($row_cpe_det);
 
-                $detalle = $row_cpe_det;
-            }
-   //var_dump($detalle);
-          //*******************DATOS DE LAS CUOTAS *********************//
-        
-   $cuota='';
+                        $detalle = $row_cpe_det;
+                //var_dump($detalle);
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                /*REVISAMOS A VER SI HAY ANTICIPOS*/
+                }else{
+                        //echo 'el id ultimo es '.$lastInsertId;
+                        $lista_cpe_det = $connect->prepare("SELECT * FROM vw_tbl_venta_det WHERE idventa=$lastInsertId");
 
-        if($_POST['condicion'] == '2')
-        {
-            $lista_cpe_cuo = $connect->prepare("SELECT * FROM tbl_venta_cuota WHERE id_venta=$lastInsertId");
-            
-            $lista_cpe_cuo->execute();
-            $row_cpe_cuo=$lista_cpe_cuo->fetchAll(PDO::FETCH_ASSOC);
-            //print_r($row_cpe_det);
-            
-            $cuota = $row_cpe_cuo;
-        }
+                        $lista_cpe_det->execute();
+                        $row_cpe_det=$lista_cpe_det->fetchAll(PDO::FETCH_ASSOC);
+                        //print_r($row_cpe_det);
 
-        $xml->CrearXMLFactura($ruta, $emisor, $cliente, $comprobante, $detalle, $cuota);
+                        $detalle = $row_cpe_det;
+                    }
+           //var_dump($detalle);
+                  //*******************DATOS DE LAS CUOTAS *********************//
+                
+           $cuota='';
 
-
-        require_once("../../sunat/api/ApiFacturacion.php");
-
-        $objApi = new ApiFacturacion();
-
-        if($row_empresa['envio_automatico']=='SI')
-        {
-            if($tdoc=='03' && $row_empresa['envio_resumen']=='SI')
-            {
-            require_once("phpqrcode/qrlib.php");
-            //CREAR QR INICIO
-            //codigo qr
-            /*RUC | TIPO DE DOCUMENTO | SERIE | NUMERO | MTO TOTAL IGV | 
-            MTO TOTAL DEL COMPROBANTE | FECHA DE EMISION |TIPO DE DOCUMENTO ADQUIRENTE |
-            NUMERO DE DOCUMENTO ADQUIRENTE |*/
-    
-            $ruc = $row_empresa['ruc'];
-            $tipo_documento = $tdoc; //factura
-            $serie = $_POST['serie'];
-            $correlativo = $_POST['numero'];
-            $igv = $_POST['igv'];
-            $total = $_POST['total'];
-            $fecha = $_POST['fecha_emision'];
-            $tipodoccliente = $row_cliente['tipo_doc'];
-            $nro_doc_cliente = $row_cliente['num_doc'];
-    
-            $nombrexml = $ruc."-".$tipo_documento."-".$serie."-".$correlativo;
-            $text_qr = $ruc." | ".$tipo_documento." | ".$serie." | ".$correlativo." | ".$igv." | ".$total." | ".$fecha." | ".$tipodoccliente." | ".$nro_doc_cliente;
-            $ruta_qr = '../../sunat/'.$row_empresa['ruc'].'/qr/'.$nombrexml.'.png';
-    
-            QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
-            
-            /*procesando documentos para resumen*/
-            
-            $cod_sunat = '01999999';
-            $msj_sunat = 'Documento preparado para envio Resumen';
-            $hash_cdr  = '';
-            $idfactura = $lastInsertId;
-            
-            if($cod_sunat == '01999999')
-            {
-               $estadofe = '0'; 
-            }
-            
-            $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
-                $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
-            
-            $miArray= array
-            ("id_emp"      => $row_empresa['ruc'],
-             "cod_sunat"   => $cod_sunat,
-             "msj_sunat"   => $msj_sunat,
-             "hash_cdr"    => $hash_cdr,
-             "lastInsertId"=>$idfactura
-             
-                );
-            echo json_encode($miArray);
-            
-            //echo json_encode($lastInsertId);
-            exit;
-    
-            }
-    
-            else if($tdoc=='01' || $tdoc=='03')
-            {
-    
-            $respuesta = $objApi->EnviarComprobanteElectronico($emisor,$nombrexml,$connect,$lastInsertId);
-    
-            require_once("phpqrcode/qrlib.php");
-            //CREAR QR INICIO
-            //codigo qr
-            /*RUC | TIPO DE DOCUMENTO | SERIE | NUMERO | MTO TOTAL IGV | 
-            MTO TOTAL DEL COMPROBANTE | FECHA DE EMISION |TIPO DE DOCUMENTO ADQUIRENTE |
-            NUMERO DE DOCUMENTO ADQUIRENTE |*/
-    
-            $ruc = $row_empresa['ruc'];
-            $tipo_documento = $tdoc; //factura
-            $serie = $_POST['serie'];
-            $correlativo = $_POST['numero'];
-            $igv = $_POST['igv'];
-            $total = $_POST['total'];
-            $fecha = $_POST['fecha_emision'];
-            $tipodoccliente = $row_cliente['tipo_doc'];
-            $nro_doc_cliente = $row_cliente['num_doc'];
-    
-            $nombrexml = $ruc."-".$tipo_documento."-".$serie."-".$correlativo;
-            $text_qr = $ruc." | ".$tipo_documento." | ".$serie." | ".$correlativo." | ".$igv." | ".$total." | ".$fecha." | ".$tipodoccliente." | ".$nro_doc_cliente;
-            $ruta_qr = '../../sunat/'.$row_empresa['ruc'].'/qr/'.$nombrexml.'.png';
-    
-            QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
-            
-            $cod_sunat = $respuesta['cod_sunat'];
-            $msj_sunat = $respuesta['msj_sunat'];
-            $hash_cdr  = $respuesta['hash_cdr'];
-            $idfactura = $lastInsertId;
-            $respuestahash = $respuesta['respuestahash'];
-            
-         
-            
-            
-          /*  if(strlen($cod_sunat)>4)
-            {
-                $codsunat = explode("-",$cod_sunat);
-                $cod_sunat = $codsunat[0];//extraemos la respuesta de error
-                if(intval($codsunat)>=0 && is_string(intval($codsunat))=='false')
+                if($_POST['condicion'] == '2')
                 {
-                    $cod_sunat = $cod_sunat;
-                    $msj_sunat = trim($codsunat[1]);
+                    $lista_cpe_cuo = $connect->prepare("SELECT * FROM tbl_venta_cuota WHERE id_venta=$lastInsertId");
+                    
+                    $lista_cpe_cuo->execute();
+                    $row_cpe_cuo=$lista_cpe_cuo->fetchAll(PDO::FETCH_ASSOC);
+                    //print_r($row_cpe_det);
+                    
+                    $cuota = $row_cpe_cuo;
                 }
+
+                $xml->CrearXMLFactura($ruta, $emisor, $cliente, $comprobante, $detalle, $cuota);
+
+
+                require_once("../../sunat/api/ApiFacturacion.php");
+
+                $objApi = new ApiFacturacion();
+
+                if($row_empresa['envio_automatico']=='SI')
+                {
+                    if($tdoc=='03' && $row_empresa['envio_resumen']=='SI')
+                    {
+                    require_once("phpqrcode/qrlib.php");
+                    //CREAR QR INICIO
+                    //codigo qr
+                    /*RUC | TIPO DE DOCUMENTO | SERIE | NUMERO | MTO TOTAL IGV | 
+                    MTO TOTAL DEL COMPROBANTE | FECHA DE EMISION |TIPO DE DOCUMENTO ADQUIRENTE |
+                    NUMERO DE DOCUMENTO ADQUIRENTE |*/
+            
+                    $ruc = $row_empresa['ruc'];
+                    $tipo_documento = $tdoc; //factura
+                    $serie = $_POST['serie'];
+                    $correlativo = $_POST['numero'];
+                    $igv = $_POST['igv'];
+                    $total = $_POST['total'];
+                    $fecha = $_POST['fecha_emision'];
+                    $tipodoccliente = $row_cliente['tipo_doc'];
+                    $nro_doc_cliente = $row_cliente['num_doc'];
+            
+                    $nombrexml = $ruc."-".$tipo_documento."-".$serie."-".$correlativo;
+                    $text_qr = $ruc." | ".$tipo_documento." | ".$serie." | ".$correlativo." | ".$igv." | ".$total." | ".$fecha." | ".$tipodoccliente." | ".$nro_doc_cliente;
+                    $ruta_qr = '../../sunat/'.$row_empresa['ruc'].'/qr/'.$nombrexml.'.png';
+            
+                    QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
+                    
+                    /*procesando documentos para resumen*/
+                    
+                    $cod_sunat = '01999999';
+                    $msj_sunat = 'Documento preparado para envio Resumen';
+                    $hash_cdr  = '';
+                    $idfactura = $lastInsertId;
+                    
+                    if($cod_sunat == '01999999')
+                    {
+                       $estadofe = '0'; 
+                    }
+                    
+                    $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
+                        $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
+                    
+                    $miArray= array
+                    ("id_emp"      => $row_empresa['ruc'],
+                     "cod_sunat"   => $cod_sunat,
+                     "msj_sunat"   => $msj_sunat,
+                     "hash_cdr"    => $hash_cdr,
+                     "lastInsertId"=>$idfactura
+                     
+                        );
+                    echo json_encode($miArray);
+                    
+                    //echo json_encode($lastInsertId);
+                    exit;
+            
+                    }
+            
+                    else if($tdoc=='01' || $tdoc=='03')
+                    {
+            
+                    $respuesta = $objApi->EnviarComprobanteElectronico($emisor,$nombrexml,$connect,$lastInsertId);
+            
+                    require_once("phpqrcode/qrlib.php");
+                    //CREAR QR INICIO
+                    //codigo qr
+                    /*RUC | TIPO DE DOCUMENTO | SERIE | NUMERO | MTO TOTAL IGV | 
+                    MTO TOTAL DEL COMPROBANTE | FECHA DE EMISION |TIPO DE DOCUMENTO ADQUIRENTE |
+                    NUMERO DE DOCUMENTO ADQUIRENTE |*/
+            
+                    $ruc = $row_empresa['ruc'];
+                    $tipo_documento = $tdoc; //factura
+                    $serie = $_POST['serie'];
+                    $correlativo = $_POST['numero'];
+                    $igv = $_POST['igv'];
+                    $total = $_POST['total'];
+                    $fecha = $_POST['fecha_emision'];
+                    $tipodoccliente = $row_cliente['tipo_doc'];
+                    $nro_doc_cliente = $row_cliente['num_doc'];
+            
+                    $nombrexml = $ruc."-".$tipo_documento."-".$serie."-".$correlativo;
+                    $text_qr = $ruc." | ".$tipo_documento." | ".$serie." | ".$correlativo." | ".$igv." | ".$total." | ".$fecha." | ".$tipodoccliente." | ".$nro_doc_cliente;
+                    $ruta_qr = '../../sunat/'.$row_empresa['ruc'].'/qr/'.$nombrexml.'.png';
+            
+                    QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
+                    
+                    $cod_sunat = $respuesta['cod_sunat'];
+                    $msj_sunat = $respuesta['msj_sunat'];
+                    $hash_cdr  = $respuesta['hash_cdr'];
+                    $idfactura = $lastInsertId;
+                    $respuestahash = $respuesta['respuestahash'];
+                    
+                 
+                    
+                    
+                  /*  if(strlen($cod_sunat)>4)
+                    {
+                        $codsunat = explode("-",$cod_sunat);
+                        $cod_sunat = $codsunat[0];//extraemos la respuesta de error
+                        if(intval($codsunat)>=0 && is_string(intval($codsunat))=='false')
+                        {
+                            $cod_sunat = $cod_sunat;
+                            $msj_sunat = trim($codsunat[1]);
+                        }
+                        else
+                        {
+                            $cod_sunat = $codsunat[0];
+                            $msj_sunat = trim($cod_sunat);
+                            
+                        }
+                        
+                        //$respuesta_sunat = $codsunat[0];//extraemos la respuesta de error
+                        
+                        $query_sunat = "SELECT * FROM tbl_error WHERE nombre='$msj_sunat'";//buscamos la respuesta en la tabla de errores
+                        $resultado_sunat = $connect->prepare($query_sunat);
+                        $resultado_sunat->execute();
+                        $row_sunat = $resultado_sunat->fetch(PDO::FETCH_ASSOC);
+                        
+                        $cod_sunat = $row_sunat['cod']; //asignamos el codigo de error
+                        
+                        
+                    }*/
+                    /*$csunat = explode("-",$cod_sunat);
+                    $cod_sunat = trim($csunat[0]);
+                    $msj_sunat = trim($csunat[1]);*/
+                    
+                    if($cod_sunat == '0')
+                    {
+                       $estadofe = '1'; 
+                    }
+                    else if(intval($cod_sunat)==1033)
+                    {
+                        $estadofe = '1';
+                    }
+                    else if(intval($cod_sunat)==1032)
+                    {
+                        $estadofe = '3';
+                    }
+                    else if(intval($cod_sunat)>=2000 || intval($cod_sunat)<=3999)
+                    {
+                        $estadofe = '3';
+                    }
+                     else if(intval($cod_sunat)>4000 )
+                    {
+                        $estadofe = '2';
+                    }
+                    else
+                    {
+                        $estadofe = '0';
+                    }
+                    
+                    if(isset($hash_cdr))
+                    {
+                        $hash_cdr = $respuestahash;
+                    }
+
+                //var_dump($cod_sunat);
+
+                $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
+                $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
+                    
+                    $miArray= array
+                    ("id_emp"      => $row_empresa['ruc'],
+                     "cod_sunat" => $cod_sunat,
+                     "msj_sunat" => $msj_sunat,
+                     "hash_cdr"  => $hash_cdr,
+                     "lastInsertId"=>$idfactura
+                     
+                        );
+                    echo json_encode($miArray);
+                    
+                   // echo $cod_sunat.'-'.$msj_sunat;
+                    exit;
+                    }
+                }
+                // si envio automatico es NO
                 else
                 {
-                    $cod_sunat = $codsunat[0];
-                    $msj_sunat = trim($cod_sunat);
+                    require_once("phpqrcode/qrlib.php");
+                    //CREAR QR INICIO
+                    //codigo qr
+                    /*RUC | TIPO DE DOCUMENTO | SERIE | NUMERO | MTO TOTAL IGV | 
+                    MTO TOTAL DEL COMPROBANTE | FECHA DE EMISION |TIPO DE DOCUMENTO ADQUIRENTE |
+                    NUMERO DE DOCUMENTO ADQUIRENTE |*/
+            
+                    $ruc = $row_empresa['ruc'];
+                    $tipo_documento = $tdoc; //factura
+                    $serie = $_POST['serie'];
+                    $correlativo = $_POST['numero'];
+                    $igv = $_POST['igv'];
+                    $total = $_POST['total'];
+                    $fecha = $_POST['fecha_emision'];
+                    $tipodoccliente = $row_cliente['tipo_doc'];
+                    $nro_doc_cliente = $row_cliente['num_doc'];
+            
+                    $nombrexml = $ruc."-".$tipo_documento."-".$serie."-".$correlativo;
+                    $text_qr = $ruc." | ".$tipo_documento." | ".$serie." | ".$correlativo." | ".$igv." | ".$total." | ".$fecha." | ".$tipodoccliente." | ".$nro_doc_cliente;
+                    $ruta_qr = '../../sunat/'.$row_empresa['ruc'].'/qr/'.$nombrexml.'.png';
+            
+                    QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
                     
+                    /*Documento Fcatura aviso para enviar mas tarde*/
+                    
+                    $cod_sunat = '01999999';
+                    $msj_sunat = 'Pendiente de envio';
+                    $hash_cdr  = '';
+                    $idfactura = $lastInsertId;
+                    
+                    if($cod_sunat == '01999999')
+                    {
+                       $estadofe = '0'; 
+                    }
+                    
+                    $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
+                        $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
+                    
+                    $miArray= array
+                    ("id_emp"      => $row_empresa['ruc'],
+                     "cod_sunat" => $cod_sunat,
+                     "msj_sunat" => $msj_sunat,
+                     "hash_cdr"  => $hash_cdr,
+                     "lastInsertId"=>$idfactura
+                     
+                        );
+                    echo json_encode($miArray);
+                    
+                    //echo json_encode($lastInsertId);
+                    exit;
                 }
-                
-                //$respuesta_sunat = $codsunat[0];//extraemos la respuesta de error
-                
-                $query_sunat = "SELECT * FROM tbl_error WHERE nombre='$msj_sunat'";//buscamos la respuesta en la tabla de errores
-                $resultado_sunat = $connect->prepare($query_sunat);
-                $resultado_sunat->execute();
-                $row_sunat = $resultado_sunat->fetch(PDO::FETCH_ASSOC);
-                
-                $cod_sunat = $row_sunat['cod']; //asignamos el codigo de error
-                
-                
-            }*/
-            /*$csunat = explode("-",$cod_sunat);
-            $cod_sunat = trim($csunat[0]);
-            $msj_sunat = trim($csunat[1]);*/
-            
-            if($cod_sunat == '0')
-            {
-               $estadofe = '1'; 
-            }
-            else if(intval($cod_sunat)==1033)
-            {
-                $estadofe = '1';
-            }
-            else if(intval($cod_sunat)==1032)
-            {
-                $estadofe = '3';
-            }
-            else if(intval($cod_sunat)>=2000 || intval($cod_sunat)<=3999)
-            {
-                $estadofe = '3';
-            }
-             else if(intval($cod_sunat)>4000 )
-            {
-                $estadofe = '2';
-            }
-            else
-            {
-                $estadofe = '0';
-            }
-            
-            if(isset($hash_cdr))
-            {
-                $hash_cdr = $respuestahash;
-            }
-
-        //var_dump($cod_sunat);
-
-        $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
-        $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
-            
-            $miArray= array
-            ("id_emp"      => $row_empresa['ruc'],
-             "cod_sunat" => $cod_sunat,
-             "msj_sunat" => $msj_sunat,
-             "hash_cdr"  => $hash_cdr,
-             "lastInsertId"=>$idfactura
-             
-                );
-            echo json_encode($miArray);
-            
-           // echo $cod_sunat.'-'.$msj_sunat;
-            exit;
-            }
-        }
-        // si envio automatico es NO
-        else
-        {
-            require_once("phpqrcode/qrlib.php");
-            //CREAR QR INICIO
-            //codigo qr
-            /*RUC | TIPO DE DOCUMENTO | SERIE | NUMERO | MTO TOTAL IGV | 
-            MTO TOTAL DEL COMPROBANTE | FECHA DE EMISION |TIPO DE DOCUMENTO ADQUIRENTE |
-            NUMERO DE DOCUMENTO ADQUIRENTE |*/
-    
-            $ruc = $row_empresa['ruc'];
-            $tipo_documento = $tdoc; //factura
-            $serie = $_POST['serie'];
-            $correlativo = $_POST['numero'];
-            $igv = $_POST['igv'];
-            $total = $_POST['total'];
-            $fecha = $_POST['fecha_emision'];
-            $tipodoccliente = $row_cliente['tipo_doc'];
-            $nro_doc_cliente = $row_cliente['num_doc'];
-    
-            $nombrexml = $ruc."-".$tipo_documento."-".$serie."-".$correlativo;
-            $text_qr = $ruc." | ".$tipo_documento." | ".$serie." | ".$correlativo." | ".$igv." | ".$total." | ".$fecha." | ".$tipodoccliente." | ".$nro_doc_cliente;
-            $ruta_qr = '../../sunat/'.$row_empresa['ruc'].'/qr/'.$nombrexml.'.png';
-    
-            QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
-            
-            /*Documento Fcatura aviso para enviar mas tarde*/
-            
-            $cod_sunat = '01999999';
-            $msj_sunat = 'Pendiente de envio';
-            $hash_cdr  = '';
-            $idfactura = $lastInsertId;
-            
-            if($cod_sunat == '01999999')
-            {
-               $estadofe = '0'; 
-            }
-            
-            $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
-                $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$idfactura]);
-            
-            $miArray= array
-            ("id_emp"      => $row_empresa['ruc'],
-             "cod_sunat" => $cod_sunat,
-             "msj_sunat" => $msj_sunat,
-             "hash_cdr"  => $hash_cdr,
-             "lastInsertId"=>$idfactura
-             
-                );
-            echo json_encode($miArray);
-            
-            //echo json_encode($lastInsertId);
-            exit;
-        }
 }
 
 // guardar nueva venta nota de credito

@@ -84,7 +84,7 @@ if($_POST['action'] == 'listarGreDet')
         
         $sql="SELECT 
 idempresa, idguia,  sum(peso) AS peso, idproducto, codigoproducto, nro_orden,
-unidadmedida,nombreproducto AS nomproducto, sum(cantidad) AS cantidad, sum(precio) AS precio, sum(subtotal) AS subtotal, sum(igv) AS igv, sum(total) AS total, precio_compra, factor, afectacion , sum(preciounitario_igv) AS preciounitario_igv
+unidadmedida,nombreproducto AS nomproducto, sum(cantidad) AS cantidad, (precio) AS precio, sum(subtotal) AS subtotal, sum(igv) AS igv, sum(total) AS total, precio_compra, factor, afectacion , sum(preciounitario_igv) AS preciounitario_igv
 
 FROM vw_tbl_gre_det WHERE idguia = $idventa
 GROUP BY 
@@ -432,7 +432,7 @@ if($_POST['action'] == 'nueva_gre')
 
                         QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
                         
-                        //$mensaje['hash_cpe']      = $respuesta['hash_cpe'];
+                        $mensaje['hash_cpe']      = $respuesta['hash_cpe'];
                         $mensaje['ndoc']          = $respuesta['ndoc'];
                         $mensaje['ruc']           = $respuesta['ruc'];
                         $mensaje['numerror1']     = $respuesta['numerror1'];
@@ -454,7 +454,7 @@ if($_POST['action'] == 'nueva_gre')
                         $mensaje['hash_cdr']      = $respuesta['hash_cdr'];
                        /* $mensaje['arcCdr']        = $respuesta['arcCdr'];*/
                        $mensaje['msj_link']       = $respuesta['msj_link'];
-                       $mensaje['respuesta3']    = $respuesta['respuesta3'];
+                       //$mensaje['respuesta3']    = $respuesta['respuesta3'];
                         
                         //$mensaje['response2'] = $respuesta['response2'];
                         $query=$connect->prepare("UPDATE tbl_gre_cab SET hash=?,ticket=? ,mensaje=?,numerror=?,link=? WHERE id=?;");
@@ -596,7 +596,7 @@ if($_POST['action'] == 'sunat_gre')
         $objApi = new ApiFacturacion();
 
 
-                $respuesta =  $objApi->EnviarComprobanteElectronicoGRE($emisor,$nombrexml,$connect,$lastInsertId);
+                $respuesta =  $objApi->EnviarComprobanteElectronicoGRE($emisor,$nombrexml,$connect,$id_venta);
 
                         require_once("phpqrcode/qrlib.php");
                         //CREAR QR INICIO
@@ -621,7 +621,7 @@ if($_POST['action'] == 'sunat_gre')
 
                         QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
                         
-                       // $mensaje['hash_cpe']      = $respuesta['hash_cpe'];
+                        $mensaje['hash_cpe']      = $respuesta['hash_cpe'];
                         //$mensaje['ndoc']          = $respuesta['ndoc'];
                         $mensaje['ruc']           = $respuesta['ruc'];
                         $mensaje['numerror1']     = $respuesta['numerror1'];
@@ -629,14 +629,14 @@ if($_POST['action'] == 'sunat_gre')
                         $mensaje['hash_cdr1']     = $respuesta['hash_cdr1'];
                         //$mensaje['token1']        = $respuesta['token1'];
                         
-                        //$mensaje['ticket2']       = $respuesta['ticket2'];
+                        $mensaje['ticket2']       = $respuesta['ticket2'];
                         $mensaje['fecRecepcion2'] = $respuesta['fecRecepcion2'];
                         $mensaje['cod_sunat2']    = $respuesta['cod_sunat2'];
                         $mensaje['numerror2']     = $respuesta['numerror2'];
                         $mensaje['msj_sunat2']    = $respuesta['msj_sunat2'];
                         $mensaje['hash_cdr2']     = $respuesta['hash_cdr2'];
                         
-                        $mensaje['idgre']         = $lastInsertId;
+                        $mensaje['idgre']         = $id_venta;
                         $mensaje['cod_sunat']     = $respuesta['cod_sunat'];
                         $mensaje['numerror']      = $respuesta['numerror'];
                         $mensaje['msj_sunat']     = $respuesta['msj_sunat'];
@@ -644,7 +644,7 @@ if($_POST['action'] == 'sunat_gre')
                         $mensaje['arcCdr']        = $respuesta['arcCdr'];
                         $mensaje['msj_link']       = $respuesta['msj_link'];
                        //$mensaje['respuesta3']    = $respuesta['respuesta3'];
-                        $mensaje['rutaws'] = $respuesta['rutaws'];
+                        //$mensaje['rutaws'] = $respuesta['rutaws'];
                         //$mensaje['response2'] = $respuesta['response2'];
                         $query=$connect->prepare("UPDATE tbl_gre_cab SET hash=?,ticket=? ,mensaje=?,numerror=?,link=? WHERE id=?;");
                         $resultado=$query->execute([$mensaje['hash_cpe'],$mensaje['ticket2'],$mensaje['msj_sunat'],$mensaje['numerror'],$mensaje['msj_link'],$mensaje['idgre']]);

@@ -177,7 +177,7 @@ alert(selected);*/
                             <label for="">Fecha Vencimiento</label>
                             <input type="date" class="form-control" value="<?=$hoy?>" name="fecha_vencimiento" id="fecha_vencimiento">
                           </div>
-                          <div class="col-sm-6">
+                          <div class="col-sm-4">
                             <label for="">Motivo :</label>
                              <select class="form-control select2" style="width: 100%;" name="motivo" id="motivo" required onchange="ShowSelected();">
                       
@@ -190,6 +190,14 @@ alert(selected);*/
                             </select>
                             <input type="hidden" id="motivo1" name="motivo1">
                           </div>
+
+                          <div class="col-sm-2">
+                        <label for="">Exportacion</label>
+                        <select class="form-control select2" name="exportacion" id="exportacion" >
+                          <option value="NO">NO</option>
+                          <option value="SI">SI</option>
+                        </select>
+                      </div>
                           
                           
                           

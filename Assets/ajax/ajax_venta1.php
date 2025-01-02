@@ -990,8 +990,8 @@ if($_POST['action'] == 'nueva_nota_de_credito')
         $porciones = explode("-", $_POST['motivo1']);
         $cmotivo= $porciones[0]; // porción1
         $cdescripcion = $porciones[1]; // porción2
-        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,tipocomp_ref,serie_ref,correlativo_ref,cod_motivo,des_motivo,vendedor,idcliente,codmoneda,local) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$_POST['empresa'],$tip,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'],$_POST['cod_doc_ref'],$_POST['serie_ref'],$_POST['num_ref'],$cmotivo,$cdescripcion,$_POST['vendedor'],$_POST['id_ruc'],$_POST['moneda'],$localemp]);
+        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,tipocomp_ref,serie_ref,correlativo_ref,cod_motivo,des_motivo,vendedor,idcliente,codmoneda,local,exportacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $resultado=$query->execute([$_POST['empresa'],$tip,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'],$_POST['cod_doc_ref'],$_POST['serie_ref'],$_POST['num_ref'],$cmotivo,$cdescripcion,$_POST['vendedor'],$_POST['id_ruc'],$_POST['moneda'],$localemp,$_POST['exportacion']]);
 
 
 
@@ -1125,8 +1125,8 @@ if($_POST['action'] == 'nueva_nota_de_credito')
         'servidor_link'     =>$row_empresa['link']
         );
         //buscar datos cliente
-
-        $query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc = $_POST[ruc_persona]";
+        $numruc = $_POST['ruc_persona'];
+        $query_cliente = "SELECT * FROM tbl_contribuyente WHERE num_doc ='$numruc' ";
         $resultado_cliente = $connect->prepare($query_cliente);
         $resultado_cliente->execute();
         $row_cliente = $resultado_cliente->fetch(PDO::FETCH_ASSOC);
@@ -1142,6 +1142,15 @@ if($_POST['action'] == 'nueva_nota_de_credito')
         $numero = $_POST['total'];
         include 'numeros.php';
         $texto=convertir($numero);
+
+        $serie_ex=$_POST['serie_ref'];
+        $cor_ex = $_POST['num_ref'];
+        $query_ex = "SELECT * FROM vw_tbl_venta_cab WHERE serie ='$serie_ex' AND correlativo='$cor_ex' AND idempresa=$_POST[empresa] ";
+                
+        $resultado_ex = $connect->prepare($query_ex);
+        $resultado_ex->execute();
+        $row_ex = $resultado_ex->fetch(PDO::FETCH_ASSOC);
+        $expo = $row_ex['exportacion'];
 
         $comprobante =  array(
         'tipodoc'       => $tip, //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
@@ -1160,7 +1169,8 @@ if($_POST['action'] == 'nueva_nota_de_credito')
         'serie_ref'     => $_POST['serie_ref'],
         'correlativo_ref'=> $_POST['num_ref'],
         'codmotivo'     => $cmotivo,
-        'descripcion'   => $cdescripcion
+        'descripcion'   => $cdescripcion,
+        'exportacion' => $expo
         );
 
 
@@ -1395,6 +1405,7 @@ if($_POST['action'] == 'sunat')
                         'tc'                 => $row_cpe_cab['tc'],
                         'total_texto'        => $texto,
                         'redondeo'           => $row_cab['redondeo'],
+                        'exportacion'  => $row_cab['exportacion'],
                          /*CUERPO DE ANTICIPOS*/
                         "totalanticipo"=> '',
                         "subanticipo"=> '',
@@ -1423,7 +1434,8 @@ if($_POST['action'] == 'sunat')
                         'codmotivo'     => $row_cab['cod_motivo'],
                         'por_det'            => 0,
                         'condicion_venta'    => '1',
-                        'descripcion'   => $row_cab['des_motivo']
+                        'descripcion'   => $row_cab['des_motivo'],
+                        'exportacion'  => $row_cab['exportacion']
                         );
                 }
 
@@ -1506,7 +1518,7 @@ if($_POST['action'] == 'sunat')
             $respcurl  = $respuesta['respcurl'];
             $respuestahash = $respuesta['respuestahash'];
             $rutacert     = $respuesta['rutacert'];
-            $cod_sunat1 = $mensaje['cod_sunat1'];
+            //$cod_sunat1 = $mensaje['cod_sunat1'];
             
            /* if(strlen($cod_sunat)>4)
             {
@@ -1542,7 +1554,7 @@ if($_POST['action'] == 'sunat')
             }*/
             $csunat = explode("-",$cod_sunat);
             $cod_sunat = trim($csunat[0]);
-            $msj_sunat = trim($csunat[1]);
+            //$msj_sunat = trim($csunat[1]);
             
             if($cod_sunat == '0')
             {
@@ -1578,13 +1590,13 @@ if($_POST['action'] == 'sunat')
                 $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$id_venta]);
             $miArray= array
             ("cod_sunat" => $cod_sunat,
-             "cod_sunat1" => $cod_sunat1,
+            
              "msj_sunat" => $msj_sunat,
              "hash_cdr"  => $hash_cdr,
              "lastInsertId"=>$id_venta,
              "httpcode"  => $httpcode,
-             "codigo_error" =>  $codigo_error,
-             "msj_if"     => $msj_if
+             
+             
              
                 );
             echo json_encode($miArray);

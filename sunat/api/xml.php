@@ -905,37 +905,71 @@ foreach($detalle as $k=>$v){
                                           </cac:RegistrationAddress>
                                        </cac:PartyLegalEntity>
                                     </cac:Party>
-                                 </cac:AccountingCustomerParty>
+                                 </cac:AccountingCustomerParty>';
 
 
-                                 <cac:TaxTotal>
-                                    <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>
-                                    <cac:TaxSubtotal>
-                                       <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opgravadas'],2, '.', '').'</cbc:TaxableAmount>
-                                       <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>
-                                       <cac:TaxCategory>
-                                          <cac:TaxScheme>
-                                             <cbc:ID>1000</cbc:ID>
-                                             <cbc:Name>IGV</cbc:Name>
-                                             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                                          </cac:TaxScheme>
-                                       </cac:TaxCategory>
-                                    </cac:TaxSubtotal>';
 
-                                    if($comprobante['total_opexoneradas']>0){
-                                       $xml.='<cac:TaxSubtotal>
-                                          <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opexoneradas'],2, '.', '').'</cbc:TaxableAmount>
-                                          <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">0.00</cbc:TaxAmount>
-                                          <cac:TaxCategory>
-                                             <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">E</cbc:ID>
-                                             <cac:TaxScheme>
-                                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">9997</cbc:ID>
-                                                <cbc:Name>EXO</cbc:Name>
-                                                <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                                             </cac:TaxScheme>
-                                          </cac:TaxCategory>
-                                       </cac:TaxSubtotal>';
-                                    }
+                              $xml.='<cac:TaxTotal>
+                  <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>';
+                                 
+                                  if($comprobante['exportacion'] == 'NO'){
+                                 $xml.='
+                                             <cac:TaxSubtotal>
+                                                <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opgravadas'],2, '.', '').'</cbc:TaxableAmount>
+                                                <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>
+                                                <cac:TaxCategory>
+                                                   <cac:TaxScheme>
+                                                      <cbc:ID>1000</cbc:ID>
+                                                      <cbc:Name>IGV</cbc:Name>
+                                                      <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                                                   </cac:TaxScheme>
+                                                </cac:TaxCategory>
+                                             </cac:TaxSubtotal>';
+                                            
+                                 }
+                                       if($comprobante['total_opexoneradas']>0){
+                                                if($comprobante['exportacion'] == 'SI')
+                                                {
+                                                   $codafe = '9995';
+                                                   $nomafe = 'EXP';
+                                                   $tipafe = 'FRE';
+                                                   $letra  =  'G';
+                                                }
+                                                else
+                                                {
+                                                   $codafe = '9997';
+                                                   $nomafe = 'EXO';
+                                                   $tipafe = 'VAT';
+                                                   $letra  =  'E';
+                                                }
+                                                $xml.='<cac:TaxSubtotal>
+                                                   <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opexoneradas'],2, '.', '').'</cbc:TaxableAmount>
+                                                   <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">0.00</cbc:TaxAmount>
+                                                   <cac:TaxCategory>
+                                                      <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">'.$letra.'</cbc:ID>
+                                                      <cac:TaxScheme>
+                                                         <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">'.$codafe.'</cbc:ID>
+                                                         <cbc:Name>'.$nomafe.'</cbc:Name>
+                                                         <cbc:TaxTypeCode>'.$tipafe.'</cbc:TaxTypeCode>
+                                                      </cac:TaxScheme>
+                                                   </cac:TaxCategory>
+                                                </cac:TaxSubtotal>';
+                                             }
+                                 
+                                             if($comprobante['total_opinafectas']>0){
+                                                $xml.='<cac:TaxSubtotal>
+                                                   <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opinafectas'],2, '.', '').'</cbc:TaxableAmount>
+                                                   <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">0.00</cbc:TaxAmount>
+                                                   <cac:TaxCategory>
+                                                      <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">E</cbc:ID>
+                                                      <cac:TaxScheme>
+                                                         <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">9998</cbc:ID>
+                                                         <cbc:Name>INA</cbc:Name>
+                                                         <cbc:TaxTypeCode>FRE</cbc:TaxTypeCode>
+                                                      </cac:TaxScheme>
+                                                   </cac:TaxCategory>
+                                                </cac:TaxSubtotal>';
+                                             }
 
                                     if($comprobante['total_opinafectas']>0){
                                        $xml.='<cac:TaxSubtotal>

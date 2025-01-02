@@ -1319,6 +1319,7 @@ function agregar(id,nombre,precio,afectacion,precio_compra,factor,mxmn,calculaig
 	}
 	
 
+
 			var subtotal =cantidadu*precio+cantidad*factor*precio;
 			var valor_unitario =subtotal/(1+$igv_unitario);
 			var igv_u =valor_unitario*$igv_unitario;
@@ -1498,11 +1499,12 @@ function calcularTotales()
   var tot           = 0.00;
  	var sub           = document.getElementsByName("subtotal");
    var afec=document.getElementsByName("afectacion[]");
+
  	for(var i=0; i< sub.length; i++)
  	{
  	var inpA=afec[i];
       //var afe = document.getElementsByName("afectacion[]").value;
-
+		;
        if(inpA.value==10)
        {
        	op_gravadas +=  document.getElementsByName("subtotal")[i].value;
@@ -1516,7 +1518,6 @@ function calcularTotales()
        {
        	op_inafectas +=  document.getElementsByName("subtotal")[i].value;
        }
-       
 
        sog = (op_gravadas/1.18).toFixed(2);
        igv = (sog*0.18).toFixed(2);

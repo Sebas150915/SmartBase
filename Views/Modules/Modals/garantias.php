@@ -1,9 +1,15 @@
 <?php
 
-$query_con = "SELECT * FROM tbl_alq_contratos WHERE id_local = $empresa ";
+$query_con = "SELECT * FROM tbl_alq_local WHERE id= $idlocal ";
 $resultado_con=$connect->prepare($query_con);
-$resultado_con->execute(); 
+$resultado_con->execute();
+$row_con = $resultado_con->fetch(PDO::FETCH_ASSOC); 
 $num_reg_con=$resultado_con->rowCount();
+
+$query_emp = "SELECT * FROM tbl_contribuyente WHERE empresa = $empresa ";
+$resultado_emp=$connect->prepare($query_emp);
+$resultado_emp->execute(); 
+$num_reg_emp=$resultado_emp->rowCount();
 
 ?>
 
@@ -23,6 +29,25 @@ $num_reg_con=$resultado_con->rowCount();
 
 
       <div class="row">
+
+      <div class="col-sm-6">
+           <label for="">Cliente</label>
+           <input type="hidden" name="action" value="addSeparacion">
+           <input type="hidden" name="empresa" value="<?=$empresa?>">
+           <input type="hidden" name="local" value="<?=$idlocal?>">
+           <select id="cliente" name="cliente" class="form-control select2">
+                  <option value="">Seleccionar Cliente</option>
+                  <?php 
+                        while($row_emp = $resultado_emp->fetch(PDO::FETCH_ASSOC) )
+                   {?>
+                    <option value="<?= $row_emp['id_persona'] ?>"><?= $row_emp['nombre_persona']?></option>;
+                   <?php  } ?>
+                  
+              </select>
+          </div>
+
+
+
           <div class="col-sm-6">
               <label for="">Fecha</label>
               <input type="hidden" name="action" value="addGarantia">
@@ -32,12 +57,19 @@ $num_reg_con=$resultado_con->rowCount();
 
           <div class="col-sm-6">
               <label for="">Meses</label>
-            <input type="text" name="meses" id="meses" class="form-control" required="">
+            <input type="text" name="meses" id="meses" class="form-control" required="" value="<?=$row_con['meses_garantia'] ?>" readonly="">
+          </div>
+
+          <div class="col-sm-6">
+              <label>Moneda</label>
+              <select class="form-control" name="moneda" id="moneda" required="">
+                  <option value="PEN">SOLES</option>
+                  <option value="USD">DOLARES</option>
+              </select>
           </div>
 
 
       </div>
-      <hr>
       <div class="row mt-3">
         <div class="col-sm-6">
           <label for="">Importe Soles</label>

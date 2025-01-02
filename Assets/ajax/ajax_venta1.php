@@ -10,8 +10,9 @@ session_start();
 
 if($_POST['action'] == 'revertir_retencion')
 {
-        $fecha    = $_POST['f_ini'];
-        $id       = $_POST['id'];
+        //var_dump($_POST);exit();
+        $fecha    = $_POST['fecharet'];
+        $id       = $_POST['idretencion'];
         $f        = explode('-',$fecha);
         //print_r($f);exit;
 
@@ -42,7 +43,7 @@ if($_POST['action'] == 'revertir_retencion')
         'certificado'  => $row_empresa['certificado'],
         'clave_certificado'  =>$row_empresa['clave_certificado'],
         'cta_detraccion'  => $row_empresa['cta_detracciones'],
-        'servidor_sunat'     =>$row_empresa['servidor_cpe'],
+        'servidor_cpe'     =>$row_empresa['servidor_cpe'],
         'servidor_nombre'     =>$row_empresa['nombre_server'],
         'servidor_link'     =>$row_empresa['link']
         );
@@ -93,10 +94,25 @@ if($_POST['action'] == 'revertir_retencion')
 
 
         //nombre de resumen = RUC - RC -YYYYMMDD-NUM.XML
-        $nombrexml = $row_empresa['ruc'].'-'.$cabecera['tipodocr'].'-'.$cabecera['serier'].'-'.$cabecera['correlativor'];
+        $nombrexml = $row_empresa['ruc'].'-RR-'.$cabecera['serier'].'-'.$cabecera['correlativor'];
         $rutaxml = "../../sunat/".$row_empresa['ruc']."/xml/";
 
        /*DETALLE DEL CPE RETENCION*/
+
+        $query_retd = "SELECT * FROM vw_tbl_ret_cab WHERE id = $id";
+        $resultado_retd = $connect->prepare($query_retd);
+        $resultado_retd->execute();
+        $row_retd = $resultado_retd->fetch(PDO::FETCH_ASSOC);
+
+        $items = array(
+        "TIPODOC"      =>$row_retd['tipocomp'],
+        "SERIE"        =>$row_retd['serie'],
+        "FECHA"        =>$row_retd['serie'],
+        "MONEDA"       =>$row_retd['serie'],
+        "TOTAL"        =>$row_retd['serie'],
+        "PERCEPCION"   =>$row_retd['serie'],
+        "SUBTOTAL"     =>$row_retd['serie']
+        );
        /*FIN*/
 
        require_once("../../sunat/api/xml.php");
@@ -106,13 +122,13 @@ if($_POST['action'] == 'revertir_retencion')
                 $serier = $cabecera['serier'];
                 $numeror =$cabecera['correlativor'];
 
-                $xml->CrearXMLResumenDocumentos($emisor, $cabecera, $items, $rutaxml.$nombrexml);
+                $xml->CrearXMLBajaRetenciones($emisor, $cabecera, $items, $rutaxml.$nombrexml);
 
                 require_once("../../sunat/api/ApiFacturacion.php");
 
                 $objApi = new ApiFacturacion();
 
-                $ticket = $objApi->EnviarResumenComprobantes($emisor,$nombrexml,$connect,$serier,$numeror);
+                $ticket = $objApi->EnviarBajaRetenciones($emisor,$nombrexml,$connect,$serier,$numeror);
                 
                 //var_dump($ticket);
 
@@ -130,7 +146,7 @@ if($_POST['action'] == 'revertir_retencion')
                  if($cod_sunat == '0')
                 {
                     $query_ctr = $connect->prepare("UPDATE tbl_venta_cab SET feestado = ? WHERE id=? ");
-                $resultado_ctr = $query_ctr->execute(['8',$id_baja]);
+                $resultado_ctr = $query_ctr->execute(['5',$id_baja]);
                 }
                 
                 echo 'ticket : '.$ticket.'- codigo : '.$cod_sunat.' mensaje : '.$msj_sunat;

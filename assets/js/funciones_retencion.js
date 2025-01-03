@@ -22,54 +22,58 @@
 
 
 
-var idventadet=0;
-function agregadetalleret()
-{
-	idventadet=idventadet+1;
-	var tipodoc=$("#tipdocrel").val();
-	var serie=$("#serielrel").val();
-	var numero=$("#numerorel").val();
-	var moneda=$("#moneda").val();
-	var total=$("#totalrel").val();
-	var fecha=$("#fecharel").val();
+var idventadet = 0;
 
-	//alert(fecha);
-    if(fecha==''){ Swal.fire('NO HA INGRESADO LA FECHA'); return true; }
-	if(serie==''){ Swal.fire('NO HA INGRESADO LA SERIE'); return true; }
-	if(numero==''){ Swal.fire('NO HA INGRESADO EL CORRELATIVO'); return true; }
-	if(total=='0.00'){ Swal.fire('FALTA EL TOTAL DEL DOCUMENTO'); return true; }
+function agregadetalleret() {
+    idventadet = idventadet + 1;
+    var tipodoc = $("#tipdocrel").val();
+    var serie = $("#serielrel").val();
+    var numero = $("#numerorel").val();
+    var moneda = $("#moneda").val();
+    var total = $("#totalrel").val();
+    var fecha = $("#fecharel").val();
 
-	var t = $('#tabla').DataTable();
-	var tdoc;
-	var porcentaje='3.00';
-	var retencion;
-	var sub='0.00';
+    if (fecha == '') { Swal.fire('NO HA INGRESADO LA FECHA'); return true; }
+    if (serie == '') { Swal.fire('NO HA INGRESADO LA SERIE'); return true; }
+    if (numero == '') { Swal.fire('NO HA INGRESADO EL CORRELATIVO'); return true; }
+    if (total == '0.00') { Swal.fire('FALTA EL TOTAL DEL DOCUMENTO'); return true; }
 
-	retencion=parseFloat(total*3);
-	retencion=parseFloat(retencion/100);
-	retencion=retencion.toFixed(2);
-	sub=parseFloat(total)-parseFloat(retencion);
+    var t = $('#tabla').DataTable();
+    var porcentaje = '3.00';
+    var retencion = parseFloat(total * 3 / 100).toFixed(2);
+    var sub = (parseFloat(total) - parseFloat(retencion)).toFixed(2);
 
-	t.row.add( [
-		idventadet,
-		tipodoc,
-                serie,
-                numero,
-                fecha,
-                moneda,
-                total,
-                sub,
-                porcentaje,
-                retencion,
-        sub
-            ]).draw( false );
+    // Agregar fila con botón de eliminar
+    t.row.add([
+        idventadet,
+        tipodoc,
+        serie,
+        numero,
+        fecha,
+        moneda,
+        total,
+        sub,
+        porcentaje,
+        retencion,
+        sub,
+        `<button class="btn btn-danger btn-sm eliminar-fila" data-id="${idventadet}">Eliminar</button>`
+    ]).draw(false);
+
     totales();
+
     $("#serielrel").val('');
     $("#numerorel").val('');
     $("#totalrel").val('');
     $("#fecharel").val('');
-
 }
+
+// Evento para eliminar una fila
+$(document).on('click', '.eliminar-fila', function () {
+    var t = $('#tabla').DataTable();
+    var row = $(this).closest('tr'); // Obtener la fila actual
+    t.row(row).remove().draw(false); // Eliminar la fila
+    totales(); // Recalcular totales
+});
 
 function totales()
 {

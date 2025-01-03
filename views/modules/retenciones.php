@@ -82,7 +82,8 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                       <h2><a href="nueva_retencion" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Nueva Retencion</a>
                      </h2>
                     <hr style="border-top: 1px solid #d5dde6;">
-                    <form method="POST" class="form-inline"><label for=""> Fecha Inicial :</label><input type="date" class="form-control mr-3" name="f_ini" id="f_ini" value="<?=$fecha_ini?>"><label for=""> Fecha Final :</label><input type="date" class="form-control mr-3" name="f_fin" value="<?=$fecha_fin?>" id="f_fin"> <button class="btn btn-success" type="submit">Procesar</button></form>
+                    <form method="POST" class="form-inline">
+                      <label for=""> Fecha Inicial :</label><input type="date" class="form-control mr-3" name="f_ini" id="f_ini" value="<?=$fecha_ini?>"><label for=""> Fecha Final :</label><input type="date" class="form-control mr-3" name="f_fin" value="<?=$fecha_fin?>" id="f_fin"> <button class="btn btn-success" type="submit">Procesar</button></form>
                           </div>
                          <div class="card-body">
                           

@@ -466,9 +466,50 @@ if($_POST['action'] == 'nueva_venta')
         $query_cli = $connect->prepare("UPDATE tbl_contribuyente SET correo = ? WHERE id_persona = ?");
         $resultado_cli = $query_cli->execute([$_POST['correo_cliente'],$_POST['id_ruc']]);
 
+        /*BUSCAR CORRELATIVO PARA VOU SISCONT*/
+        $empresa = $_POST['empresa'];
+
+        $fecha_vou = $_POST['fecha_emision'];
+        $fvou      = explode('-',$fecha_vou);
+        $mes       = $fvou[1];
+        $anio      = $fvou[0];
+        $origen    = '02';
+
+        $query_vou = "SELECT * FROM tbl_vou WHERE mes='$mes' AND anio ='$anio' and origen = '$origen' and idempresa = $empresa";
+        $resultado_vou = $connect->prepare($query_vou);
+        $resultado_vou->execute();
+        $num_reg_vou=$resultado_vou->rowCount();
+
+        if($num_reg_vou == 0)
+        {
+                $correlativo_rc =1;
+
+                $insert_ctemov =$connect->prepare("INSERT INTO tbl_vou(mes,anio,origen,num,idempresa) VALUES(?,?,?,?,?)");
+                $resultado_detalle = $insert_ctemov->execute([$mes,$anio, $origen ,$correlativo_rc,$empresa]);
+
+        }
+        else
+        {
+        
+                $row_vou = $resultado_vou->fetch(PDO::FETCH_ASSOC);
+
+                $correlativo_rc = $row_vou['num'] + 1;
+
+                $query_vou = $connect->prepare("UPDATE tbl_vou SET num = ? WHERE mes=? AND anio =? and origen=? and idempresa = ?");
+                $resultado_vou = $query_vou->execute([$correlativo_rc,$mes,$anio,$origen,$empresa]);
+
+
+
+        }
+        /*FIN VOU NUMERACION */
+
+
+
+
+
         $hora = date('h:i:s');
-        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,incoterms,orden_compra,codmoneda,local,redondeo, relacionado_id, relacionado_serie, estadopagoanticipo,exportacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['incoterms'],$_POST['orden_compra'],$moneda,$localemp,$redondeo, $relacionado_id, $relacionado_serie, $estadopagoanticipo,$_POST['exportacion']]);
+        $query=$connect->prepare("INSERT INTO tbl_venta_cab(idempresa,tipocomp,serie,correlativo,fecha_emision,fecha_vencimiento,condicion_venta,op_gravadas,op_exoneradas,op_inafectas,igv,total,codcliente,vendedor,obs,cuotas_credito,hora_emision,idcliente,por_det,cod_det,imp_det,guia_remision,incoterms,orden_compra,codmoneda,local,redondeo, relacionado_id, relacionado_serie, estadopagoanticipo,exportacion,voucher) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $resultado=$query->execute([$_POST['empresa'],$tdoc,$_POST['serie'],$_POST['numero'],$_POST['fecha_emision'],$_POST['fecha_vencimiento'],$_POST['condicion'],$_POST['op_g'],$_POST['op_e'],$_POST['op_i'],$_POST['igv'],$_POST['total'],$_POST['ruc_persona'], $vendedor,$_POST['obs'],$_POST['cuotas'],$hora,$_POST['id_ruc'],$por_det,$cod_det,$importe_det,$_POST['nguiar'],$_POST['incoterms'],$_POST['orden_compra'],$moneda,$localemp,$redondeo, $relacionado_id, $relacionado_serie, $estadopagoanticipo,$_POST['exportacion'],$correlativo_rc]);
 
         $lastInsertId = $connect->lastInsertId();
 
@@ -482,7 +523,7 @@ if($_POST['action'] == 'nueva_venta')
         //registro detalle venta
 
         for($i = 0; $i< count($_POST['idarticulo']); $i++)
-         {
+        {
                 $item                  = $_POST['itemarticulo'][$i];
                 $idarticulo            = $_POST['idarticulo'][$i];
                  $nomarticulo=(isset($_POST['nomarticulo'][$i])) ? $_POST['nomarticulo'][$i] : "";
@@ -522,10 +563,6 @@ if($_POST['action'] == 'nueva_venta')
                 $importe_total = ($cantidad_total*$precio_venta);
 
                 $valor_total = $cantidad_total*$precio_venta_unitario;
-
-
-
-
                 }
                 else
                 {
@@ -564,35 +601,35 @@ if($_POST['action'] == 'nueva_venta')
 
                 if($tdoc=='01' || $tdoc=='03')
                 {
-                //ACTUALIZA STOCK
-                //buscar insumos de tabla recetas
+                        //ACTUALIZA STOCK
+                        //buscar insumos de tabla recetas
 
-                $query_articulos = "SELECT * FROM tbl_recetas WHERE id_producto = '$idarticulo'";
-                $resultado_articulos = $connect->prepare($query_articulos);
-                $resultado_articulos->execute();
-                $num_reg_articulos=$resultado_articulos->rowCount();
-
-
-
-                if($num_reg_articulos>=1)
-                {
-                foreach($resultado_articulos as $receta_insumo)
-                {
-                $idarticulo = $receta_insumo['id_insumo'];
-
-                $query_insumo = $connect->prepare("UPDATE tbl_productos SET stock = stock - ?  WHERE id = ?");
-                $resultado_insumo = $query_insumo->execute([$cantidad_total*$receta_insumo['cantidad'],$idarticulo]);                                                       
+                        $query_articulos = "SELECT * FROM tbl_recetas WHERE id_producto = '$idarticulo'";
+                        $resultado_articulos = $connect->prepare($query_articulos);
+                        $resultado_articulos->execute();
+                        $num_reg_articulos=$resultado_articulos->rowCount();
 
 
-                }
 
-                }
-                else
-                {
-                $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock - ? WHERE id=?");
-                $resultado_stock = $query_stock->execute([$cantidad_total,$idarticulo]);
+                        if($num_reg_articulos>=1)
+                        {
+                        foreach($resultado_articulos as $receta_insumo)
+                        {
+                        $idarticulo = $receta_insumo['id_insumo'];
 
-                }
+                        $query_insumo = $connect->prepare("UPDATE tbl_productos SET stock = stock - ?  WHERE id = ?");
+                        $resultado_insumo = $query_insumo->execute([$cantidad_total*$receta_insumo['cantidad'],$idarticulo]);                                                       
+
+
+                        }
+
+                        }
+                        else
+                        {
+                        $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock - ? WHERE id=?");
+                        $resultado_stock = $query_stock->execute([$cantidad_total,$idarticulo]);
+
+                        }
 
 
 
@@ -606,7 +643,44 @@ if($_POST['action'] == 'nueva_venta')
                 }
 
 
-                }
+        }
+
+        /*BUSCAR CORRELATIVO PARA VOU SISCONT*/
+        $empresa = $_POST['empresa'];
+
+        $fecha_vou = $_POST['fecha_emision'];
+        $fvou      = explode('-',$fecha_vou);
+        $mes       = $fvou[1];
+        $anio      = $fvou[0];
+        $origen    = '04';
+
+        $query_vou = "SELECT * FROM tbl_vou WHERE mes='$mes' AND anio ='$anio' and origen = '$origen' and idempresa = $empresa";
+        $resultado_vou = $connect->prepare($query_vou);
+        $resultado_vou->execute();
+        $num_reg_vou=$resultado_vou->rowCount();
+
+        if($num_reg_vou == 0)
+        {
+                $correlativo_rcpx =1;
+
+                $insert_ctemov =$connect->prepare("INSERT INTO tbl_vou(mes,anio,origen,num,idempresa) VALUES(?,?,?,?,?)");
+                $resultado_detalle = $insert_ctemov->execute([$mes,$anio, $origen ,$correlativo_rc,$empresa]);
+
+        }
+        else
+        {
+        
+                $row_vou = $resultado_vou->fetch(PDO::FETCH_ASSOC);
+
+                $correlativo_rcpx = $row_vou['num'] + 1;
+
+                $query_vou = $connect->prepare("UPDATE tbl_vou SET num = ? WHERE mes=? AND anio =? and origen=? and idempresa = ?");
+                $resultado_vou = $query_vou->execute([$correlativo_rc,$mes,$anio,$origen,$empresa]);
+
+
+
+        }
+        /*FIN VOU NUMERACION */
 
                 //insert deuda por cobrar
 
@@ -620,8 +694,8 @@ if($_POST['action'] == 'nueva_venta')
                 if($visa>0)
                 {
                 $fdp = '2';
-                $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,numero_operacion,importe_pago,tipo_operacion,fecha_pago) VALUES (?,?,?,?,?,?)");
-                $resultado_fdp = $query_fdp->execute([$lastInsertId,$cvisa,$_POST['numero_operacion'],$visa,$_POST['tipo_operacion'],$_POST['fecha_pago']]);
+                $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,numero_operacion,importe_pago,tipo_operacion,fecha_pago,voucher) VALUES (?,?,?,?,?,?,?)");
+                $resultado_fdp = $query_fdp->execute([$lastInsertId,$cvisa,'',$visa,'01',$_POST['fecha_emision'],$correlativo_rcpx]);
 
                 $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
                 $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$visa,$_POST['fecha_emision'],$_POST['empresa']]);
@@ -631,8 +705,8 @@ if($_POST['action'] == 'nueva_venta')
                 if($efectivo>0)
                 {
                 $fdp = '1';
-                $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,importe_pago,fecha_pago) VALUES (?,?,?,?)");
-                $resultado_fdp = $query_fdp->execute([$lastInsertId,$fdp,$efectivo,$_POST['fecha_emision']]);
+                $query_fdp = $connect->prepare("INSERT INTO tbl_venta_pago(id_venta,fdp,importe_pago,fecha_pago,voucher) VALUES (?,?,?,?,?)");
+                $resultado_fdp = $query_fdp->execute([$lastInsertId,$fdp,$efectivo,$_POST['fecha_emision'],$correlativo_rcpx]);
 
                 $insert_ctemov =$connect->prepare("INSERT INTO tbl_cta_cobrar(tipo,persona,tipo_doc,ser_doc,num_doc,monto,fecha,empresa) VALUES(?,?,?,?,?,?,?,?)");
                 $resultado_detalle = $insert_ctemov->execute(['2',$_POST['ruc_persona'],$tdoc,$_POST['serie'],$_POST['numero'],$efectivo+$_POST['vuelto'],$_POST['fecha_emision'],$_POST['empresa']]);
@@ -2558,7 +2632,7 @@ if($_POST['action'] == 'resumen_cpe')
 
 
                  $serie=date('Ymd');
-                 $query_articuloss = "SELECT * FROM tbl_series WHERE id_td='RC' AND serie =$serie and id_empresa = $empresa";
+                $query_articuloss = "SELECT * FROM tbl_series WHERE id_td='RC' AND serie =$serie and id_empresa = $empresa";
                 $resultado_articuloss = $connect->prepare($query_articuloss);
                 $resultado_articuloss->execute();
                 $num_reg_articuloss=$resultado_articuloss->rowCount();

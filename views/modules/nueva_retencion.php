@@ -201,31 +201,32 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                   <thead class="bg-dark" style="color:white" >
                     <tr>
                       <th width="2%">#</th>
-                            <th width="10%">Tipo</th>
-                            <th width="10%">Serie</th>
-                            <th width="10%">Número</th>
-                            <th width="10%">Fecha</th>
-                            <th width="10%">Mon</th>
+                            <th width="8%">Tipo</th>
+                            <th width="8%">Serie</th>
+                            <th width="8%">Número</th>
+                            <th width="8%">Fecha</th>
+                            <th width="8%">Mon</th>
                             <th width="10%">T.Doc</th>
                             <th width="10%">T.Pag</th>           
                           <td width="8%">T(3%)</th>
                           <td width="10%">Ret</th>
                           <td width="10%">Neto</th>
+                            <td width="10%">Op.</td>
                   </thead>
                 
                    <tfoot>
                     <tr>
-                      <th colspan="9"></th>
+                      <th colspan="10"></th>
                       <th>Importe Total</th>
                       <td><input type="text" class="form-control text-right" name="importeret" id="importeret" value="0.00" readonly></td>
                     </tr>
                     <tr>
-                      <th colspan="9"></th>
+                      <th colspan="10"></th>
                       <th>Tasa</th>
                       <td><input type="text" class="form-control text-right" name="tasaret" id="tasaret" value="3.00" readonly></td>
                     </tr>
                     <tr>
-                      <th colspan="9"></th>
+                      <th colspan="10"></th>
                       <th>Importe Percibido</th>
                       <td><input type="text" class="form-control text-right" name="op_i" id="op_i" value="0.00" readonly></td>
                     </tr>
@@ -261,7 +262,7 @@ $num_reg_tipo=$resultado_tipo->rowCount();
 
 
  
-      <script src="assets/js/funciones_retencion.js?v=8"></script>
+      <script src="assets/js/funciones_retencion.js?v=1"></script>
        <script src="assets/js/cambiar_tc.js?v=3"></script>
     <script src="<?=media()?>/js/tablas.js"></script>
 

@@ -245,7 +245,7 @@ height: 2cm;
                     <th class="border1 text-center" width="20%">FECHA EMISION</th>
                     <th class="border1 text-center border3" width="20%">TASA</th>
                     
-                    <th class="border1 text-center border3" width="20%">MONEDA</th>
+                   
                   </tr>
                 </thead>
                 <tbody>
@@ -253,7 +253,7 @@ height: 2cm;
                     <th class="text-center">'.$row_cabecera["FECHA_DOCUMENTO"].'</th>
                     <th class="text-center border3">3%</th>
                    
-                    <th class="text-center border3">'.$mon.'</th>
+                   
                   </tr>
                 </tbody>
               </table>
@@ -286,6 +286,7 @@ height: 2cm;
                 </thead>
                 <tbody>';
                  $z=1;
+                 $sumd = 0;
                   foreach ($resultado_detalle as $detalle) {
                   if($row_cabecera['moneda']=='PEN'){$tc='';}else{$tc=$detalle->tc;}
                   if($row_cabecera['moneda']=='PEN'){$retenido = $detalle->PERCEPCION;}else{$retenido = $detalle->PERCEPCION*$detalle->tc;}
@@ -308,7 +309,19 @@ height: 2cm;
                      
                        <th  class="text-right border3">'.number_format($detalle->SUBTOTAL,2).'</th>
                      </tr>';
+
+                     $sumd = $sumd + ($retenido);
                } 
+               if($row_cabecera['moneda']=='USD')
+               {
+               
+                $texto=convertir($sumd);
+                $precibido = number_format($sumd,2);
+               }
+               else
+               {
+                $precibido = number_format($row_cabecera["PERCIBIDO"],2);
+               }
 
           $output.='
                 </tbody>
@@ -323,7 +336,7 @@ height: 2cm;
                     <table width="100%">
                       <thead>
                         <tr>
-                          <td>SON: '.$texto. ' '.$mon.'</td>
+                          <td>SON: '.$texto.' SOLES </td>
                         </tr>
                         <tr>
                           <td>
@@ -347,7 +360,7 @@ height: 2cm;
                     <table class="border">
                       <tr>
                         <th class="text-right"> RETENCION</th>
-                        <th class="text-right border3">'.number_format($row_cabecera["PERCIBIDO"],2).'</th>
+                        <th class="text-right border3">'.$precibido.'</th>
                       </tr>
                    
                       <tr>

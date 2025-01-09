@@ -5,6 +5,12 @@ $resultado_con=$connect->prepare($query_con);
 $resultado_con->execute(); 
 $num_reg_con=$resultado_con->rowCount();
 
+
+
+$query_emp = "SELECT * FROM tbl_contribuyente WHERE empresa = $empresa ";
+$resultado_emp=$connect->prepare($query_emp);
+$resultado_emp->execute(); 
+$num_reg_emp=$resultado_emp->rowCount();
 ?>
 
 
@@ -20,7 +26,23 @@ $num_reg_con=$resultado_con->rowCount();
       </div>
       <div class="modal-body">
       
+  <div class="row">
 
+    <div class="col-sm-12">
+      <label for="">Cliente</label>
+     <select id="cliente" name="cliente" class="form-control select2">
+                  <option value="">Seleccionar Cliente</option>
+                  <?php 
+                        while($row_emp = $resultado_emp->fetch(PDO::FETCH_ASSOC) )
+                   {?>
+                    <option value="<?= $row_emp['id_persona'] ?>"><?= $row_emp['nombre_persona']?></option>;
+                   <?php  } ?>
+                  
+              </select>
+    </div>
+
+  </div>
+  <hr>
 
       <div class="row">
           <div class="col-sm-6">
@@ -32,7 +54,7 @@ $num_reg_con=$resultado_con->rowCount();
 
           <div class="col-sm-6">
               <label for="">Meses</label>
-            <input type="text" name="meses" id="meses" class="form-control" required="">
+            <input type="text" name="meses" id="meses" class="form-control" value="<?=$mesesgar?>" required="">
           </div>
 
 
@@ -41,11 +63,25 @@ $num_reg_con=$resultado_con->rowCount();
       <div class="row mt-3">
         <div class="col-sm-6">
           <label for="">Importe Soles</label>
-          <input type="text" class="form-control text-right" name="importe_soles" id="importe_soles" value="0.00">
+          <input type="text" class="form-control text-right" name="importe_soles" id="importe_soles" value="<?=$impsoles?>">
         </div>
         <div class="col-sm-6">
           <label for="">Importe Dólares</label>
-          <input type="text" class="form-control text-right" name="importe_dolares" id="importe_dolares" value="0.00">
+          <input type="text" class="form-control text-right" name="importe_dolares" id="importe_dolares" value="<?=$impdolar?>">
+       </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-sm-6">
+          <label for="">Tipo de Cambio</label>
+          <input type="text" class="form-control text-right" name="tipcambio" id="tipcambio" value="<?=$tclocal?>">
+        </div>
+        <div class="col-sm-6">
+          <label for="">Moneda</label>
+          <select name="moneda" id="moneda" class="form-control" required>
+            <option >SELECCIONAR MONEDA</option>
+            <option value="PEN">SOLES</option>
+            <option value="USD">DOLAR</option>
+          </select>
        </div>
       </div>
    

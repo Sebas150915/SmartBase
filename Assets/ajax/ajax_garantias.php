@@ -13,8 +13,8 @@ if($_POST['action'] == 'addGarantia')
 {
     
     $moneda=$_POST['moneda'];
-	$query=$connect->prepare("INSERT INTO tbl_alq_garantias(meses_garantia,importe_soles,importe_dolares,fecha_garantia,estado) VALUES (?,?,?,?,?);");
-	$resultado=$query->execute([$_POST['meses'],$_POST['importe_soles'],$_POST['importe_dolares'],$_POST['fecha_garantia'],'1']);
+	$query=$connect->prepare("INSERT INTO tbl_alq_garantias(meses_garantia,importe_soles,importe_dolares,fecha_garantia,estado,moneda,tc,idcliente) VALUES (?,?,?,?,?,?,?,?);");
+	$resultado=$query->execute([$_POST['meses'],$_POST['importe_soles'],$_POST['importe_dolares'],$_POST['fecha_garantia'],'1',$_POST['moneda'],$_POST['tipcambio'],$_POST['cliente']]);
 
 
 	if($resultado)

@@ -67,13 +67,14 @@ $num_reg_data=$resultado_data->rowCount();
                           <thead class="bg-dark" style="color: white">
                         
                        <tr>
-                        <th width="10%">Acciones</th>
-                         <th width="10%">Id</th>
+                        <th>Acciones</th>
+                         <th>Id</th>
                          <th>Nombre</th>
                          <th>RUC</th>
                          <th>F. Inicio</th>
                          <th>F. Vencimiento</th>
                          <th>Correo</th>
+                         <th>Teléfono</th>
                          
                          
                        </tr>
@@ -81,16 +82,9 @@ $num_reg_data=$resultado_data->rowCount();
                       <tbody>
                       <?php while($data = $resultado_data->fetch(PDO::FETCH_ASSOC) )
                         { 
-                            $estado = $data['estado'];
-                            if($estado == '0'){
-                                $table_color = 'table-danger';
-                            }
-                            else
-                            {
-                                $table_color = 'table-success';
-                            }
+                           
                         ?>
-                         <tr class="<?=$table_color?>">
+                         <tr>
                             <td>
                               <button class="btn btn-warning rounded-circle" onclick="openModalEdit1()"><i class="fe fe-edit"></i></button>
                               <button class="btn btn-danger rounded-circle" onclick="delserie()"><i class="fe fe-trash-2"></i></button>
@@ -100,8 +94,8 @@ $num_reg_data=$resultado_data->rowCount();
                           <td><?php echo $data['ruc'] ?></td>
                            <td><?php echo $data['fecha_inicio'] ?></td>
                            <td><?php echo $data['fecha_vencimiento'] ?></td>
-                           
                            <td><?php echo $data['correo'] ?></td>
+                           <td><?php echo $data['telefono'] ?></td>
                            
                           
                         </tr>

@@ -140,28 +140,32 @@ $num_reg_nivel=$resultado_nivel->rowCount();
 
       <div class="row">
           <div class="col-sm-6">
-              <label for="">Nombre Local</label>
+              <label for="">Código Local</label>
             <input type="hidden" name="update_id" id="update_id" value="">
             <input type="hidden" name="action" value="ediLocal">
             <input type="text"  name="update_nombre" id="update_nombre" class="form-control" required="" onkeyup="javascript:this.value=this.value.toUpperCase();">
           </div>
           
-        <div class="col-sm-6">
-         <label for="">Importe Soles</label>
-            <input type="text" class="form-control text-right" name="update_importe" id="update_importe">
-       </div>
-          
+          <div class="col-sm-6">
+          <label for="">Ubicación</label>
+          <input type="text" class="form-control text-right"  name="update_ubicacion" id="update_ubicacion">
+       </div>  
       </div>
-      <hr>
-      <div class="row mt-3">
-        <div class="col-sm-6">
-          <label for="">Area Local (M²)</label>
-          <input type="text" class="form-control text-right"  name="update_area" id="update_area">
-        </div>
-        <div class="col-sm-6">
-          <label for="">Ubicacion</label>
-          <input type="text" class="form-control text-right" name="update_ubi" id="update_ubi">
-       </div>
+
+
+      <div class="row">
+       <div class="col-sm-6">
+                      <label for="">Nivel</label>
+               <select class="form-control select2" style="width: 100%;" name="nivel" id="nivel" required>
+                          
+            <option value="">Seleccionar Nivel</option>
+            <?php 
+                    while($row_nivel = $resultado_nivel->fetch(PDO::FETCH_ASSOC) )
+               {?>
+                <option value="<?= $row_nivel['id'] ?>"><?=$row_nivel['nombre']?></option>;
+               <?php  } ?>
+          </select>
+                  </div>
 
        <div class="col-sm-6">
        <label for="">Escala</label>

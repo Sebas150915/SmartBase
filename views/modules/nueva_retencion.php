@@ -26,6 +26,13 @@ $resultado_tipo->execute();
 $num_reg_tipo=$resultado_tipo->rowCount();
 
 
+    $query_tc = $connect->prepare("SELECT * FROM tbl_tipo_cambio WHERE fecha = '$hoy' ");
+    $query_tc->execute();
+    $row_tc   = $query_tc->fetch(PDO::FETCH_ASSOC);
+
+    $tc='1.000';
+   if($row_tc){ $tc  = $row_tc['tventa']; }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -92,7 +99,7 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                         <input type="hidden" id="empresa" name="empresa" value="<?= $_SESSION['id_empresa']?>">
                       </div>
 
-                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                      <div class="col-lg-1 col-sm-6 col-sm-4">
                         <label for="">Fecha Emision</label>
                         <input type="date" class="form-control" value="<?=$hoy?>" name="fecha_emision" id="fecha_emision" >
                       </div>
@@ -116,7 +123,13 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                         <label for="">Razon Social</label>
                         <input type="text" class="form-control" name="razon_social" id="razon_social" readonly>
                         <input type="hidden" class="form-control" name="razon_direccion" id="razon_direccion" readonly>
-                        </div>                        
+                        </div>  
+
+
+                        <div class="col-lg-1 col-sm-6 col-sm-4">
+                        <label for="">Tipo Cambio</label>
+                        <input type="text" class="form-control" value="<?=$tc?>" name="tcambio" id="tcambio" >
+                      </div>                      
                       
                     </div>
                     <hr>
@@ -162,6 +175,9 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                     <div class="clearfix">
                       <div class="row mt-3">
                         <div class="col-sm-3">
+                          <button type="button" class="btn btn-warning btn-block" onclick="validaCompra()" >Validar Cpe SUNAT</button>
+                        </div>
+                        <div class="col-sm-3">
                 
                           <button class="btn btn-primary btn-block" type="button" onclick="agregadetalleret()"><i class="fa fa-plus"></i> Agregar</button>
                 </div>
@@ -185,31 +201,32 @@ $num_reg_tipo=$resultado_tipo->rowCount();
                   <thead class="bg-dark" style="color:white" >
                     <tr>
                       <th width="2%">#</th>
-                            <th width="10%">Tipo</th>
-                            <th width="10%">Serie</th>
-                            <th width="10%">Número</th>
-                            <th width="10%">Fecha</th>
-                            <th width="10%">Mon</th>
+                            <th width="8%">Tipo</th>
+                            <th width="8%">Serie</th>
+                            <th width="8%">Número</th>
+                            <th width="8%">Fecha</th>
+                            <th width="8%">Mon</th>
                             <th width="10%">T.Doc</th>
                             <th width="10%">T.Pag</th>           
                           <td width="8%">T(3%)</th>
                           <td width="10%">Ret</th>
                           <td width="10%">Neto</th>
+                            <td width="10%">Op.</td>
                   </thead>
                 
                    <tfoot>
                     <tr>
-                      <th colspan="9"></th>
+                      <th colspan="10"></th>
                       <th>Importe Total</th>
                       <td><input type="text" class="form-control text-right" name="importeret" id="importeret" value="0.00" readonly></td>
                     </tr>
                     <tr>
-                      <th colspan="9"></th>
+                      <th colspan="10"></th>
                       <th>Tasa</th>
                       <td><input type="text" class="form-control text-right" name="tasaret" id="tasaret" value="3.00" readonly></td>
                     </tr>
                     <tr>
-                      <th colspan="9"></th>
+                      <th colspan="10"></th>
                       <th>Importe Percibido</th>
                       <td><input type="text" class="form-control text-right" name="op_i" id="op_i" value="0.00" readonly></td>
                     </tr>
@@ -241,11 +258,81 @@ $num_reg_tipo=$resultado_tipo->rowCount();
      
     <?php include 'views/modules/modals/buscar_contribuyente_nv.php' ?>
 
+
+
+
  
-      <script src="assets/js/funciones_retencion.js?v=8"></script>
+      <script src="assets/js/funciones_retencion.js?v=1"></script>
+       <script src="assets/js/cambiar_tc.js?v=3"></script>
     <script src="<?=media()?>/js/tablas.js"></script>
 
       <script src="assets/js/sunat_reniec.js"></script>
+<script>
 
+function validaCompra()
+{
+   var ruc    = $('#ruc_persona').val();
+   var tip    = $('#tipdocrel').val();
+   var serie  = $('#serielrel').val();
+   var numero = $('#numerorel').val();
+   var fecha  = $('#fecharel').val();
+   var total  = $('#totalrel').val();
+   var action = 'valida_compra';
+   //alert(fecha);
+     // Validar que los campos no estén vacíos (opcional)
+    if (ruc === "" || serie === "" || numero === "" || fecha === "" || total === "") {
+        alert("Por favor, complete todos los campos.");
+        return;
+    }
+
+     $.ajax({
+        url: base_url+'/assets/ajax/valida_compras.php', // Archivo PHP que procesará los datos
+        method: 'GET', // Método de envío
+        data: {
+            ruc: ruc,
+            tip:tip,
+            action:action,
+            serie: serie,
+            numero: numero,
+            fecha: fecha,
+            total: total
+        },
+        success: function(response) 
+        {
+          console.log(response);
+          var data = $.parseJSON(response);
+          if(data.estadoCp == "ACEPTADO")
+          {
+            Swal.fire({
+            title: data.estadoCp,
+            text: "Estado RUC : "+data.estadoRuc+" Condicion Domicilio : "+data.condDomiRuc+" Observaciones : "+data.observaciones,
+            icon: "success"
+            });
+          }
+          else
+          {
+             Swal.fire({
+            title: data.estadoCp,
+            text: "Revisar datos ingrsados",
+            icon: "error"
+            });
+          }
+          
+
+        },
+        error: function(xhr, status, error) {
+            // Manejo de errores en la solicitud AJAX
+            console.error("Error en la solicitud AJAX: ", error);
+            alert("Ocurrió un error al validar la compra.");
+        }
+    });
+}
+
+   
+ 
+
+
+
+</script>
   </body>
 </html>

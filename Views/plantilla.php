@@ -47,9 +47,11 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "nueva_nota_credito_compra" ||
                     
                      $rutas[0] == "ventas" ||
+                     $rutas[0] == "editar_venta" ||
                      $rutas[0] == "sire_ventas" ||
                      $rutas[0] == "nota_venta" ||
                      $rutas[0] == "nueva_venta" ||
+                     $rutas[0] == "nueva_venta_gar" ||
                      $rutas[0] == "nueva_venta_psgi" ||
                      $rutas[0] == "nueva_nota_venta" ||
                      $rutas[0] == "nueva_nota_pedido" ||

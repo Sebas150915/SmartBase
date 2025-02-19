@@ -1,329 +1,609 @@
-<?php
+<?php 
+$idventa = $rutas[1];
+$empresa = $_SESSION["id_empresa"];
+$perfil = $_SESSION["perfil"];
 
-$id_factura = $rutas[1];
+//echo $_SESSION["precio"];
+$query_emp = "SELECT * FROM tbl_empresas WHERE id_empresa=$empresa";
+$resultado_emp = $connect->prepare($query_emp);
+$resultado_emp->execute();
+$row_emp = $resultado_emp->fetch(PDO::FETCH_ASSOC);
+//print_r($row_emp);
+$calculaigv=$row_emp['calculaigv'];
+//echo 'hola: '.$calculaigv
+$hoy = date('Y-m-d');
+//sumo 1 día
+//echo date("d-m-Y",strtotime($hoy."+ 1 days")); 
+//resto 1 día
+$min_date = date("Y-m-d",strtotime($hoy."- 4 days")); 
+/*****************/
 
-$hoy = date('d-m-Y');
-$usuario_id = $_SESSION["id_usuario"];
+$query_moneda = "SELECT * FROM tbl_moneda";
+$resultado_moneda=$connect->prepare($query_moneda);
+$resultado_moneda->execute();
+//$row_moneda = $resultado_moneda->fetchAll(PDO::FETCH_ASSOC);
+$num_reg_moneda=$resultado_moneda->rowCount();
 
-$query_factura_cab = "SELECT * FROM tbl_factura_cab WHERE id_factura = '$id_factura'";
-$resultado_factura_cab = $connect->prepare($query_factura_cab);
-$resultado_factura_cab->execute();
-$row_factura_cab = $resultado_factura_cab->fetch(PDO::FETCH_ASSOC);
+$query_documento = "SELECT * FROM tbl_tipo_documento WHERE fe='1' AND id in ('01','03','10')";
+$resultado_documento=$connect->prepare($query_documento);
+$resultado_documento->execute(); 
+$num_reg_documento=$resultado_documento->rowCount();
 
-$query_factura_det = "SELECT * FROM tbl_factura_det WHERE id_factura_cab = '$id_factura'";
-$resultado_factura_det = $connect->prepare($query_factura_det);
-$resultado_factura_det->execute();
+$query_forma = "SELECT * FROM tbl_forma_pago ORDER BY tipo";
+$resultado_forma=$connect->prepare($query_forma);
+$resultado_forma->execute(); 
+$num_reg_forma=$resultado_forma->rowCount();
 
+$query_tipo = "SELECT * FROM tbl_tipo_pago  WHERE empresa = $empresa AND id <> 1";
+$resultado_tipo=$connect->prepare($query_tipo);
+$resultado_tipo->execute(); 
+$num_reg_tipo=$resultado_tipo->rowCount();
 
-$doc_cli = $row_factura_cab["id_cliente"];
-
-$tpcpe = $row_factura_cab["tipo_cpe"];
-
-if($tpcpe == '01')
-{
-  $tipo_cpe_nombre = 'FACTURA ELECTRONICA';
-}
-else if($tpcpe == '03')
-{
-    $tipo_cpe_nombre = 'BOLETA DE VENTA ELECTRONICA';
-}
-
-$query_persona = "SELECT * FROM tbl_persona WHERE id_persona='$doc_cli'";
-$resultado_persona = $connect->prepare($query_persona);
-$resultado_persona->execute();
-$row_persona = $resultado_persona->fetch(PDO::FETCH_ASSOC);
-
-$query_tipo_cpe = "SELECT * FROM tbl_tipo_cpe WHERE fe_cpe='1' AND codigo_cpe IN ('01','03')";
-$resultado_tipo_cpe=$connect->prepare($query_tipo_cpe);
-$resultado_tipo_cpe->execute();
-$num_reg_tipo_cpe=$resultado_tipo_cpe->rowCount();
-
-$query = "SELECT * FROM tbl_configuracion";
-$resultado = $connect->prepare($query);
-$resultado->execute();
-$row = $resultado->fetch(PDO::FETCH_ASSOC);
-
-$tipocpe = $row['cod_cpe'];
-
-$query_serie = "SELECT * FROM vw_tbl_serie_usuario WHERE cod_doc='$tipocpe' and usuario='$usuario_id'";
-$resultado_serie = $connect->prepare($query_serie);
-$resultado_serie->execute();
-$row_serie = $resultado_serie->fetch(PDO::FETCH_ASSOC);
+$query_detraccion = "SELECT * FROM tbl_por_det";
+$resultado_detraccion=$connect->prepare($query_detraccion);
+$resultado_detraccion->execute(); 
+$num_reg_detraccion=$resultado_detraccion->rowCount();
 
 
- ?>
-<!DOCTYPE html>
+$query_vendedor = "SELECT * FROM tbl_vendedor WHERE idempresa = $empresa";
+$resultado_vendedor=$connect->prepare($query_vendedor);
+$resultado_vendedor->execute(); 
+$num_reg_vendedor=$resultado_vendedor->rowCount();
+
+
+$query_nv = "SELECT * FROM tbl_venta_cab WHERE id=$idventa";
+$resultado_nv=$connect->prepare($query_nv);
+$resultado_nv->execute();
+$row_nv = $resultado_nv->fetch(PDO::FETCH_ASSOC);
+$num_reg_nv=$resultado_nv->rowCount();
+
+$cliente1 = $row_nv['idcliente'];
+
+$query_cl = "SELECT * FROM tbl_contribuyente WHERE id_persona =$cliente1";
+$resultado_cl=$connect->prepare($query_cl);
+$resultado_cl->execute();
+$row_cl = $resultado_cl->fetch(PDO::FETCH_ASSOC);
+$num_reg_cl=$resultado_cl->rowCount();
+
+$query_producto = "SELECT * FROM vw_tbl_venta_det WHERE idventa='$idventa' ";
+$resultado_producto=$connect->prepare($query_producto);
+$resultado_producto->execute();
+//$row_producto = $resultado_producto->fetch(PDO::FETCH_ASSOC);
+$num_reg_producto=$resultado_producto->rowCount();
+
+
+?>
+
+
+
+<!doctype html>
 <html lang="en">
-<head>
-    <title><?= empresa() ?> | Editar Venta</title>
-  <?php include 'Views/Templates/head.php' ?>
-  <style>
+  <head>
+       <?php include 'views/template/head.php' ?>
 
-.hide{
-  display:none;}
-</style>
-<script type="text/javascript">
-function valideKey(evt){
+        <style>
+        .table-bordered th, .table-bordered td 
+        {
+        border: 1px solid #dce4ec;
+        border-left-width: 1px;
+        }
+        .table-bordered {
+        border: 1px solid #d3dbe3;
+        border-right-width: 1px;
+        }
+        .my-class-form-control-group{
+        display:flex;
+        align-items:Center;
+        }    
+        </style> 
+  </head>
+  <body class="horizontal dark  ">
+    <div class="wrapper">
+      <?php
+       if($_SESSION['perfil']=='1')
+       {
+       include 'views/template/nav.php';
+       }
+       else
+       {
+       include 'views/template/nav_ventas.php';
+       } ?>
+      
+      <main role="main" class="main-content">
+      <form id="venta_nueva" name="venta_nueva">
+        
+        <div class="container-fluid">
+         <div class="row justify-content-left">
+           <h3>Nueva Venta</h3>
+         </div>
+        
+          <hr>
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="row">
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Cliente</label>
+                        <div class="input-group">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-danger go-class" data-toggle="modal" data-target="#ModalClientes"><i class="fe fe-search"></i></button>
+                        </span>
+                        <input type="hidden" id="empresa" name="empresa" value="<?=$empresa?>">
+                        <input type="hidden" id="perfil" name="perfil" value="<?=$perfil?>">
+                        
+                        
+                          <input type="hidden" id="id_ruc" name="id_ruc" value="<?=$row_cl['id_persona']?>" >
+                          <input type="hidden" id="detalles" name="detalles" value="0">
+                          <input type="hidden" name="action" value="nueva_venta">
+                          <input type="text" class="form-control" name="ruc_persona" id="ruc_persona" maxlength="11" required value="<?=$row_cl['num_doc']?>" readonly>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" onclick="cliente()"><i class="fe fe-search"></i></button>
+                        </span>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-sm-6 col-sm-4">
 
-    // code is the decimal ASCII representation of the pressed key.
-    var code = (evt.which) ? evt.which : evt.keyCode;
-
-    if(code==8) { // backspace.
-      return true;
-    } else if(code>=46 && code<=57 && code!=47) { // is a number.
-      return true;
-
-    } else{ // other keys.
-      return false;
-    }
-}
-
-
-var delayTimer;
-function input(ele)
-{
-    if(ele.value=="")
-    {
-      //ele.value=0.00;
-
-  clearTimeout(delayTimer);
-    delayTimer = setTimeout(function()
-    {
-       ele.value =0.00;
-       ele.value = parseFloat(ele.value).toFixed(2).toString();
-    }, 800);
-    }
-   else
-   {
-     clearTimeout(delayTimer);
-    delayTimer = setTimeout(function()
-    {
-       ele.value = parseFloat(ele.value).toFixed(2).toString();
-    }, 800);
-   }
-}
-</script>
-</head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
-  <?php include 'Views/Templates/preloader.php' ?>
-
-  <!-- Navbar -->
-  <?php include 'Views/Templates/nav.php' ?>
-
-    <?php include 'Views/Templates/aside.php' ?>
-
-<div class="content-wrapper" style="min-height: 1604.8px;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Nueva Venta</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">Editar Venta</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-
-
-      <!-- Default box -->
- <form action="" name="editar_venta" id="editar_venta">
-
-<div class="card">
-        <div class="card-header">
-          <h3 class="card-title">
-            Editar Venta
-          </h3>
-        </div>
-<div class="card-body">
-         <div class="row">
-          <div class="col-sm-2">
-              <label for="">RUC / DNI: </label>
-              <input type="hidden" name="action" value="editVenta">
-              <input type="hidden" name="id_factura" value="<?= $id_factura ?>">
-              <input type="hidden" name="vendedor" value="<?=$usuario_id?>" id="vendedor">
-              <input type="hidden" name="cod_cliente" id="cod_cliente" value="<?=$doc_cli?>">
-            <input type="text" name="nit_cliente" maxlength="11" minlength="8" id="nit_cliente" class="form-control" required="" readonly  value="<?=$row_persona['num_doc']?>">
-          </div>
-          <div class="col-sm-10">
-              <label for="">Razon Social : </label>
-
-            <input type="text" name="proveedor" id="proveedor" class="form-control" require readonly onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?=$row_persona['nombre_persona']?>">
-          </div>
-
-
-      </div>
-<div class="row">
-            <div class="col-sm-3">
-
-                  <label>Fecha:</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        <label for="">Razon Social</label>
+                        <input type="text" class="form-control" name="razon_social" id="razon_social" readonly value="<?=$row_cl['nombre_persona']?>">
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Obs</label>
+                        <input type="text" class="form-control" name="obs" id="obs" onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?=$row_nv['obs']?>">
+                      </div>
+                      <div class="col-lg-4 col-sm-6 col-sm-4">
+                        <label for="">Direccion</label>
+                        <input type="text" class="form-control" name="razon_direccion" id="razon_direccion" readonly value="<?=$row_cl['direccion_persona']?>">
+                      </div>
+                      
+                    
                     </div>
-                   <input id="test1" name="fecha" class="form-control" value="<?=$row_factura_cab["fecha_emision"]?>" readonly>
-                  </div>
+              <div class="row">
+                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                        <label for="">Cotizacion</label>
+                        <input type="text" class="form-control" name="orden_compra" id="orden_compra">
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                        <label for="">Fecha Emision</label>
+                        <input type="date" class="form-control" name="fecha_emision" id="fecha_emision" value="<?=$row_nv['fecha_emision']?>">
+                      </div>
+                      
+                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                        <label for="">Fecha Vencimiento</label>
+                        <input type="date" class="form-control" value="<?=$row_nv['fecha_emision']?>" name="fecha_vencimiento" id="fecha_vencimiento" >
+                      </div>
+                      
+                      
+                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                        <label for="">Tipo Doc:</label>
+                        <select class="form-control select2" style="width: 100%;" name="tip_cpe" id="tip_cpe" required>
+                        <option value="">Seleccionar Documento</option>
+                       <?php  
+                        while ($row_documento = $resultado_documento->fetch(PDO::FETCH_ASSOC)) { 
+                          $selected = ($row_documento['cod'].'-'.$row_documento['id'] == $row_nv['tipocomp']) ? 'selected' : ''; 
+                          ?>
+                      <option value="<?= $row_documento['cod'].'-'.$row_documento['id'] ?>" <?= $selected ?>>
+                      <?= $row_documento['nombre'] ?>
+                      </option>
+                      <?php } ?>
+                      </select>
 
-          </div>
-          <div class="col-sm-3">
 
-              <label for="">Tipo Cpe :</label>
-<input type="text" name="tip_cpe" name="tip_cpe" class="form-control" value="<?=$tipo_cpe_nombre?>" readonly>
-          </div>
-          <div class="col-sm-3">
-              <label for="">Serie : </label>
-              <input type="text" name="serie" id="serie" maxlength="4" class="form-control" required="" readonly="" value="<?=$row_factura_cab["serie_cpe"]?>">
-          </div>
-          <div class="col-sm-3">
-              <label for="">Número : </label>
-              <input type="text" step="any" name="numero" id="numero" maxlength="8" class="form-control text-right" required="" readonly="" value="<?=$row_factura_cab["numero_cpe"]?>">
-          </div>
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                        <label for="">Serie:</label>
+                        <input type="text" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="4" readonly name="serie" id="serie" value="<?=$row_nv['serie']?>">
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                        <label for="">Numero:</label>
+                        <input type="text" class="form-control" readonly name="numero" id="numero" value="<?=$row_nv['correlativo']?>">
+                        <input type="hidden" id="vendedor" name="vendedor" value="<?= $_SESSION['id'] ?>">
+                        <input type="hidden" id="empresa" name="empresa" value="<?= $_SESSION['id_empresa']?>">
+
+                        <input type="hidden" id="relacionado_id" name="relacionado_id" value="0">
+                        <input type="hidden" id="estadopagoanticipo" name="estadopagoanticipo" value="0">
+                        <input type="hidden" id="relacionado_serie" name="relacionado_serie" value="">
+
+
+
+
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-4">
+                        <label for="">Condicion</label>
+                        <select class="form-control select2" style="width: 100%;" name="condicion" id="condicion">
+                  
+                            <?php 
+                                    while($row_forma = $resultado_forma->fetch(PDO::FETCH_ASSOC) )
+                               {?>
+                                <option value="<?= $row_forma['tipo'] ?>"><?=$row_forma['nombre_fdp']?></option>;
+                               <?php  } ?>
+                          </select>
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Moneda</label>
+                        <select name="moneda" id="moneda" class="form-control select2">
+                        <option <?= $row_nv['codmoneda'] ==='PEN' ? "selected='selected'": "" ?> value="PEN">SOLES</option>
+                        <option <?= $row_nv['codmoneda'] ==='USD' ? "selected='selected'": "" ?> value="USD">DOLARES</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Tipo de Cambio</label>
+                        <input type="text" class="form-control text-right"  name="tcambio" id="tcambio" value="<?=$row_nv['tc']?>">
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Detraccion</label>
+                        <select class="form-control select2" style="width: 100%;" name="det" id="det">
+                  
+                            <?php 
+                                    while($row_det = $resultado_detraccion->fetch(PDO::FETCH_ASSOC) )
+                               {?>
+                                <option value="<?= $row_det['id'] ?>"><?=$row_det['por']. '| '.$row_det['nombre']?></option>;
+                               <?php  } ?>
+                          </select>
+                          <input type="hidden" name="por_det" id="por_det" value="0">
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Importe Detraccon:</label>
+                        <input type="text" class="form-control text-right" name="imp_det" id="imp_det" readonly value="0.00">
+                      </div>
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Saldo a Pagar:</label>
+                        <input type="text" class="form-control text-right" name="saldo_ft" id="saldo_ft" readonly value="0.00">
+                      </div>
+                      <div class="col-lg-4 col-sm-6 col-sm-6">
+                        <label for="">Correo:</label>
+                        <input type="text" class="form-control" name="correo_cliente" id="correo_cliente">
+                      </div>
+                       <div class="col-lg-2 col-sm-6 col-sm-3">
+                        <label for="">Vendedor:</label>
+                         <select class="form-control select2" style="width: 100%;" name="ven" id="ven">
+
+                          <option value="0">--VENDEDOR POR DEFECTO--</option>
+                  
+                            <?php 
+                                    while($row_ven = $resultado_vendedor->fetch(PDO::FETCH_ASSOC) )
+                               {?>
+                                <option value="<?= $row_ven['id'] ?>"><?=$row_ven['nombre'].'% | '.$row_ven['apellido']?></option>;
+                               <?php  } ?>
+                          </select>
+                        
+                      </div>
+
+                    <div class="col-lg-2 col-sm-6 col-sm-2">
+                      <label for="">Guia Remision</label>
+                      <input type="text" class="form-control" onkeyup="buscarftgre()"  name="nguiar" id="nguiar" value="<?=$row_nv['guia_remision']?>">
+                      </div>
+                     
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Exportacion</label>
+                        <select class="form-control select2" name="exportacion" id="exportacion" value="<?=$row_nv['exportacion']?>">
+                          <option <?= $row_nv['exportacion'] ==='NO' ? "selected='selected'": "" ?> value="NO">NO</option>
+                          <option <?= $row_nv['exportacion'] ==='SI' ? "selected='selected'": "" ?> value="SI">SI</option>
+                        </select>
+                      </div>
+                      
+                      
+                      <div class="col-lg-2 col-sm-6 col-sm-2">
+                        <label for="">Incoterms</label>
+                        <select class="form-control select2" name="incoterms" id="incoterms" value="<?=$row_nv['incoterms']?>">
+                        <option <?= $row_nv['incoterms'] ==='CIF' ? "selected='selected'": "" ?> value="CIF">CIF</option>
+                        <option <?= $row_nv['incoterms'] ==='FOB' ? "selected='selected'": "" ?> value="FOB">FOB</option>
+                        </select>
+                      </div>
+                      
+
+
+
+
+
+                    </div>
+
+<!--div class="row justify-content-left">
+<div class="col-sm-5">                            
+<fieldset class="row border border-primary rounded p-3" >
+<legend class="w-auto">Datos de </legend>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+  <label class="form-check-label" for="inlineRadio1">1</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+  <label class="form-check-label" for="inlineRadio2">2</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+  <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
+</div>
+</fieldset>
+</div>
+</div-->
+
+
+<div class="clearfix">
+<div class="row mt-3">
+<?php if($_SESSION["venta_por_mayor"] == 'SI'){ ?>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProdcuto"><i class="fa fa-plus-circle"></i> P. Minorista</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> P. Mayorista</button>
+</div>
+<?php } 
+else {?>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-info" type="button" data-toggle="modal" data-target="#addProdcuto2"><i class="fa fa-plus-circle"></i> Productos</button>
+</div>
+<?php }?>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-success" type="button" id="btnGuardarft"><i class="fa fa-save"></i> Guardar</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button id="btnPagar" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addPago"><i class="fa fa-usd"></i> Pagos</button>
+<button id="btnCuota" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addCuota"><i class="fa fa-usd"></i> Cuotas</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">
+<button class="btn btn-warning" type="button" onClick="openModalanticipos();" ><i class="fa fa-usd"></i> Anticipos</button>
+</div>
+<div class="col-lg-2 col-sm-6 col-sm-4">                                                
+<a href="<?=base_url()?>/ventas" class="btn btn-danger" type="button"><i class="fa fa-close"></i> Cancelar</a>
 </div>
 
-
-<hr>
-<div class="row">
-  <div class="col-sm-12">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProdcuto"><i class="fas fa-plus"></i> Agregar Producto</button>
-  </div>
 </div>
-<hr>
-<div class="row">
-  <div class="col-sm-12">
-     <table id="tabla" class="table table-striped table-bordered table-condensed table-hover dataTable">
-        <thead>
-    <tr>
-      <td width="10%">Opciones</td>
-      <td width="10%">Orden</td>
-      <td width="50%">Nombre</td>
-      <td width="10%">Cantidad</td>
-      <td width="10%">Unidad</td>
-      <td width="10%">P.U.</td>
-      <td>Total</td>
-    </tr>
-  </thead>
-  <tbody style="font-size: 12px">
-<?php while($data = $resultado_factura_det->fetch(PDO::FETCH_ASSOC) )
-{ ?>
-<tr id="fila<?=$data['item']?>">
-           <td><button type="button" class="btn btn-danger" onclick="eliminar(<?=$data['item']?>)"><i class="fa fa-trash"></i></button></td>
-           <td><?=$data['item']?></td>
-           <td><input type="hidden" name="itemarticulo[]" value="<?=$data['item']?>">
-               <input type="hidden" name="idarticulo[]" value="<?=$data['codigo']?>">
-               <input type="hidden" name="nomarticulo[]" value="<?=$data['descripcion']?>"> <?= $data['descripcion'] ?></td>
-           <td><input type="hidden" name="precio_compra[]" value="<?=$data['precio_compra']?>">
-               <input type="hidden" name="factor[]" value="<?=$data['factor']?>">
-               <input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="<?=$data['cantidad_factor']?>" onkeypress="return valideKey(event);" oninput='input(this)'  onkeyup="modificarSubtotales()"></td>
-           <td><input type="text" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="<?=$data['cantidad_unitario']?>" onkeypress="return valideKey(event);" oninput='input(this)' onkeyup="modificarSubtotales()"></td>
-           <td><input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="<?=$data['valor_unitario']?>" readonly>
-               <input type="hidden" class="form-control input-sm" name="igv_unitario[]" id="igv_unitario[]" value="<?=$data['igv']?>" readonly>
-               <input type="text" class="form-control input-sm" name="precio_venta[]" id="precio_venta[]" value="<?=$data['precio_unitario']?>" readonly></td>
-           <td><span id="subtotal<?=$data['item']?>" name="subtotal"><?=$data['importe_total']?></span>
-               <input type="hidden" id="afectacion<?=$data['item']?>" name="afectacion[]" class="form-control input-sm" value="<?=$data['codigo_afectacion_alt']?>"></td>
+                    </div>
+                    <hr>
+                <?php if($_SESSION["usabarras"] == 'SI'){ ?>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label for="">Codigo de Barras</label>
+                        <input type="text" class="form-control" name="cbarras" id="cbarras" >
+                        <!--onkeypress="return teclas(event);"-->
+                      </div>
+                    </div>
+                    <hr>
+                <?php } ?>
+
+                    <div class="row">
+                     <div class="col-xs-12 col-sm-12 col-md-12" style="overflow: auto; position: relative;border: 0px; width: 100%; ">
+                    <table id="tabla" class="table table-bordered table-hover table-striped datatables dataTable no-footer" width="100%" bordercolor="#00CC66">
+                  <thead class="bg-dark" style="color:white" >
+                    <tr>
+                      <th width="10%">Acciones</th>
+                      <th width="5%">Item</th>
+                      <th width="50%">Producto</th>
+                      <th>Cant.</th>
+                      <th>Unidad</th>
+                      <th>Precio</th>
+                      <th>Total</th>
+                      
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                  <?php foreach($resultado_producto as $nvd){ ?>
+          <tr id="fila<?=$nvd['item']?>">
+              <td><button type="button" class="btn btn-danger" onclick="eliminar(<?=$nvd['item']?>)"><i class="fe fe-trash-2"></i></button></td>
+              <td><?=$nvd['item']?></td>
+              <td><input type="hidden" name="itemarticulo[]" value="<?=$nvd['item']?>"><input type="hidden" name="idarticulo[]" value="<?=$nvd['codigo']?>"><input type="hidden" name="nomarticulo[]" value="<?=$nvd['descripcion']?>"><input type="hidden" name="mxmn[]" value="<?=$nvd['mxmn']?>"> <input class="form-control" value="<?=$nvd['descripcion']?>"></td>
+
+              <td><input type="hidden" name="precio_compra[]" value="<?=$nvd['costo']?>"><input type="hidden" name="factor[]" value="<?=$nvd['factor']?>"><input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="<?=$nvd['cantidad_factor']?>" onkeyup="modificarSubtotales()" required pattern="[0-9]{1,5}">
+              <input type="hidden" class="form-control input-sm" name="cantidada[]" id="cantidada[]" value="<?=$nvd['cantidad_factor']?>" readonly>
+              </td>
+
+              <td><input type="text" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="<?=$nvd['cantidad_unitario']?>" required onkeyup="modificarSubtotales()">
+                  <input type="hidden" class="form-control input-sm" name="cantidadua[]" id="cantidadua[]" value="<?=$nvd['cantidad_unitario']?>" readonly>
+              </td>
+
+              <td><input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="<?=$nvd['valor_unitario']?>" readonly>
+              <input type="hidden" class="form-control input-sm" name="igv_unitario[]" id="igv_unitario[]" value="<?=$nvd['igv']?>" readonly>
+              <input type="text" class="form-control input-sm" name="precio_venta[]" id="precio_venta[]" value="<?=$nvd['precio_unitario']?>" onkeyup="modificarSubtotales()" ></td>
+
+              <td><span id="subtotal<?=$nvd['item']?>" name="subtotal"><?=$nvd['importe_total']?></span><input type="hidden" id="afectacion<?=$nvd['item']?>" name="afectacion[]" class="form-control input-sm" value="<?=$nvd['codigo_afectacion_alt']?>"></td>
+
+          </tr>
+                      <?php } ?>
+                  </tbody>
+                
+                   <tfoot>
+
+
+
+<tr>
+<th colspan="3"></th>
+<th>Op. Gravadas</th>
+<td><input type="text" class="form-control text-right" name="op_g" id="op_g" value="<?=$row_nv['op_gravadas']?>" readonly></td>
+<th>Anticipo</th>
+<td><input type="text" class="form-control text-right" name="anticipo_pago" id="anticipo_pago" value="0.00" readonly></td>
 </tr>
 
+<tr>
+<th colspan="3"></th>
+<th>Op. Exonerada</th>
+<td><input type="text" class="form-control text-right" name="op_e" id="op_e" value="0.00" readonly></td>
+<th>Saldo.A</th>
+<td><input type="text" class="form-control text-right" name="anticipo_saldo" id="anticipo_saldo" value="0.00" readonly></td>
+</tr>
 
-<?php } ?>
-  </tbody>
-    </table>
-  <table class="table table-striped table-bordered table-condensed table-hover dataTable">
-    <thead>
-      <tr>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th>Op. Gravadas</th>
-        <td colspan="2"><input type="text" class="form-control text-right"  readonly="" name="op_g" id="op_g" value="<?=$row_factura_cab["op_gravadas"]?>"></td>
+<tr>
+<th colspan="3"></th>
+<th>Op. Inafecta</th>
+<td><input type="text" class="form-control text-right" name="op_i" id="op_i" value="0.00" readonly></td>
+<th>Total.C</th>
+<td><input type="text" class="form-control text-right" name="anticipo_total" id="anticipo_total" value="0.00" readonly></td>
+</tr>
 
-      </tr>
-       <tr>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th>Op. Exoneradas</th>
-        <td colspan="2"><input type="text" class="form-control text-right" value="<?=$row_factura_cab["op_exoneradas"]?>" readonly="" name="op_e" id="op_e"></td>
+<tr>
+<th colspan="3"></th>
+<th>I.G.V.</th>
+<td><input type="text" class="form-control text-right" name="igv" id="igv" value="<?=$row_nv['igv']?>" readonly></td>
+<th></th>
+<td></td>
+</tr>
 
-      </tr>
-       <tr>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th>Op. Inafectas</th>
-        <td colspan="2"><input type="text" class="form-control text-right" value="<?=$row_factura_cab["op_inafectas"]?>" readonly="" name="op_i" id="op_i"></td>
-
-      </tr>
-       <tr>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th>Sub - Total</th>
-        <td colspan="2"><input type="text" class="form-control text-right" value="<?=$row_factura_cab["subtotal"]?>" readonly="" name="subt" id="subt"></td>
-
-      </tr>
-       <tr>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th>I.G.V.</th>
-        <td colspan="2"><input type="text" class="form-control text-right" value="<?=$row_factura_cab["igv"]?>" readonly="" name="igv" id="igv"></td>
-
-      </tr>
-       <tr>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th width="20%"></th>
-        <th>Total</th>
-        <td colspan="2"><input type="text" class="form-control text-right" value="<?=$row_factura_cab["total"]?>" readonly="" name="total" id="total"></td>
-
-      </tr>
-    </thead>
+<tr>
+<th colspan="3"></th>
+<th>Total</th>
 
 
-  </table>
+<td><input type="text" class="form-control text-right" name="total" id="total" value="<?=$row_nv['total']?>" readonly></td>
+<th></th>
+<td></td>
+</tr>
 
-  </div>
-</div>
+</tfoot>
 
-</div>
-  <div class="card-footer text-muted">
-            <a href="<?=base_url()?>/ventas" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancelar</a>
-        <button type="submit" class="btn btn-success btnGuardar" id="btnGuardar"><i class="fas fa-save"></i> Actualizar</button>
-        <div class="col-sm-4">
-            <img src="<?= base_url()?>/Assets/js/ajax.gif" class="ajaxgif hide" width="100%">
+
+</table>
+
+
+                   </div>
+                  </div>
+
+
+
+                                  
+              
+              
+             
+            </div> <!-- /.col -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+        <!--modal forma de pago-->
+<div class="modal fade" id="addPago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Pagos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="">Monto a Pagar</label>
+           <input type="text" name="montopago" id="montopago" value="" readonly class="form-control border-danger text-center text-bold" style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;">
           </div>
+           </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <label for="">Efectivo</label>
+              <input type="text" name="efectivo" onkeyup="pagos()" id="efectivo" value="0.00" class="form-control text-right">
+            </div>
+            
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="">Otro Medio de Pago</label>
+              <select name="cvisa" id="cvisa" class="form-control">
+                
+               
+                <?php 
+                        while($row_tipo = $resultado_tipo->fetch(PDO::FETCH_ASSOC) )
+                   {?>
+                <option value="<?= $row_tipo['id'] ?>"><?=$row_tipo['nombre']?></option>;
+                   <?php  } ?>
+              </select>
+
+            </div>
+            <div class="col-sm-6">
+              <label for="">Importe</label>
+               <input type="text" name="visa" onkeyup="pagos()"  id="visa" value="0.00" class="form-control text-right"> 
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="">Saldo</label>
+            <input type="text" value="0.00" name="saldo" id="saldo" readonly class="form-control border-danger text-center text-bold" style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;">
+            </div>
+            <div class="col-sm-6">
+              <label for="">Vuelto</label>
+            <input type="text" value="0.00" name="vuelto" id="vuelto" readonly class="form-control border-danger text-center text-bold" style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;">
+            </div>           
+            
+          </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-save"></i> Guardar</button>
+       
+      </div>
+    </div>
   </div>
+</div>
+<!--fin modal forma de pago-->
+
+<!--modal cuotas-->
+<div class="modal fade" id="addCuota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Cuotas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">      
+                    
+<div id="cargador">
+<div>
+<div class="row">
+<div class="col-sm-12">
+   <div class="my-class-form-control-group">
+      <input type="numeric" class="form-control text-right mr-2" name="cuotas" id="cuotas" placeholder="Cuotas" value="0" /><input type="text" class="form-control text-center text-bold mr-2" name="importe_pago_cuota" id="importe_pago_cuota" readonly style="color: red; background-color: #96EC94; font-weight: bold; font-size: 20px;" /><button class="btn btn-dark" type="button" onclick="agregar_campo();"><i class="fas fa-plus"></i></button>
+    </div>
+</div>
 
 </div>
-      <!-- /.card -->
-</form>
-
-    </section>
-    <!-- /.content -->
+</div>
+</div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-save"></i> Guardar</button>
+       
+      </div>
+    </div>
   </div>
+</div>
+<!--fin modal uotas-->
+        </form>
+      </main> <!-- main -->
+    </div> <!-- .wrapper -->
 
-    <?php include 'Views/Templates/footer.php' ?>
-<script src="<?=media()?>/js/funciones_ventas.js"></script>
-<script src="<?=media()?>/js/ventas.js"></script>
+    <!-- /fin modal pagos -->
+          <?php  include 'views/modules/modals/persona.php' ?> 
+          <?php include 'views/modules/modals/buscar_contribuyente.php' ?> 
+          <?php include 'views/modules/modals/articulo_venta.php' ?> 
+          <?php include 'views/modules/modals/venta-pedidos.php' ?>
+          <?php include 'views/template/pie.php' ?>
 
-<?php include 'Views/Modules/Modals/add_articulos_venta.php' ?>
-   <script src="<?=media()?>/js/tablas.js"></script>
-<script>
-    console.log(navigator.userAgent);
-    $("#test1").inputmask("datetime", {
-        inputFormat: "yyyy-mm-dd",
-        outputFormat: "mm-yyyy-dd",
-        inputEventOnly: true
-    });
+
+
+<script src="<?=media()?>/js/funciones_ventas.js?v=<?=date('s')?>"></script>
+<script src="../assets/js/separaciones.js?v=<?=date('s')?>"></script>
+
+      <script src="<?=media()?>/js/sunat_reniec.js"></script>
+      <script>
+            /*letras o cuotas*/
+            var contador=0;
+            var detalle=0;
+            function agregar_campo() 
+            { 
+               cont++;
+             detalles++;
+              $("#cargador").append("<div class='row mt-1'><div class='col-sm-12'><div class='my-class-form-control-group'><input type='date' class='form-control mr-2' name='datepago[]' /><input type='text' class='form-control text-right' value='0.00' name='montocuota[]'><button class='btn btn-danger' type='button' onclick='eliminar_campo(this);''><i class='fas fa-minus'></i></button></div></div></div>"); 
+              
+                $('#valor_unitario').val(cuotas.value);
+            } 
+                
+            function eliminar_campo(campos) 
+            { 
+              $(campos).parent().remove();
+              detalle=detalle-1;
+            }
+            
+
+listarcliente();
+
 </script>
-</body>
+  </body>
 </html>

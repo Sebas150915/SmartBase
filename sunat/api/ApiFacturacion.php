@@ -677,7 +677,7 @@ class ApiFacturacion
 					curl_close($ch);
 					return $ticket;
 	}
-		public function EnviarResumenBajas($emisor,$nombre, $connect,$serier,$numeror, $rutacertificado="../../sunat/api/", $ruta_archivo_xml = "../../sunat/",$ruta_archivo_cdr = "../../sunat/")
+	public function EnviarResumenBajas($emisor,$nombre, $connect,$serier,$numeror, $rutacertificado="../../sunat/api/", $ruta_archivo_xml = "../../sunat/",$ruta_archivo_cdr = "../../sunat/")
 	{
 
 				$ruta_archivo_xml = $ruta_archivo_xml.$emisor['ruc'].'/xml/';
@@ -820,6 +820,9 @@ class ApiFacturacion
 					curl_close($ch);
 					return $ticket;
 	}
+
+
+
 
 	public function EnviarBajaCpe($emisor,$nombre, $connect,$serier,$numeror, $rutacertificado="../../sunat/api/", $ruta_archivo_xml = "../../sunat/",$ruta_archivo_cdr = "../../sunat/")
 	{
@@ -973,7 +976,17 @@ class ApiFacturacion
 		   $ruta_archivo_cdr = $ruta_archivo_cdr.$emisor['ruc'].'/cdr/';
 
 			//Enviamos el archivo a sunat
-		        $link = $emisor['servidor_link'];
+		        //$link = $emisor['servidor_link'];
+
+
+		 if($emisor['servidor_cpe']=='1')
+		{
+         $link = 'https://e-beta.sunat.gob.pe/ol-ti-itemision-otroscpe-gem-beta/billService';
+		}
+		else
+		{
+		$link = 'https://e-factura.sunat.gob.pe/ol-ti-itemision-otroscpe-gem/billService?wsdl';
+	    }
 		        //echo 'link de resumen: '.$link;
 				$ws   = $link;
 			//$nombre	= $emisor["ruc"]."-".$cabecera["tipodoc"]."-".$cabecera["serie"]."-".$cabecera["correlativo"];
@@ -1067,7 +1080,7 @@ class ApiFacturacion
 					$cdr = $doc->getElementsByTagName('content')->item(0)->nodeValue;
 					$cdr = base64_decode($cdr);
 					
-					//echo $cdr;
+					echo $cdr;
 					
 
 					file_put_contents($ruta_archivo_cdr."R-".$nombre.".ZIP", $cdr);
@@ -1091,7 +1104,7 @@ class ApiFacturacion
 						    }
 						
 					}
-				unlink($ruta_archivo_cdr . 'R-' . $nombre . '.ZIP');
+				//unlink($ruta_archivo_cdr . 'R-' . $nombre . '.ZIP');
 				//unlink('../../assets/ajax/'. 'R-' . $nombre . '.ZIP');
 					$doc_cdr = new DOMDocument();
             $doc_cdr->load($ruta_archivo_cdr . 'R-' . $nombre . '.XML');
@@ -1434,7 +1447,156 @@ class ApiFacturacion
 		return $mensaje;
 	}
 
+public function EnviarBajaRetenciones($emisor,$nombre, $connect,$serier,$numeror, $rutacertificado="../../sunat/api/", $ruta_archivo_xml = "../../sunat/",$ruta_archivo_cdr = "../../sunat/")
+	{
 
+				$ruta_archivo_xml = $ruta_archivo_xml.$emisor['ruc'].'/xml/';
+		        $ruta_archivo_cdr = $ruta_archivo_cdr.$emisor['ruc'].'/cdr/';
+
+				//firma del documento
+				$objSignature = new Signature();
+
+				$flg_firma = "0";
+				//$ruta_archivo_xml = "xml/";
+				$ruta = $ruta_archivo_xml.$nombre.'.XML';
+
+				$ruta_firma = $rutacertificado.$emisor['certificado'];
+				$pass_firma = $emisor['clave_certificado'];
+
+				$resp = $objSignature->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
+
+				//print_r($resp);
+		        $hash = $resp['hash_cpe'];
+
+
+				//Generar el .zip
+
+				$zip = new ZipArchive();
+
+				$nombrezip = $nombre.".ZIP";
+				$rutazip = $ruta_archivo_xml.$nombre.".ZIP";
+                
+				if($zip->open($rutazip,ZIPARCHIVE::CREATE)===true){
+					$zip->addFile($ruta, $nombre.'.XML');
+					$zip->close();
+				}
+
+
+				//Enviamos el archivo a sunat
+		if($emisor['servidor_cpe']=='1')
+		{
+         $link = 'https://demo-ose.nubefact.com/ol-ti-itcpe/billService?wsdl';
+		}
+		else
+		{
+		$link = 'https://e-factura.sunat.gob.pe/ol-ti-itemision-otroscpe-gem/billService?wsdl';
+	    }
+		        //echo 'link de resumen: '.$link;
+				$ws   = $link;
+		        //$ws = "https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?wsdl";
+		        //$ws = "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService";
+
+				$ruta_archivo = $ruta_archivo_xml.$nombrezip;
+
+				$nombre_archivo = $nombrezip;
+				
+
+				$contenido_del_zip = base64_encode(file_get_contents($ruta_archivo));
+				
+				$xml_envio ='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.sunat.gob.pe" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+						 <soapenv:Header>
+						 	<wsse:Security>
+						 		<wsse:UsernameToken>
+						 			<wsse:Username>'.$emisor['ruc'].$emisor['usuario_sol'].'</wsse:Username>
+						 			<wsse:Password>'.$emisor['clave_sol'].'</wsse:Password>
+						 		</wsse:UsernameToken>
+						 	</wsse:Security>
+						 </soapenv:Header>
+						 <soapenv:Body>
+						 	<ser:sendSummary>
+						 		<fileName>'.$nombre_archivo.'</fileName>
+						 		<contentFile>'.$contenido_del_zip.'</contentFile>
+						 	</ser:sendSummary>
+						 </soapenv:Body>
+						</soapenv:Envelope>';
+
+
+					$header = array(
+								"Content-type: text/xml; charset=\"utf-8\"",
+								"Accept: text/xml",
+								"Cache-Control: no-cache",
+								"Pragma: no-cache",
+								"SOAPAction: ",
+								"Content-lenght: ".strlen($xml_envio)
+							);
+
+
+					$ch = curl_init();
+					curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,0);
+					curl_setopt($ch,CURLOPT_URL,$ws);
+					curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+					curl_setopt($ch,CURLOPT_HTTPAUTH,CURLAUTH_ANY);
+					curl_setopt($ch,CURLOPT_TIMEOUT,30);
+					curl_setopt($ch,CURLOPT_POST,true);
+					curl_setopt($ch,CURLOPT_POSTFIELDS,$xml_envio);
+					curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
+					//para ejecutar los procesos de forma local en windows
+					//enlace de descarga del cacert.pem https://curl.haxx.se/docs/caextract.html
+					//curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__)."/cacert.pem");
+
+					$response = curl_exec($ch);
+					
+					//$mensaje['respuestacurl'] = $response;
+					
+                   // echo $response;
+					$httpcode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+					//echo $httpcode.'----'.$response;
+					
+					$estadofe = "0";
+
+					$ticket = "0";
+					if($httpcode == 200)
+					{
+						$doc = new DOMDocument();
+						$doc->loadXML($response);
+
+						if (isset($doc->getElementsByTagName('ticket')->item(0)->nodeValue)) 
+						{
+			                $ticket = $doc->getElementsByTagName('ticket')->item(0)->nodeValue;
+							//echo "TODO OK : ".$ticket;
+							$estadofe ="4";
+							$codigo='.';
+							$mensaje = 'Resumen Enviado';
+						}
+						else
+						{		
+
+							$codigo = $doc->getElementsByTagName("faultcode")->item(0)->nodeValue;
+							$mensaje = $doc->getElementsByTagName("faultstring")->item(0)->nodeValue;
+					    	echo "error :".$codigo.": ".$mensaje; 
+							$ticket='';
+							$estadofe="2";
+						}
+
+					}
+					else{
+						echo curl_error($ch);
+						echo "Problema de conexión";
+						$codigo = '.';
+						$mensaje = '';	
+						$ticket = '';
+						$estadofe="3";
+					}
+
+					$cod = explode('.',$codigo);
+					$codigo = $cod[1];
+
+					$query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=?,ticket=? WHERE serie_resumen=? and numero_resumen=?");
+					$resultado=$query->execute([$resp['hash_cpe'],$estadofe,$codigo,$mensaje,$ticket,$serier,$numeror]);
+
+					curl_close($ch);
+					return $ticket;
+	}
 	
 
 }

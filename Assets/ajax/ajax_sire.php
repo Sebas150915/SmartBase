@@ -236,7 +236,7 @@ if($_POST['action'] == 'sunat_sire')
                     $resultado=$query->execute([$movkey,$data['codTipoCDP'],$data['numSerieCDP'],$numdoc,$data['mtoValFactExpo'],$data['mtoBIGravada'],$data['mtoExonerado'],$data['mtoInafecto'],$data['mtoIGV'],$data['mtoTotalCP'],'0101',$data['codMoneda'],$data['codTipoDocIdentidad'],$data['numDocIdentidad'],$data['mtoTipoCambio'],$data['perPeriodoTributario'],$date ,$_POST['empresa']]);
                 }
     }
-}
+   }
     exit;
 }
 

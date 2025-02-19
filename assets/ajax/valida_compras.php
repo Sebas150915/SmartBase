@@ -20,9 +20,9 @@ switch ($op)
 {
         case 'valida_compra':
 	    
-		$ruc = '20493277490';
-		$client_id = '8322c580-221c-44e4-a44c-60506c8046fe';
-		$client_secret='KcoRl01d93Pvbk4wNB75QA==';
+		$ruc = '20510360932';
+		$client_id = '018b9c52-4a25-4069-ae83-0a55a406fbad';
+		$client_secret='0CBie80RjfbWHPTcMAXx6g==';
 
 		$curl = curl_init();
 
@@ -84,6 +84,16 @@ switch ($op)
 		//print_r($datos);
 		$rpta =  $datos['data'];
 
+		$obs='';
+
+		// Verificar si existen observaciones y extraerlas
+if (isset($datos['data']['observaciones']) && is_array($datos['data']['observaciones'])) {
+    $observaciones = $datos['data']['observaciones'];
+    foreach ($observaciones as $observacion) {
+        $obs .= $observacion . PHP_EOL;
+    }
+}
+
 		$estadoCp = $rpta['estadoCp'];
 		$estadoRuc ='';
 		$condDomiRuc='';
@@ -133,7 +143,8 @@ switch ($op)
      $data = array(
       "estadoCp"    => $estadoCp,
       "estadoRuc"   => $estadoRuc,
-      "condDomiRuc" => $condDomiRuc
+      "condDomiRuc" => $condDomiRuc,
+      "observaciones" => $obs,
      );
 	echo json_encode($data);
 	break;

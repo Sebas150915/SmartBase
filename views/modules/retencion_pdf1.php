@@ -59,16 +59,9 @@ $resultado_detalle = $query_detalle->fetchAll(PDO::FETCH_OBJ);
       {
          $doc = 'NOTA DE VENTA ELECTRONICA';
       }
-  if($row_cabecera['condicion_venta']=='1')
-  {
-    $condicion = 'CONTADO';
-  }
-  else
-  {
-    $condicion = 'CREDITO';
-  }
 
- if($row_cabecera['codmoneda']=='PEN')
+
+ if($row_cabecera['moneda']=='PEN')
   {
     $mon = 'SOLES';
 }
@@ -78,20 +71,12 @@ else
 } 
 
 
- if($row_cabecera['tipocomp_ref']=='01')
-      {
-         $docref = 'FACTURA ELECTRONICA';
-      }
-      else if($row_cabecera['tipocomp_ref']=='03')
-      {
-         $docref = 'BOLETA DE VENTA ELECTRONICA';
-      }
-      
+
 /*$query_pago = $connect->prepare("SELECT * FROM tbl_venta_pag as p LEFT JOIN tbl_forma_pago AS f
 ON p.fdp = f.id_fdp WHERE id_venta='$factura'");
 $query_pago->execute();
 $resultado_pago = $query_pago->fetchAll(PDO::FETCH_OBJ);*/
-$numero = $row_cabecera['total'];
+$numero = $row_cabecera['PERCIBIDO'];
 include 'assets/ajax/numeros.php';
 $texto=convertir($numero);
 //file_put_contents($rutaGuardado.$fileName, $fileData);
@@ -113,7 +98,7 @@ $output.='
        body
         {
           background: white;
-          font-size: 12px;
+          font-size: 14px;
          
             font-family: "Montserrat", sans-serif;
 
@@ -153,6 +138,12 @@ $output.='
          .border3
         {
           border-left: 1px solid #000;
+           padding: 0.3em;
+          border-spacing: 0;
+        }
+           .border4
+        {
+          border-right: 1px solid #000;
            padding: 0.3em;
           border-spacing: 0;
         }
@@ -229,7 +220,7 @@ height: 2cm;
               <table class="border">
                 <thead>
                   <tr>
-                    <th width="15%" class="border1">Proveedor</th>
+                    <th width="15%" class="border1">Señor(es)</th>
                     <th class="text-left border1 border3">'.$row_cabecera["nombre_persona"].'</th>
                   </tr>
                   <tr>
@@ -254,7 +245,7 @@ height: 2cm;
                     <th class="border1 text-center" width="20%">FECHA EMISION</th>
                     <th class="border1 text-center border3" width="20%">TASA</th>
                     
-                    <th class="border1 text-center border3" width="20%">MONEDA</th>
+                   
                   </tr>
                 </thead>
                 <tbody>
@@ -262,7 +253,7 @@ height: 2cm;
                     <th class="text-center">'.$row_cabecera["FECHA_DOCUMENTO"].'</th>
                     <th class="text-center border3">3%</th>
                    
-                    <th class="text-center border3">'.$mon.'</th>
+                   
                   </tr>
                 </tbody>
               </table>
@@ -272,42 +263,65 @@ height: 2cm;
             <td colspan="3">
               <table class="border">
                 <thead>
+                <tr>
+                <th colspan="5" class="border1 border4 text-center">
+                      Comprobante de pago que dan origen a la retencion
+                </th>
+                </tr>
                   <tr>
-                     <th width="8%" class="border1 text-center ">TIPO DOCUMENTO</th>
-                    <th width="8%" class="border1 text-left border3">SERIE</th>
-                    <th width="5%" class="border1 text-center border3">NUMERO</th>
+                     <th width="4%" class="border1 text-center ">Tipo</th>
+                    <th width="8%" class="border1 text-left border3">Comprobante</th>
+                    <th width="8%"  class="border1 text-center border3">Fecha Emision</th>
+                    <th width="5%" class="border1 text-center border3">Moneda</th>
                    
-                    <th width="8%"  class="border1 text-center border3">FECHA EMISION</th>
-                    <th width="8%"  class="border1 text-center border3">TOTAL COMPROBANTE</th>
-                    <th width="8%"  class="border1 text-center border3">N° PAGO</th>
-                  <th width="8%"  class="border1 text-center border3">IMPORTE PAGO</th>
-                  <th width="8%"  class="border1 text-center border3">TASA</th>
-                  <th width="8%"  class="border1 text-center border3">RETENCION</th>
-                    <th width="8%"  class="border1 text-center border3">IMPORTE NETO PAGADO</th>
+                    
+                    <th width="8%"  class="border1 text-center border3">Importe Total</th>
+                    <th width="8%"  class="border1 text-center border3 border2">Fecha de Pago</th>
+                    <th width="8%"  class="border1 text-center border3 border2">N° PAGO</th>
+                  <th width="8%"  class="border1 text-center border3 border2">IMPORTE PAGO</th>
+                  <th width="8%"  class="border1 text-center border3 border2">Tipo de Cambio</th>
+                  <th width="8%"  class="border1 text-center border3 border2">RETENCION</th>
+                    <th width="8%"  class="border1 text-center border3 border2">IMPORTE NETO PAGADO</th>
                   </tr>
                 </thead>
                 <tbody>';
                  $z=1;
+                 $sumd = 0;
                   foreach ($resultado_detalle as $detalle) {
-                  
+                  if($row_cabecera['moneda']=='PEN'){$tc='';}else{$tc=$detalle->tc;}
+                  if($row_cabecera['moneda']=='PEN'){$retenido = $detalle->PERCEPCION;}else{$retenido = $detalle->PERCEPCION*$detalle->tc;}
                   $output.='
                      <tr>
-                       <th class="text-left">'.$detalle->nombre_cpe.'</th>
-                       <th class="text-left border3">'.$detalle->seriedoc.'</th>
-                       <th class="text-center border3">'.$detalle->numdoc.'</th>
+                       <th class="text-left">'.$detalle->TIPODOC.'</th>
+                       <th class="text-left border3">'.$detalle->seriedoc.'-'.$detalle->numdoc.'</th>
+                          <th class="text-center border3">'.$detalle->FECHA.'</th>
+                       <th class="text-center border3">'.$detalle->MONEDA.'</th>
                       
-                       <th class="text-center border3">'.$detalle->FECHA.'</th>
+                    
                      
                        <th  class="text-center border3">'.number_format($detalle->TOTAL,2).'</th>
+                       <th class="text-center border3">'.$row_cabecera["FECHA_DOCUMENTO"].'</th>
                        <th class="text-center border3">'.$z.'</th>
                        <th class="text-center border3">'.number_format($detalle->TOTAL,2).'</th>
-                       <th class="text-center border3">'.$detalle->TASA.'</th>
+                       <th class="text-center border3">'.$tc .'</th>
                       
-                       <th class="text-center border3">'.$detalle->PERCEPCION.'</th>
+                       <th class="text-center border3">'. $retenido.'</th>
                      
                        <th  class="text-right border3">'.number_format($detalle->SUBTOTAL,2).'</th>
                      </tr>';
-               $z++;   } 
+
+                     $sumd = $sumd + ($retenido);
+               } 
+               if($row_cabecera['moneda']=='USD')
+               {
+               
+                $texto=convertir($sumd);
+                $precibido = number_format($sumd,2);
+               }
+               else
+               {
+                $precibido = number_format($row_cabecera["PERCIBIDO"],2);
+               }
 
           $output.='
                 </tbody>
@@ -322,11 +336,11 @@ height: 2cm;
                     <table width="100%">
                       <thead>
                         <tr>
-                          <td>SON: '.$texto.'</td>
+                          <td>SON: '.$texto.' SOLES </td>
                         </tr>
                         <tr>
                           <td>
-                            La '.$doc .'  '.$row_cabecera["femensajesunat"].'
+                          '.$row_cabecera["femensajesunat"].'
                           </td>
                         </tr>
                         <tr>
@@ -346,7 +360,7 @@ height: 2cm;
                     <table class="border">
                       <tr>
                         <th class="text-right"> RETENCION</th>
-                        <th class="text-right border3">'.number_format($row_cabecera["PERCIBIDO"],2).'</th>
+                        <th class="text-right border3">'.$precibido.'</th>
                       </tr>
                    
                       <tr>
@@ -356,9 +370,7 @@ height: 2cm;
                     </table>
                   </th>
                 </tr>
-                <tr>
-                          <td>Observacion: '.$row_cabecera["obs"].' </td>
-                        </tr>
+             
                 
               </table>
             </td>
@@ -372,7 +384,14 @@ height: 2cm;
     
     
 <footer>
-Powered by SmartBase 
+<strong>Powered by SmartBase </strong>
+<br />
+<table width="100%">
+
+</table>
+
+<br />
+
 </footer>
   </body>
 

@@ -1456,7 +1456,7 @@ function modificarSubtotales()
 		var inpP=prev[i];
 		var inpA=afec[i];
 		var inpS=sub[i];
-		//alert(inpV.value+'-'+inpU.value+'-'+inpF.value+'-'+inpVu.value+'-'+inpI.value+'-'+inpP.value+'-'+inpA.value);
+		alert(inpV.value+'-'+inpU.value+'-'+inpF.value+'-'+inpVu.value+'-'+inpI.value+'-'+inpP.value+'-'+inpA.value);
 		inpS.value = (inpV.value*inpP.value + inpU.value*inpP.value/inpF.value);
 		document.getElementsByName("subtotal")[i].innerHTML=inpS.value.toFixed(2);
 

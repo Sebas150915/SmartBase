@@ -65,7 +65,7 @@ $resultado_cl->execute();
 $row_cl = $resultado_cl->fetch(PDO::FETCH_ASSOC);
 $num_reg_cl=$resultado_cl->rowCount();
 
-$query_producto = "SELECT * FROM tbl_productos WHERE id='8588' ";
+$query_producto = "SELECT * FROM vw_tbl_venta_det WHERE idventa='$idventa' ";
 $resultado_producto=$connect->prepare($query_producto);
 $resultado_producto->execute();
 //$row_producto = $resultado_producto->fetch(PDO::FETCH_ASSOC);
@@ -377,26 +377,28 @@ else {?>
                   </thead>
 
                   <tbody>
-                  
+                  <?php foreach($resultado_producto as $nvd){ ?>
+          <tr id="fila<?=$nvd['item']?>">
+              <td><button type="button" class="btn btn-danger" onclick="eliminar(<?=$nvd['item']?>)"><i class="fe fe-trash-2"></i></button></td>
+              <td><?=$nvd['item']?></td>
+              <td><input type="hidden" name="itemarticulo[]" value="<?=$nvd['item']?>"><input type="hidden" name="idarticulo[]" value="<?=$nvd['codigo']?>"><input type="hidden" name="nomarticulo[]" value="<?=$nvd['descripcion']?>"><input type="hidden" name="mxmn[]" value="<?=$nvd['mxmn']?>"> <input class="form-control" value="<?=$nvd['descripcion']?>"></td>
 
+              <td><input type="hidden" name="precio_compra[]" value="<?=$nvd['costo']?>"><input type="hidden" name="factor[]" value="<?=$nvd['factor']?>"><input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="<?=$nvd['cantidad_factor']?>" onkeyup="modificarSubtotales()" required pattern="[0-9]{1,5}">
+              <input type="hidden" class="form-control input-sm" name="cantidada[]" id="cantidada[]" value="<?=$nvd['cantidad_factor']?>" readonly>
+              </td>
 
-                  <?php 
-                  $i=1;
-                  foreach($resultado_producto as $detalle ){ ?>
-                          <tr>
-                            <td>
-                              <button class="btn btn-danger rounded-circle"><i class="fe fe-trash-2"></i></button></td>
-                            <td><?= $i?></td>
-                            <td><?= $detalle['nombre'] ?></td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td><?= $totalventa?></td>
-                            <td><?= $totalventa?> </td>
-                          </tr>
-                        <?php 
-                      $i++;
-                      } ?>                     
+              <td><input type="text" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="<?=$nvd['cantidad_unitario']?>" required onkeyup="modificarSubtotales()">
+                  <input type="hidden" class="form-control input-sm" name="cantidadua[]" id="cantidadua[]" value="<?=$nvd['cantidad_unitario']?>" readonly>
+              </td>
 
+              <td><input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="<?=$nvd['valor_unitario']?>" readonly>
+              <input type="hidden" class="form-control input-sm" name="igv_unitario[]" id="igv_unitario[]" value="<?=$nvd['igv']?>" readonly>
+              <input type="text" class="form-control input-sm" name="precio_venta[]" id="precio_venta[]" value="<?=$nvd['precio_unitario']?>" onkeyup="modificarSubtotales()" ></td>
+
+              <td><span id="subtotal<?=$nvd['item']?>" name="subtotal"><?=$nvd['importe_total']?></span><input type="hidden" id="afectacion<?=$nvd['item']?>" name="afectacion[]" class="form-control input-sm" value="<?=$nvd['codigo_afectacion_alt']?>"></td>
+
+          </tr>
+                      <?php } ?>
                   </tbody>
                 
                    <tfoot>
@@ -406,7 +408,7 @@ else {?>
 <tr>
 <th colspan="3"></th>
 <th>Op. Gravadas</th>
-<td><input type="text" class="form-control text-right" name="op_g" id="op_g" value="<?=$subventa?>" readonly></td>
+<td><input type="text" class="form-control text-right" name="op_g" id="op_g" value="<?=$row_nv['op_gravadas']?>" readonly></td>
 <th>Anticipo</th>
 <td><input type="text" class="form-control text-right" name="anticipo_pago" id="anticipo_pago" value="0.00" readonly></td>
 </tr>
@@ -430,7 +432,7 @@ else {?>
 <tr>
 <th colspan="3"></th>
 <th>I.G.V.</th>
-<td><input type="text" class="form-control text-right" name="igv" id="igv" value="<?=$igvventa?>" readonly></td>
+<td><input type="text" class="form-control text-right" name="igv" id="igv" value="<?=$row_nv['igv']?>" readonly></td>
 <th></th>
 <td></td>
 </tr>
@@ -440,7 +442,7 @@ else {?>
 <th>Total</th>
 
 
-<td><input type="text" class="form-control text-right" name="total" id="total" value="<?=$totalventa?>" readonly></td>
+<td><input type="text" class="form-control text-right" name="total" id="total" value="<?=$row_nv['total']?>" readonly></td>
 <th></th>
 <td></td>
 </tr>
@@ -576,7 +578,7 @@ else {?>
 
 
 
-<script src="<?=media()?>/js/funciones_ventas.js?v=4"></script>
+<script src="<?=media()?>/js/funciones_ventas.js?v=<?=date('s')?>"></script>
 <script src="../assets/js/separaciones.js?v=<?=date('s')?>"></script>
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>

@@ -269,6 +269,29 @@ $num_reg_producto=$resultado_producto->rowCount();
                         
                       </div>
 
+                      <div class="col-lg-2 col-sm-6 col-sm-2" style="display:none">
+                        <label for="">Guia Remision</label>
+                        <input type="text" class="form-control" onkeyup="buscarftgre()"  name="nguiar" id="nguiar" value="">
+                      </div>
+
+
+                      <div class="col-lg-2 col-sm-6 col-sm-2" style="display:none">
+                        <label for="">Exportacion</label>
+                        <select class="form-control select2" name="exportacion" id="exportacion" >
+                          <option selected value="NO">NO</option>
+                          <option value="SI">SI</option>
+                        </select>
+                      </div>
+
+                      <div class="col-lg-2 col-sm-6 col-sm-2" style="display:none">
+                        <label for="">Incoterms</label>
+                        <select class="form-control select2" name="incoterms" id="incoterms" >
+                          <option value="CIF">CIF</option>
+                          <option value="FOB">FOB</option>
+                        </select>
+                      </div>
+
+
                     </div>
 
 <!--div class="row justify-content-left">
@@ -351,7 +374,7 @@ else {?>
                     </tr>
                   </thead>
 
-                  <tbody>
+                  <tbody id="detalles">
 
                   <?php
 if($row_general['moneda']=='PEN')
@@ -372,16 +395,33 @@ else
                   <?php 
                   $i=1;
                   foreach($resultado_producto as $detalle ){ ?>
-                          <tr>
-                            <td>
-                              <button class="btn btn-danger rounded-circle"><i class="fe fe-trash-2"></i></button></td>
-                            <td><?= $i?></td>
-                            <td><?= $detalle['nombre'] ?></td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td><?= $totalventa?></td>
-                            <td><?= $totalventa?> </td>
-                          </tr>
+                  <tr id="fila<?=$i?>">
+	         <td><button type="button" class="btn btn-danger" onclick="eliminar(<?=$i?>)"><i class="fe fe-trash-2"></i></button></td>
+	         <td><?=$i?></td>
+	          <td>
+            <input type="hidden" name="itemarticulo[]" value="<?=$i?>"><input type="hidden" name="idarticulo[]" value="<?=$detalle['id']?>">
+            <input type="text" class="form-control w-100" name="nomarticulo[]" value="<?=$detalle['nombre']?>" edidetalle>
+            <input type="hidden" name="mxmn[]" value="mxmn"></td>
+	          <td>
+            <input type="hidden" name="precio_compra[]" value="<?=$detalle['costo']?>">
+            <input type="hidden" name="factor[]" value="1">
+            <input type="text" min="1" class="form-control input-sm" name="cantidad[]" id="cantidad[]" value="0" onkeyup="modificarSubtotales()" required>
+            </td>
+	          <td>
+            <input type="text" min="1" class="form-control input-sm" name="cantidadu[]" id="cantidadu[]" value="1" required onkeyup="modificarSubtotales()">
+            </td>
+	          <td>
+            <input type="hidden" class="form-control input-sm" name="valor_unitario[]" id="valor_unitario[]" value="<?=$totalventa?>" readonly>
+	          <input type="hidden" id="cantidada <?=$i?>" name="cantidada[]" class="form-control input-sm" >
+	          <input type="hidden" id="cantidadua <?=$i?>" name="cantidadua[]" class="form-control input-sm">
+	          <input type="hidden" class="form-control input-sm" name="igv_unitario[]" id="igv_unitario[]" value="<?=$igvventa?>" readonly>
+	          <input type="text" class="form-control input-sm" name="precio_venta[]" id="precio_venta[]" value="<?=$totalventa?>" onkeyup="modificarSubtotales()">
+            </td>
+	         <td>
+           <span id="subtotal<?=$i?>" name="subtotal"></span>
+           <input type="hidden" id="afectacion<?=$i?>" name="afectacion[]" class="form-control input-sm" value="<?=$detalle['afectacion']?>">
+          </td>
+	        </tr>
                         <?php 
                       $i++;
                       } ?>                     
@@ -565,7 +605,7 @@ else
 
 
 
-<script src="<?=media()?>/js/funciones_ventas.js?v=4"></script>
+<script src="<?=media()?>/js/funciones_ventas.js?v=<?=date('s')?>"></script>
 <script src="../assets/js/separaciones.js?v=<?=date('s')?>"></script>
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>
@@ -590,6 +630,7 @@ else
             
 
 listarcliente();
+modificarSubtotales();
 
 </script>
   </body>

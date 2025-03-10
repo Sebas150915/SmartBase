@@ -6,21 +6,6 @@ $resultado_data=$connect->prepare($query_data);
 $resultado_data->execute();
 $num_reg_data=$resultado_data->rowCount();
 
-
-$query_local = "SELECT * FROM tbl_alq_local WHERE id=$idlocal";
-$resultado_local = $connect->prepare($query_local);
-$resultado_local->execute();
-$row_local = $resultado_local->fetch(PDO::FETCH_ASSOC);
-
-$tclocal   = $row_local['tc'];
-$impsoles  = $row_local['importe_soles'];
-$impdolar  = $row_local['importe_dolar'];
-$mesesgar  = $row_local['meses_garantia'];
-
-//print_r($row_local);
-
-//echo $mesesgar;
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -82,8 +67,6 @@ $mesesgar  = $row_local['meses_garantia'];
                           <th>Importe Dólares</th>
                           <th>Fecha</th>
                           <th>Meses</th>
-                          <th>Moneda</th>
-                          <th>TC</th>
                           <th>Estado</th>
                           
                         </tr>
@@ -94,15 +77,13 @@ $mesesgar  = $row_local['meses_garantia'];
                             <td>
                               <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
                               <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button>
-                              <a class="btn btn-success rounded-circle" href="<?=base_url()?>/nueva_venta_gar/<?=$usuario['id_garantia']?>"> <i class="fe fe-dollar-sign"></i></a>
+                              <a class="btn btn-success rounded-circle" href="<?=base_url()?>/nueva_venta_alq/<?=$usuario['id_garantia']?>"> <i class="fe fe-dollar-sign"></i></a>
                             </td>
                             <td><?= $usuario['id_garantia'] ?></td>
                             <td><?= $usuario['importe_soles'] ?></td>
                             <td><?= $usuario['importe_dolares'] ?></td>
                             <td><?= $usuario['fecha_garantia'] ?></td>
                             <td><?= $usuario['meses_garantia'] ?></td>
-                            <td><?= $usuario['moneda'] ?></td>
-                            <td><?= $usuario['tc'] ?></td>
                             <td><?php $e = $usuario['estado'];
                             if($e == '1')
                             {

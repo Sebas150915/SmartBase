@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+//error_reporting(0);
 //echo 'sesion :'.$_SESSION["iniciarSesion"];
 if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
 {
@@ -47,6 +47,7 @@ if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "cinema")
                      $rutas[0] == "nueva_nota_credito_compra" ||
                     
                      $rutas[0] == "ventas" ||
+                     $rutas[0] == "editar_venta" ||
                      $rutas[0] == "sire_ventas" ||
                      $rutas[0] == "nota_venta" ||
                      $rutas[0] == "nueva_venta" ||

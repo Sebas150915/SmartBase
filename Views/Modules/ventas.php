@@ -179,7 +179,7 @@ $row_empresa = $resultado_empresa->fetch(PDO::FETCH_ASSOC);
                               <tr>
                                 
                                 <th>Id</th>
-                              
+                                <th>Editar</th>
                               
                                 <th>Estado</th>
                                 <th>Codigo</th>
@@ -230,7 +230,7 @@ $table_color = 'table-danger';
                           <tr class="<?=$table_color?>">
                             
                             <td><?= $ventas['id'] ?></td>
-                           
+                            <td><a href="<?=base_url()?>/editar_venta/<?= $ventas['id'] ?>" class="btn btn-warning rounded-circle" ><i class="fas fa-edit"></i></a></td>
                             <td><?php $e = $ventas['feestado'];
                             if($e == 1)
                             {
@@ -288,27 +288,7 @@ $table_color = 'table-danger';
                           </tr>
                         <?php } ?>                     
                       </tbody>
-                    <tfoot>
-                    <tr>
-                    <th>Totales</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    </tr>
-                    </tfoot>
+                    
                         </table>
                          </div>
                         </div>

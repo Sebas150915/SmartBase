@@ -57,6 +57,11 @@ $resultado_detalle = $query_detalle->fetchAll(PDO::FETCH_OBJ);
       {
          $doc = 'NOTA DE VENTA ELECTRONICA';
       }
+      else if($row_cabecera['tipocomp']=='10')
+      {
+         $doc = 'RECIBO DE ARRENDAMIENTO';
+      }
+    
   if($row_cabecera['condicion_venta']=='1')
   {
     $condicion = 'CONTADO';

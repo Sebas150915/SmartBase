@@ -1,16 +1,16 @@
 <?php
 
-$query_con = "SELECT * FROM tbl_alq_contratos WHERE id_local = $empresa ";
+$query_con = "SELECT * FROM tbl_alq_local WHERE id= $idlocal ";
 $resultado_con=$connect->prepare($query_con);
-$resultado_con->execute(); 
+$resultado_con->execute();
+$row_con = $resultado_con->fetch(PDO::FETCH_ASSOC); 
 $num_reg_con=$resultado_con->rowCount();
-
-
 
 $query_emp = "SELECT * FROM tbl_contribuyente WHERE empresa = $empresa ";
 $resultado_emp=$connect->prepare($query_emp);
 $resultado_emp->execute(); 
 $num_reg_emp=$resultado_emp->rowCount();
+
 ?>
 
 
@@ -26,11 +26,16 @@ $num_reg_emp=$resultado_emp->rowCount();
       </div>
       <div class="modal-body">
       
-  <div class="row">
 
-    <div class="col-sm-12">
-      <label for="">Cliente</label>
-     <select id="cliente" name="cliente" class="form-control select2">
+
+      <div class="row">
+
+      <div class="col-sm-6">
+           <label for="">Cliente</label>
+           <input type="hidden" name="action" value="addSeparacion">
+           <input type="hidden" name="empresa" value="<?=$empresa?>">
+           <input type="hidden" name="local" value="<?=$idlocal?>">
+           <select id="cliente" name="cliente" class="form-control select2">
                   <option value="">Seleccionar Cliente</option>
                   <?php 
                         while($row_emp = $resultado_emp->fetch(PDO::FETCH_ASSOC) )
@@ -39,12 +44,10 @@ $num_reg_emp=$resultado_emp->rowCount();
                    <?php  } ?>
                   
               </select>
-    </div>
+          </div>
 
-  </div>
-  <hr>
 
-      <div class="row">
+
           <div class="col-sm-6">
               <label for="">Fecha</label>
               <input type="hidden" name="action" value="addGarantia">
@@ -54,34 +57,27 @@ $num_reg_emp=$resultado_emp->rowCount();
 
           <div class="col-sm-6">
               <label for="">Meses</label>
-            <input type="text" name="meses" id="meses" class="form-control" value="<?=$mesesgar?>" required="">
+            <input type="text" name="meses" id="meses" class="form-control" required="" value="<?=$row_con['meses_garantia'] ?>" readonly="">
+          </div>
+
+          <div class="col-sm-6">
+              <label>Moneda</label>
+              <select class="form-control" name="moneda" id="moneda" required="">
+                  <option value="PEN">SOLES</option>
+                  <option value="USD">DOLARES</option>
+              </select>
           </div>
 
 
       </div>
-      <hr>
       <div class="row mt-3">
         <div class="col-sm-6">
           <label for="">Importe Soles</label>
-          <input type="text" class="form-control text-right" name="importe_soles" id="importe_soles" value="<?=$impsoles?>">
+          <input type="text" class="form-control text-right" name="importe_soles" id="importe_soles" value="0.00">
         </div>
         <div class="col-sm-6">
           <label for="">Importe Dólares</label>
-          <input type="text" class="form-control text-right" name="importe_dolares" id="importe_dolares" value="<?=$impdolar?>">
-       </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-sm-6">
-          <label for="">Tipo de Cambio</label>
-          <input type="text" class="form-control text-right" name="tipcambio" id="tipcambio" value="<?=$tclocal?>">
-        </div>
-        <div class="col-sm-6">
-          <label for="">Moneda</label>
-          <select name="moneda" id="moneda" class="form-control" required>
-            <option >SELECCIONAR MONEDA</option>
-            <option value="PEN">SOLES</option>
-            <option value="USD">DOLAR</option>
-          </select>
+          <input type="text" class="form-control text-right" name="importe_dolares" id="importe_dolares" value="0.00">
        </div>
       </div>
    

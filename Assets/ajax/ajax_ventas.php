@@ -418,7 +418,6 @@ if($_POST['action'] == 'addCliente')
           $doc = $d[1];
 
                 $query_articulos = "SELECT * FROM vw_tbl_serie_usuario WHERE cod ='$cod' AND usuario='$user' AND empresa = $emp";
-            //echo($query_articulos);
                 $resultado = $connect->prepare($query_articulos);
                 $resultado->execute();
                 $row_articulo = $resultado->fetch(PDO::FETCH_ASSOC);

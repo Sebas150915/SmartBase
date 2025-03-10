@@ -199,7 +199,7 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
                             <?php 
                                     while($row_forma = $resultado_forma->fetch(PDO::FETCH_ASSOC) )
                                {?>
-                                <option value="<?= $row_forma['tipo'] ?>"><?=$row_forma['nombre_fdp']?></option>;
+                                <option value="<?= $row_forma['tipo'] ?>" data-dias="<?= $row_forma['dias'] ?>"><?=$row_forma['nombre_fdp']?></option>;
                                <?php  } ?>
                           </select>
                       </div>
@@ -299,29 +299,29 @@ $num_reg_vendedor=$resultado_vendedor->rowCount();
 <div class="row mt-3">
 <?php if($_SESSION["venta_por_mayor"] == 'SI'){ ?>
 <div class="col-lg-2 col-sm-6 col-sm-4">
-<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProdcuto"><i class="fa fa-plus-circle"></i> P. Minorista</button>
+<button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#addProdcuto"><i class="fa fa-plus-circle"></i> P. Minorista</button>
 </div>
 <div class="col-lg-2 col-sm-6 col-sm-4">
-<button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> P. Mayorista</button>
+<button class="btn btn-secondary btn-block" type="button" data-toggle="modal" data-target="#addProdcuto1"><i class="fa fa-plus-circle"></i> P. Mayorista</button>
 </div>
 <?php } 
 else {?>
 <div class="col-lg-2 col-sm-6 col-sm-4">
-<button class="btn btn-info" type="button" data-toggle="modal" data-target="#addProdcuto2"><i class="fa fa-plus-circle"></i> Productos</button>
+<button class="btn btn-info btn-block" type="button" data-toggle="modal" data-target="#addProdcuto2"><i class="fa fa-plus-circle"></i> Productos</button>
 </div>
 <?php }?>
 <div class="col-lg-2 col-sm-6 col-sm-4">
-<button class="btn btn-success" type="button" id="btnGuardarft"><i class="fa fa-save"></i> Guardar</button>
+<button class="btn btn-success btn-block" type="button" id="btnGuardarft"><i class="fa fa-save"></i> Guardar</button>
 </div>
 <div class="col-lg-2 col-sm-6 col-sm-4">
-<button id="btnPagar" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addPago"><i class="fa fa-usd"></i> Pagos</button>
-<button id="btnCuota" class="btn btn-warning" type="button" data-toggle="modal" data-target="#addCuota"><i class="fa fa-usd"></i> Cuotas</button>
+<button id="btnPagar" class="btn btn-warning btn-block" type="button" data-toggle="modal" data-target="#addPago"><i class="fa fa-usd"></i> Pagos</button>
+<button id="btnCuota" class="btn btn-warning btn-block" type="button" data-toggle="modal" data-target="#addCuota"><i class="fa fa-usd"></i> Cuotas</button>
 </div>
 <div class="col-lg-2 col-sm-6 col-sm-4">
-<button class="btn btn-warning" type="button" onClick="openModalanticipos();" ><i class="fa fa-usd"></i> Anticipos</button>
+<button class="btn btn-warning btn-block" type="button" onClick="openModalanticipos();" ><i class="fa fa-usd"></i> Anticipos</button>
 </div>
 <div class="col-lg-2 col-sm-6 col-sm-4">                                                
-<a href="<?=base_url()?>/ventas" class="btn btn-danger" type="button"><i class="fa fa-close"></i> Cancelar</a>
+<a href="<?=base_url()?>/ventas" class="btn btn-danger btn-block" type="button"><i class="fa fa-close"></i> Cancelar</a>
 </div>
 
 </div>
@@ -545,7 +545,7 @@ else {?>
             { 
                cont++;
              detalles++;
-              $("#cargador").append("<div class='row mt-1'><div class='col-sm-12'><div class='my-class-form-control-group'><input type='date' class='form-control mr-2' name='datepago[]' /><input type='text' class='form-control text-right' value='0.00' name='montocuota[]'><button class='btn btn-danger' type='button' onclick='eliminar_campo(this);''><i class='fas fa-minus'></i></button></div></div></div>"); 
+                $("#cargador").append("<div class='row mt-1'><div class='col-sm-12'><div class='my-class-form-control-group'><input type='date' class='form-control mr-2' name='datepago[]' /><input type='text' class='form-control text-right' value='0.00' name='montocuota[]'><button class='btn btn-danger' type='button' onclick='eliminar_campo(this);''><i class='fas fa-minus'></i></button></div></div></div>"); 
               
                 $('#valor_unitario').val(cuotas.value);
             } 
@@ -653,6 +653,23 @@ var id_venta_ref = id;
 
 
 }
+
+</script>
+
+<script>
+  $(document).ready(function() {
+    $("#condicion").change(function() {
+        let dias = $(this).find(":selected").data("dias"); // Obtiene los días del atributo data-dias
+        let fechaEmision = new Date($("#fecha_emision").val()); // Obtiene la fecha de emisión
+        if (!isNaN(fechaEmision.getTime())) {
+            fechaEmision.setDate(fechaEmision.getDate() + dias); // Suma los días
+            let nuevaFecha = fechaEmision.toISOString().split("T")[0]; // Formato YYYY-MM-DD
+            $("#fecha_vencimiento").val(nuevaFecha);
+        }
+    });
+});
+
+
 
 </script>
   </body>

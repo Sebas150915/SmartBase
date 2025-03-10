@@ -93,7 +93,7 @@ $num_reg_division=$resultado_division->rowCount();
       <div class="col-sm-12">
 
       <label for="">Zona</label>
-               <select class="form-control select2" style="width: 100%;" name="zona" id="zona" required>
+               <select class="form-control select2" style="width: 100%;" name="zona" id="zona">
                           
             <option value="">Seleccionar Zona</option>
             <?php 
@@ -110,7 +110,7 @@ $num_reg_division=$resultado_division->rowCount();
       <div class="col-sm-12">
 
       <label for="">División</label>
-               <select class="form-control select2" style="width: 100%;" name="division" id="division" required>
+               <select class="form-control select2" style="width: 100%;" name="division" id="division">
                           
             <option value="">Seleccionar División</option>
             <?php 

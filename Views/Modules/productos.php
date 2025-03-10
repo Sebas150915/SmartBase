@@ -219,8 +219,8 @@ button.dt-button{
     .inputmask({
       alias: 'decimal', 
       allowMinus: false,  
-      digits: 2, 
-      max: 999999.99
+      digits: 4, 
+      max: 999999.9999
   });
 })
   </script>
@@ -232,8 +232,8 @@ button.dt-button{
     .inputmask({
       alias: 'decimal', 
       allowMinus: false,  
-      digits: 2, 
-      max: 999999.99
+      digits: 4, 
+      max: 999999.9999
   });
 })
   </script>
@@ -243,8 +243,8 @@ button.dt-button{
     .inputmask({
       alias: 'decimal', 
       allowMinus: false,  
-      digits: 2, 
-      max: 999999.99
+      digits: 4, 
+      max: 999999.9999
   });
 })
   </script>
@@ -254,8 +254,8 @@ button.dt-button{
     .inputmask({
       alias: 'decimal', 
       allowMinus: false,  
-      digits: 2, 
-      max: 999999.99
+     digits: 4, 
+      max: 999999.9999
   });
 })
   </script>
@@ -266,8 +266,8 @@ button.dt-button{
     .inputmask({
       alias: 'decimal', 
       allowMinus: false,  
-      digits: 2, 
-      max: 999999.99
+      digits: 4, 
+      max: 999999.9999
   });
 })
   </script>
@@ -277,8 +277,8 @@ button.dt-button{
     .inputmask({
       alias: 'decimal', 
       allowMinus: false,  
-      digits: 2, 
-      max: 999999.99
+      digits: 4, 
+      max: 999999.9999
   });
 })
   </script>

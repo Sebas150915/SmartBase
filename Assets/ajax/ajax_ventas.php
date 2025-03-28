@@ -268,14 +268,15 @@ if($_POST['action'] == 'listarDetalle')
        $idventa = $_POST['id'];
        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $sql="SELECT * FROM vw_tbl_venta_det WHERE idventa like '$idventa'";
+        $sql="SELECT * FROM vw_tbl_venta_det WHERE idventa='$idventa'";
         $resultado=$connect->prepare($sql);
         $resultado->execute();
         $num_reg=$resultado->rowCount();
         $detalletabla = '';
+        $cont =1;
         foreach($resultado as $serie )
         {
-            $cont =1;
+            
             $descripcion = $serie['descripcion'];
             $codigo      = $serie['codigo'];
             $descripcion = $serie['descripcion'];
@@ -290,7 +291,7 @@ if($_POST['action'] == 'listarDetalle')
             $detalletabla .='<tr id="fila'.$cont.'">
              <td><button type="button" class="btn btn-danger" onclick="eliminar('.$cont.')" disabled><i class="fe fe-trash"></i></button></td>
              <td>'.$cont.'</td>
-            <td><input type="hidden" name="itemarticulo[]" value="'.$cont.'"><input type="hidden" name="idarticulo[]" value="'.$codigo.'"><input type="hidden" name="cantidadu[]" value="'.$cantidadu.'"><input type="hidden" name="factor[]" value="'.$factor.'"><input type="hidden" name="nomarticulo[]" value="'.$descripcion.'">'.$descripcion.'</td>
+            <td><input type="hidden" name="itemarticulo[]" value="'.$cont.'"><input type="hidden" name="idarticulo[]" value="'.$codigo.'"><input type="hidden" name="factor[]" value="'.$factor.'"><input type="hidden" name="nomarticulo[]" value="'.$descripcion.'">'.$descripcion.'</td>
              
             
             <td><input type="text" min="1" class="form-control text-right" name="cantidad[]" id="cantidad[]" value="'.$cantidadf.'" onkeyup="modificarSubtotales()" readonly></td>

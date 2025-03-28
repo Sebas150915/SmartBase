@@ -302,7 +302,7 @@ alert(selected);*/
 
   
 
-      <script src="<?=media()?>/js/funciones_ventas.js"></script>
+      <script src="<?=media()?>/js/funciones_ventas.js?v=6"></script>
    
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>

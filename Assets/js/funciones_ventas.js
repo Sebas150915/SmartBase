@@ -784,27 +784,56 @@ location.reload();
 
 			success: function(response)
 			{
-       swal.fire({
-					title: "Exito...",
-					text: "Por favor espere",
-					
-					showConfirmButton: true,
-					allowOutsideClick: false
-					});		
-        //window.location = "ventas";
-         console.log(response);
-         var data1 = $.parseJSON(response);
-         //console.log(data);
-         //window.location = base_url+'/ticket_factura/'+data;
-         window.open(base_url+'/ticket_factura/'+data1, '_blank');
-         window.location = "ventas";
-         //location.reload();
+				console.log(response);
+				var data1 = $.parseJSON(response);
+				console.log(data1);
+				var respuesta_sunat = data1.msj_sunat;
+				var ticket = data1.lastInsertId;
+				var empresa = data1.id_emp;
+		 swal.fire({
+			title: "Exito...",
+			text: response,
+			
+			showConfirmButton: true,
+			allowOutsideClick: false
+			});		
+
+			Swal.fire({
+				title: respuesta_sunat,
+				showDenyButton: true,
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				confirmButtonText: "Imprime PDF",
+				denyButtonText: "Imprime Ticket"
+				}).then((result) => {
+				/* Read more about isConfirmed, isDenied below */
+				if (result.isConfirmed) 
+				{
+				window.open(base_url+'/factura_pdf/'+ticket, '_blank');
+				window.location = "ventas";
+				location.reload();
+				} 
+				else if (result.isDenied) 
+				{
+						window.open(base_url+'/factura_pdf/'+ticket, '_blank');
+						window.location = "ventas";   
+						location.reload();
+					 
+					 
+				}
+				else
+				{
+				window.location = "ventas";
+				location.reload();
+				}
+				});
+         
 			},
 			error: function(response)
 			{
           $('#cargando').modal('hide');
           $('#error').modal('show');
-          location.reload(); 
+          //location.reload(); 
 			}
 
 		});
@@ -1539,8 +1568,12 @@ function calcularTotales()
 
 
 }
+
 function redondear()
 {
+    var empresa  = $('#empresa').val();
+    if (empresa == 21)
+    {
     var redondeo  = $('#redondeo').val();
 	var total   = $('#total').val();
 	var tot   = 0;
@@ -1552,11 +1585,10 @@ function redondear()
 	 tot = (total - tot2).toFixed(2);
 	 $('#total').val(tot);
 	 $('#montopago').val(tot);
-	
-	
-	
+    }
 
 }
+
 function evaluar()
 {
 	if(detalles>0)

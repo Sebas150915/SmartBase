@@ -533,7 +533,7 @@ else {?>
 
 
 
-<script src="<?=media()?>/js/funciones_ventas.js?v=10"></script>
+<script src="<?=media()?>/js/funciones_ventas.js?v=1"></script>
    
 
       <script src="<?=media()?>/js/sunat_reniec.js"></script>

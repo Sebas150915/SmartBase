@@ -1290,6 +1290,11 @@ function agregar(id,nombre,precio,afectacion,precio_compra,factor,mxmn,calculaig
 	{
 		$igv_unitario = 0.18;
 	}
+	
+	else if(afectacion ==17)
+	{
+		$igv_unitario = 0.04;	
+	}
 
 	else
 	{
@@ -1352,7 +1357,10 @@ function agregarpos(id,nombre,precio,afectacion,precio_compra,factor,mxmn,calcul
 	{
 		$igv_unitario = 0.18;
 	}
-
+	else if(afectacion ==17)
+		{
+			$igv_unitario = 0.04;	
+		}
 	else
 	{
 		$igv_unitario = 0.00;
@@ -1456,13 +1464,17 @@ function modificarSubtotales()
 		var inpP=prev[i];
 		var inpA=afec[i];
 		var inpS=sub[i];
-		alert(inpV.value+'-'+inpU.value+'-'+inpF.value+'-'+inpVu.value+'-'+inpI.value+'-'+inpP.value+'-'+inpA.value);
+		//alert(inpV.value+'-'+inpU.value+'-'+inpF.value+'-'+inpVu.value+'-'+inpI.value+'-'+inpP.value+'-'+inpA.value);
 		inpS.value = (inpV.value*inpP.value + inpU.value*inpP.value/inpF.value);
 		document.getElementsByName("subtotal")[i].innerHTML=inpS.value.toFixed(2);
 
 		if(inpA.value == '10')
 		{
 			$igv_unitario = 0.18;
+		}
+		else if(inpA.value == '17')
+		{
+			$igv_unitario = 0.04;	
 		}
 		else
 		{
@@ -1508,7 +1520,16 @@ function calcularTotales()
        if(inpA.value==10)
        {
        	op_gravadas +=  document.getElementsByName("subtotal")[i].value;
+		   sog = (op_gravadas/1.18).toFixed(2);
+		   igv = (sog*0.18).toFixed(2);
+
        }
+	   else if(inpA.value==17)
+		{
+			op_gravadas +=  document.getElementsByName("subtotal")[i].value;
+			sog = (op_gravadas/1.04).toFixed(2);
+            igv = (sog*0.04).toFixed(2);
+		}
 
        else if(inpA.value==20 || inpA.value==40 )
        {
@@ -1518,9 +1539,8 @@ function calcularTotales()
        {
        	op_inafectas +=  document.getElementsByName("subtotal")[i].value;
        }
-
-       sog = (op_gravadas/1.18).toFixed(2);
-       igv = (sog*0.18).toFixed(2);
+     
+       
        $('#op_g').val(sog);
        $('#op_e').val(op_exoneradas);
        $('#op_i').val(op_inafectas);

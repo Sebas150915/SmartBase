@@ -425,6 +425,10 @@ class GeneradorXML
           {
             $xml .='<cbc:ProfileID schemeName="Tipo de Operacion" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">0200</cbc:ProfileID>';
           }
+          if($comprobante['ivap'] == 'SI')
+          {
+            $xml.=' <cbc:Note languageLocaleID="2007">Operación sujeta al IVAP</cbc:Note>';
+          }
 
 
          $xml .='<cbc:ID>'.$comprobante['serie'].'-'.$comprobante['correlativo'].'</cbc:ID>

@@ -521,7 +521,7 @@ if($_POST['action'] == 'nueva_venta')
 
 
         //registro detalle venta
-
+        $ivap = 'NO';
         for($i = 0; $i< count($_POST['idarticulo']); $i++)
         {
                 $item                  = $_POST['itemarticulo'][$i];
@@ -530,6 +530,7 @@ if($_POST['action'] == 'nueva_venta')
                 $cantidad              = $_POST['cantidad'][$i];
 
                 $afectacion            = $_POST['afectacion'][$i];
+                
                 $tipo_precio           = '01';
                 $unidad                = 'NIU';
                 $costo                 = $_POST['precio_compra'][$i];
@@ -541,6 +542,10 @@ if($_POST['action'] == 'nueva_venta')
                 if($afectacion == '10')
                 {
                 $igv_unitario          = 18;
+                }
+                else if($afectacion == '17')
+                {
+                $igv_unitario          = 0.04; 
                 }
                 else
                 {
@@ -558,6 +563,15 @@ if($_POST['action'] == 'nueva_venta')
                 if($afectacion == 10)
                 {
                 $precio_venta_unitario = $precio_venta/1.18;
+                $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor)/1.18;
+
+                $importe_total = ($cantidad_total*$precio_venta);
+
+                $valor_total = $cantidad_total*$precio_venta_unitario;
+                }
+                else if($afectacion == 17)
+                {
+                $precio_venta_unitario = $precio_venta/1.04;
                 $valor_unitario_total  = ($_POST['valor_unitario'][$i]/$factor)/1.18;
 
                 $importe_total = ($cantidad_total*$precio_venta);
@@ -636,14 +650,20 @@ if($_POST['action'] == 'nueva_venta')
                 }
                 else if($tdoc=='07')
                 {
-                //ACTUALIZA STOCK
+                  //ACTUALIZA STOCK
 
-                $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock + ? WHERE id=?");
-                $resultado_stock = $query_stock->execute([$cantidad,$idarticulo]);
+                    $query_stock  = $connect->prepare("UPDATE tbl_productos SET stock = stock + ? WHERE id=?");
+                    $resultado_stock = $query_stock->execute([$cantidad,$idarticulo]);
                 }
 
 
         }
+
+        if($afectacion == '17')
+                {
+                    $ivap = 'SI';
+                }
+                
 
         /*BUSCAR CORRELATIVO PARA VOU SISCONT*/
         $empresa = $_POST['empresa'];
@@ -903,7 +923,8 @@ if($_POST['action'] == 'nueva_venta')
                 'tc'                 => $row_cpe_cab['tc'],
                 'total_texto'        => $texto,
                 'redondeo'           => $row_cpe_cab['redondeo'],
-                'exportacion'           => $row_cpe_cab['exportacion'],
+                'exportacion'        => $row_cpe_cab['exportacion'],
+                'ivap'               => $ivap,
                 /*CUERPO DE ANTICIPOS*/
                 "totalanticipo"=> $totanticipo,
                 "subanticipo"=> $subanticipo,

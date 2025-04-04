@@ -77,7 +77,7 @@ $num_reg_data=$resultado_data->rowCount();
                             <td>
                               <button class="btn btn-warning rounded-circle" onclick="openModalEdit()"><i class="fe fe-edit"></i></button>
                               <button class="btn btn-danger rounded-circle" onclick="openModalDel()"><i class="fe fe-trash-2"></i></button>
-                              <a class="btn btn-success rounded-circle" href="<?=base_url()?>/nueva_venta_alq/<?=$usuario['id_garantia']?>"> <i class="fe fe-dollar-sign"></i></a>
+                              <a class="btn btn-success rounded-circle" href="<?=base_url()?>/nueva_venta_gar/<?=$usuario['id_garantia']?>"> <i class="fe fe-dollar-sign"></i></a>
                             </td>
                             <td><?= $usuario['id_garantia'] ?></td>
                             <td><?= $usuario['importe_soles'] ?></td>

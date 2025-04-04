@@ -1349,7 +1349,7 @@ if($_POST['action'] == 'nueva_nota_de_credito')
         $nombrexml = $row_empresa['ruc'].'-'.$tip.'-'.$_POST['serie'].'-'.$_POST['numero'];
 
         $ruta = "../../sunat/".$row_empresa['ruc']."/xml/".$nombrexml;
-       $emisor =   array(
+        $emisor =   array(
         'tipodoc'       => '6',
         'ruc'           => $row_empresa['ruc'], 
         'razon_social'  => $row_empresa['razon_social'], 
@@ -1476,7 +1476,7 @@ if($_POST['action'] == 'nueva_nota_de_credito')
         else
         {
 
-        $objApi->EnviarComprobanteElectronico($emisor,$nombrexml,$connect,$lastInsertId);
+        $respuesta = $objApi->EnviarComprobanteElectronico($emisor,$nombrexml,$connect,$lastInsertId);
 
         require_once("phpqrcode/qrlib.php");
         //CREAR QR INICIO
@@ -1501,7 +1501,60 @@ if($_POST['action'] == 'nueva_nota_de_credito')
 
         QRcode::png($text_qr, $ruta_qr, 'Q',15, 0);
 
-        echo json_encode($lastInsertId);
+
+        $cod_sunat = $respuesta['cod_sunat'];
+        $msj_sunat = $respuesta['msj_sunat'];
+        $hash_cdr  = $respuesta['hash_cdr'];
+        $idfactura = $lastInsertId;
+        $respuestahash = $respuesta['respuestahash'];
+        
+        
+        if($cod_sunat == '0')
+        {
+           $estadofe = '1'; 
+        }
+        else if(intval($cod_sunat)==1033)
+        {
+            $estadofe = '1';
+        }
+        else if(intval($cod_sunat)==1032)
+        {
+            $estadofe = '3';
+        }
+        else if(intval($cod_sunat)>=2000 || intval($cod_sunat)<=3999)
+        {
+            $estadofe = '3';
+        }
+         else if(intval($cod_sunat)>4000 )
+        {
+            $estadofe = '2';
+        }
+        else
+        {
+            $estadofe = '0';
+        }
+        
+        if(isset($hash_cdr))
+        {
+            $hash_cdr = $respuestahash;
+        }
+
+    //var_dump($cod_sunat);
+
+    $query=$connect->prepare("UPDATE tbl_venta_cab SET hash=?,feestado=? ,fecodigoerror=?,femensajesunat=? WHERE id=?;");
+    $resultado=$query->execute([$hash_cdr,$estadofe,$cod_sunat,$msj_sunat,$lastInsertId]);
+        
+        $miArray= array
+        ("id_emp"      => $row_empresa['ruc'],
+         "cod_sunat" => $cod_sunat,
+         "msj_sunat" => $msj_sunat,
+         "hash_cdr"  => $hash_cdr,
+         "lastInsertId"=>$idfactura
+         
+            );
+        echo json_encode($miArray);
+
+        //echo json_encode($lastInsertId);
         exit;
         }
         }

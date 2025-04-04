@@ -71,7 +71,7 @@ $resultado_general->execute();
 $row_general = $resultado_general->fetch(PDO::FETCH_ASSOC);
 $num_reg_general=$resultado_general->rowCount();
 
-$query_producto = "SELECT * FROM tbl_productos WHERE id='8589' ";
+$query_producto = "SELECT * FROM tbl_productos WHERE id='8650' ";
 $resultado_producto=$connect->prepare($query_producto);
 $resultado_producto->execute();
 //$row_producto = $resultado_producto->fetch(PDO::FETCH_ASSOC);
@@ -228,7 +228,7 @@ $num_reg_producto=$resultado_producto->rowCount();
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-2">
                         <label for="">Tipo de Cambio</label>
-                        <input type="text" class="form-control text-right"  name="tcambio" id="tcambio" value="<?=$row_general['tc']?>">
+                        <input type="text" class="form-control text-right"  name="tcambio" id="tcambio" value="0.00">
                       </div>
                       <div class="col-lg-2 col-sm-6 col-sm-2">
                         <label for="">Detraccion</label>
@@ -356,13 +356,13 @@ else {?>
                   <?php
 if($row_general['moneda']=='PEN')
 {
-  $totalventa=$row_general['monto_separacion_soles'];
+  $totalventa=$row_general['importe_soles'];
   $subventa = round($totalventa/1.18 ,2);
   $igvventa = round($subventa*0.18 ,2);
 }
 else
 {
-  $totalventa=$row_general['monto_separacion_dolar'];
+  $totalventa=$row_general['importe_dolares'];
   $subventa = round($totalventa/1.18 ,2);
   $igvventa = round($subventa*0.18 ,2);
 }

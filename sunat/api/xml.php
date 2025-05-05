@@ -425,12 +425,7 @@ class GeneradorXML
           {
             $xml .='<cbc:ProfileID schemeName="Tipo de Operacion" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">0200</cbc:ProfileID>';
           }
-          if($comprobante['ivap'] == 'SI')
-          {
-            $xml.=' <cbc:Note languageLocaleID="2007">Operación sujeta al IVAP</cbc:Note>';
-          }
-
-
+         
          $xml .='<cbc:ID>'.$comprobante['serie'].'-'.$comprobante['correlativo'].'</cbc:ID>
          <cbc:IssueDate>'.$comprobante['fecha_emision'].'</cbc:IssueDate>
          <cbc:IssueTime>00:00:00</cbc:IssueTime>
@@ -457,6 +452,11 @@ class GeneradorXML
         if($comprobante['por_det']>0)
          {
            $xml .='<cbc:Note languageLocaleID="2006">Operacion Sujeta a detraccion</cbc:Note>';
+         }
+
+         if($comprobante['ivap'] == 'SI')
+         {
+           $xml.='<cbc:Note languageLocaleID="2007">Operación sujeta al IVAP</cbc:Note>';
          }
 
         $xml .=
@@ -664,21 +664,40 @@ if ($comprobante["NROACTICIPO"] <> "") {
 $xml.='<cac:TaxTotal>
 <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>';
 
- if($comprobante['exportacion'] == 'NO'){
-$xml.='
+   if($comprobante['exportacion'] == 'NO')
+   {
+      if($comprobante['ivap']=='SI')
+      {
+         $xml.='
             <cac:TaxSubtotal>
                <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opgravadas'],2, '.', '').'</cbc:TaxableAmount>
                <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>
                <cac:TaxCategory>
                   <cac:TaxScheme>
-                     <cbc:ID>1000</cbc:ID>
-                     <cbc:Name>IGV</cbc:Name>
+                     <cbc:ID>1016</cbc:ID>
+                     <cbc:Name>IVAP</cbc:Name>
                      <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
                   </cac:TaxScheme>
                </cac:TaxCategory>
             </cac:TaxSubtotal>';
-           
-}
+      }
+      else
+      {
+         $xml.='
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['total_opgravadas'],2, '.', '').'</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.number_format($comprobante['igv'],2, '.', '').'</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cac:TaxScheme>
+                  <cbc:ID>1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>';	
+      }
+            
+   }
       if($comprobante['total_opexoneradas']>0){
                if($comprobante['exportacion'] == 'SI')
                {
